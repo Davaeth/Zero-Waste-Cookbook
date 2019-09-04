@@ -21,7 +21,7 @@ class CustomBottomAppBar {
           icon,
         ),
         onPressed: () {},
-        iconSize: 25.0,
+        iconSize: 32.0,
         color: Colors.white70,
       );
 }
