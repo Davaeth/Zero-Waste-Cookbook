@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/components/colors/default_colors.dart';
+import 'package:template_name/shared/colors/default_colors.dart';
 
 class CustomBottomAppBar {
   static BottomAppBar createButtomAppBar(BuildContext context) => BottomAppBar(
@@ -17,11 +17,12 @@ class CustomBottomAppBar {
       );
 
   static IconButton _createBottomAppBarIcon(IconData icon) => IconButton(
-        icon: Icon(
-          icon,
-        ),
-        onPressed: () {},
-        iconSize: 32.0,
-        color: Colors.white70,
-      );
+      icon: Icon(
+        icon,
+      ),
+      onPressed: () {},
+      iconSize: 32.0,
+      color: Colors.white70,
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent);
 }
