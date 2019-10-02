@@ -21,16 +21,13 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) => wrapWithScrollingView(Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => RecipePage()));
-              },
-              child: RecipeCard(RecipeCard.createInteriorForSingleCard(
-                  'assets/images/small-food.png',
-                  'Belka stulejka',
-                  'Beleczka')),
-            ),
+            switchToPage(
+                context,
+                RecipeCard(RecipeCard.createInteriorForSingleCard(
+                    'assets/images/small-food.png',
+                    'Belka stulejka',
+                    'Beleczka')),
+                RecipePage()),
             addPadding(
                 Text(
                   'Nowe przepisy',
