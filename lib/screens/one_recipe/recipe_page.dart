@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/pages/one_recipe/components/reviews.dart';
+import 'package:template_name/screens/one_recipe/components/reviews.dart';
 import 'package:template_name/shared/colors/default_colors.dart';
 import 'package:template_name/shared/page_resolvers/positioning.dart';
 import 'package:template_name/shared/page_resolvers/screen_builder.dart';
 import 'package:template_name/shared/ui/dialog_builder.dart';
 import 'package:template_name/shared/ui/expansion_tiles/expansion_tile_builder.dart';
 import 'package:template_name/shared/ui/expansion_tiles/section.dart';
-import 'package:template_name/shared/ui/recipes/recipe_card.dart';
+import 'package:template_name/shared/ui/cards/recipe_card.dart';
 
 class RecipePage extends StatefulWidget {
   @override

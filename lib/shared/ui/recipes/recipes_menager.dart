@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/ui/recipes/recipe_card.dart';
+import 'package:template_name/shared/ui/cards/recipe_card.dart';
 
 class RecipesMenager extends StatefulWidget {
   @override
