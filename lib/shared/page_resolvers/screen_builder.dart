@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:template_name/shared/colors/default_colors.dart';
-import 'package:template_name/shared/constants/custom_bottom_navigation_bar.dart';
+import 'package:template_name/shared/ui/constants/custom_bottom_navigation_bar.dart';
 
-Scaffold buildPage(BuildContext context, Widget page) => Scaffold(
-      backgroundColor: DefaultColors.backgroundColor,
-      bottomNavigationBar: CustomNavigationBar(),
-      body: page,
+SafeArea buildPage(BuildContext context, Widget page) => SafeArea(
+      top: true,
+      bottom: true,
+      left: true,
+      right: true,
+      child: Scaffold(
+        backgroundColor: DefaultColors.backgroundColor,
+        bottomNavigationBar: CustomNavigationBar(),
+        body: page,
+      ),
     );
 
 GestureDetector switchToPage(

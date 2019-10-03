@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/pages/one_recipe/recipe_page.dart';
+import 'package:template_name/screens/administation_panel/administrator_panel.dart';
+import 'package:template_name/screens/one_recipe/recipe_page.dart';
 import 'package:template_name/shared/behaviours/custom_scroll_behavior.dart';
 import 'package:template_name/shared/page_resolvers/positioning.dart';
 import 'package:template_name/shared/page_resolvers/screen_builder.dart';
-import 'package:template_name/shared/ui/recipes/recipe_card.dart';
+import 'package:template_name/shared/ui/cards/recipe_card.dart';
 import 'package:template_name/shared/ui/recipes/recipes_menager.dart';
 
 void main() => runApp(MyApp());
@@ -13,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
       title: 'Flutter Demo',
       builder: (context, child) => configureScrollBehavior(child),
-      home: buildPage(context, MyHomePage()));
+      home: buildPage(context, AdministratorPanel()));
 }
 
 class MyHomePage extends StatelessWidget {

@@ -7,7 +7,10 @@ class CustomNavigationBar extends StatefulWidget {
 }
 
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
-  static int _selectedIndex = 0;
+  int _selectedIndex = 0;
+
+  @override
+  Widget build(BuildContext context) => buildNavigationBar();
 
   BottomNavigationBar buildNavigationBar() => BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -36,7 +39,4 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           activeIcon: Icon(icon),
           title: Text(''),
           backgroundColor: Colors.transparent);
-
-  @override
-  Widget build(BuildContext context) => buildNavigationBar();
 }
