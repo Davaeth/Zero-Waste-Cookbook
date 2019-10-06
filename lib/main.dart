@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/screens/administation_panel/administrator_panel.dart';
-import 'package:template_name/screens/one_recipe/recipe_page.dart';
 import 'package:template_name/shared/behaviours/custom_scroll_behavior.dart';
+import 'package:template_name/shared/enums/page.dart';
+import 'package:template_name/shared/page_resolvers/navigator.dart';
 import 'package:template_name/shared/page_resolvers/positioning.dart';
-import 'package:template_name/shared/page_resolvers/screen_builder.dart';
+import 'package:template_name/shared/page_resolvers/page_resolver.dart';
 import 'package:template_name/shared/ui/cards/recipe_card.dart';
-import 'package:template_name/shared/ui/recipes/recipes_menager.dart';
+import 'package:template_name/shared/ui/recipes/recipes_manager.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
       title: 'Flutter Demo',
       builder: (context, child) => configureScrollBehavior(child),
-      home: buildPage(context, AdministratorPanel()));
+      home: buildPage(context, Page.HomePage.index));
 }
 
 class MyHomePage extends StatelessWidget {
@@ -22,13 +22,13 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) => wrapWithScrollingView(Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            switchToPage(
+            switchPage(
                 context,
                 RecipeCard(RecipeCard.createInteriorForSingleCard(
                     'assets/images/small-food.png',
                     'Belka stulejka',
                     'Beleczka')),
-                RecipePage()),
+                Page.RecipePage),
             addPadding(
                 Text(
                   'Nowe przepisy',
@@ -38,7 +38,7 @@ class MyHomePage extends StatelessWidget {
                 top: 16.0,
                 bottom: 8.0),
             Expanded(
-              child: RecipesMenager(),
+              child: RecipesManager(),
             )
           ]));
 }
