@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/colors/default_colors.dart';
-import 'package:template_name/shared/page_resolvers/positioning.dart';
-import 'package:template_name/shared/ui/recipes/multiple_tags.dart';
-import 'package:template_name/shared/ui/ratings.dart';
-import 'package:template_name/shared/ui/stack_builder.dart';
+import 'package:template_name/ui/recipes/multiple_tags.dart';
+import 'package:template_name/ui/shared/colors/default_colors.dart';
+import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
+
+import '../ratings.dart';
+import '../stack_builder.dart';
 
 class RecipeCard extends StatefulWidget {
   final List<Widget> _interior;

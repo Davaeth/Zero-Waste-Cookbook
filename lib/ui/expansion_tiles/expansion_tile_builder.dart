@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/colors/default_colors.dart';
-import 'package:template_name/shared/page_resolvers/positioning.dart';
-import 'package:template_name/shared/ui/expansion_tiles/section.dart';
+import 'package:template_name/ui/shared/colors/default_colors.dart';
+import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
+
+import 'section.dart';
 
 class ExpansionTileBuilder extends StatefulWidget {
   final Section _section;

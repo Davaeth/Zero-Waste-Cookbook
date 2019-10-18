@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/colors/recipe_colors.dart';
-import 'package:template_name/shared/page_resolvers/positioning.dart';
-import 'package:template_name/shared/ui/ratings.dart';
+import 'package:template_name/ui/ratings.dart';
+import 'package:template_name/ui/shared/colors/recipe_colors.dart';
+import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
 
 class Reviews extends StatelessWidget {
   final String _username;
