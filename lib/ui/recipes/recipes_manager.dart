@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/enums/page.dart';
-import 'package:template_name/shared/page_resolvers/navigator.dart';
-import 'package:template_name/shared/ui/cards/recipe_card.dart';
+import 'package:template_name/ui/cards/recipe_card.dart';
+import 'package:template_name/ui/constants/routes.dart';
+import 'package:template_name/ui/shared/page_resolvers/navigator.dart';
 
 class RecipesManager extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _RecipesMenager();
+  State<StatefulWidget> createState() => _RecipesManager();
 }
 
-class _RecipesMenager extends State<RecipesManager> {
+class _RecipesManager extends State<RecipesManager> {
   @override
   Widget build(BuildContext context) => ListView.builder(
         padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 5.0),
@@ -19,6 +19,6 @@ class _RecipesMenager extends State<RecipesManager> {
             context,
             RecipeCard(RecipeCard.createInteriorForListOfCards(
                 'assets/images/small-food.png', 'Nowy przepis', 'Beleczka')),
-            Page.RecipePage),
+            Routes.Recipe),
       );
 }

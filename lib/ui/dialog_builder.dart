@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/pages/one_recipe/components/ratings__to_be_rated.dart';
-import 'package:template_name/shared/colors/default_colors.dart';
-import 'package:template_name/shared/page_resolvers/positioning.dart';
+import 'package:template_name/src/pages/one_recipe/components/ratings__to_be_rated.dart';
+
+import 'shared/colors/default_colors.dart';
+import 'shared/page_resolvers/positioning.dart';
 
 class DialogBuilder {
   static SimpleDialog buildRateReviewDialog() => SimpleDialog(

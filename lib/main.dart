@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/behaviours/custom_scroll_behavior.dart';
-import 'package:template_name/shared/enums/page.dart';
-import 'package:template_name/shared/page_resolvers/navigator.dart';
-import 'package:template_name/shared/page_resolvers/positioning.dart';
-import 'package:template_name/shared/page_resolvers/page_resolver.dart';
-import 'package:template_name/shared/ui/cards/recipe_card.dart';
-import 'package:template_name/shared/ui/recipes/recipes_manager.dart';
+import 'package:template_name/src/pages/administation_panel/actions/applications_actions.dart';
+import 'package:template_name/src/pages/administation_panel/actions/recipes_actions.dart';
+import 'package:template_name/src/pages/administation_panel/actions/users_actions.dart';
+import 'package:template_name/src/pages/one_recipe/single_recipe.dart';
+import 'package:template_name/ui/constants/routes.dart';
+import 'ui/cards/recipe_card.dart';
+import 'ui/recipes/recipes_manager.dart';
+import 'ui/shared/behaviours/custom_scroll_behavior.dart';
+import 'ui/shared/page_resolvers/navigator.dart';
+import 'ui/shared/page_resolvers/page_resolver.dart';
+import 'ui/shared/page_resolvers/positioning.dart';
 
 void main() => runApp(MyApp());
 
@@ -14,7 +18,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
       title: 'Flutter Demo',
       builder: (context, child) => configureScrollBehavior(child),
-      home: buildPage(context, Page.HomePage.index));
+      home: buildPage(context),
+      routes: {
+        Routes.AdministratorUsers: (context) => UsersActions(),
+        Routes.AdministratorRecipes: (context) => RecipesActions(),
+        Routes.AdministratorApplications: (context) => ApplicationsActions(),
+        Routes.Recipe: (context) => SingleRecipe()
+      },
+      onGenerateRoute: Routes.handleGeneratingRoutes());
 }
 
 class MyHomePage extends StatelessWidget {
@@ -28,7 +39,7 @@ class MyHomePage extends StatelessWidget {
                     'assets/images/small-food.png',
                     'Belka stulejka',
                     'Beleczka')),
-                Page.RecipePage),
+                Routes.Recipe),
             addPadding(
                 Text(
                   'Nowe przepisy',
@@ -39,6 +50,15 @@ class MyHomePage extends StatelessWidget {
                 bottom: 8.0),
             Expanded(
               child: RecipesManager(),
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.perm_contact_calendar,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                navigateToPageByRoute(Routes.VotingPage, context);
+              },
             )
           ]));
 }
