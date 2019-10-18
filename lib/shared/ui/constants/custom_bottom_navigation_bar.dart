@@ -18,7 +18,9 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           unselectedLabelColor: Colors.white70,
           tabs: <Widget>[
             _buildAppBarIcon(Icons.home),
-            _buildAppBarIcon(Icons.supervised_user_circle)
+            _buildAppBarIcon(Icons.supervised_user_circle),
+            _buildAppBarIcon(Icons.star),
+            _buildAppBarIcon(Icons.account_balance)
           ],
         ),
       );

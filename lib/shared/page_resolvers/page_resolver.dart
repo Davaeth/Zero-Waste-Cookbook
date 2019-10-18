@@ -3,6 +3,7 @@ import 'package:template_name/main.dart';
 import 'package:template_name/pages/administation_panel/administrator_panel.dart';
 import 'package:template_name/shared/colors/default_colors.dart';
 import 'package:template_name/shared/ui/constants/custom_bottom_navigation_bar.dart';
+import 'package:template_name/pages/user_profile.dart';
 
 SafeArea buildPage(BuildContext context, int pageIndex) => SafeArea(
       top: true,
@@ -10,11 +11,11 @@ SafeArea buildPage(BuildContext context, int pageIndex) => SafeArea(
       left: true,
       right: true,
       child: DefaultTabController(
-        length: 2,
+        length: 4,
         child: Scaffold(
           backgroundColor: DefaultColors.backgroundColor,
           bottomNavigationBar: CustomNavigationBar(),
-          body: TabBarView(children: [MyHomePage(), AdministratorPanel()]),
+          body: TabBarView(children: [MyHomePage(), AdministratorPanel(), AdministratorPanel(), UserProfile()]),
         ),
       ),
     );
