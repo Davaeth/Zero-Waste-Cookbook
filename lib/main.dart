@@ -12,7 +12,7 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Zero Waste Cookbook',
       builder: (context, child) => configureScrollBehavior(child),
       home: buildPage(context, Page.HomePage.index));
 }

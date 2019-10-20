@@ -22,11 +22,11 @@ class UserProfile extends StatelessWidget {
                 Page.RecipePage),
             addPadding(
                 Text(
-                  'Favorite recipes',
+                  'Favourite recipes',
                   style: TextStyle(fontSize: 20.0, color: Colors.white),
                 ),
                 left: 16.0,
-                top: 16.0,
+                top: 8.0,
                 bottom: 8.0),
             Expanded(
               child: FavRecipesManager(),
@@ -43,20 +43,24 @@ class UpperSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        SizedBox(
-          height: 32.0,
-        ),
+        
         Padding(
           padding: EdgeInsets.all(32.0),
           child: Column(
             children: <Widget>[
-              SizedBox(
-                height: 16.0,
+              Container(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Icon(
+                  Icons.settings,
+                  size: 24.0,
+                  color: DefaultColors.disabledIconColor,
+                ),
+                )
               ),
-                Icon(
-                  Icons.star,
-                  size: 64.0,
-                  color: DefaultColors.iconColor
+                CircleAvatar(
+                  radius: 50.0,
+                  backgroundImage: NetworkImage('https://www.mobafire.com/images/avatars/jinx-classic.png'),
                 ),
               SizedBox(
                 height: 16.0,
@@ -66,19 +70,11 @@ class UpperSection extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 24.0, color: Colors.white),
               ),
-              SizedBox(
-                height: 4.0,
-              ),
-              Text(
-                'Cook',
-                style: TextStyle(
-                  fontSize: 20.0, color: Colors.white),
-              )
             ],
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 32.0, right: 48.0),
+          padding: const EdgeInsets.only(left: 32.0, right: 48.0, top: 0.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -96,9 +92,8 @@ class UpperSection extends StatelessWidget {
                   Text(
                     '100k',
                     style: TextStyle(
-                  fontSize: 20.0, color: Colors.white),
+                  fontSize: 18.0, color: Colors.white),
                   )
-                  
                 ],
               ),
               Row(
@@ -115,7 +110,7 @@ class UpperSection extends StatelessWidget {
                   Text(
                     '100k',
                     style: TextStyle(
-                  fontSize: 20.0, color: Colors.white),
+                  fontSize: 18.0, color: Colors.white),
                   )
                 ],
               ),
@@ -133,13 +128,57 @@ class UpperSection extends StatelessWidget {
                   Text(
                     '100',
                    style: TextStyle(
-                  fontSize: 20.0, color: Colors.white),
+                  fontSize: 18.0, color: Colors.white),
                   )
                 ],
               ),
             ],
           ),
-        )
+        ),
+        Padding(
+          padding: const EdgeInsets.all(0.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.all(24.0),
+                    child:
+                  MaterialButton(
+                    child: Text('Add new recipe'),
+                    color: DefaultColors.iconColor,
+                    textColor: DefaultColors.textColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(18.0),
+                      side: BorderSide(color:DefaultColors.iconColor),
+                    ),
+                    onPressed: (){},
+                  ),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.all(24.0),
+                    child:
+                  MaterialButton(
+                    child: Text('Manage my recipes'),
+                    color: DefaultColors.iconColor,
+                    textColor: DefaultColors.textColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(18.0),
+                      side: BorderSide(color:DefaultColors.iconColor),
+                    ),
+                    onPressed: (){},
+                  ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
       ],
     );
   }
