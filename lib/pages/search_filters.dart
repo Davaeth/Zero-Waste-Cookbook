@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/pages/slider_selector.dart';
 import 'package:template_name/shared/colors/default_colors.dart';
 import 'package:template_name/shared/enums/page.dart';
 import 'package:template_name/shared/page_resolvers/navigator.dart';
@@ -35,7 +34,7 @@ class Filters extends StatelessWidget {
                       IconButton(
                         icon: Icon(Icons.close),
                         onPressed: (){
-                      Navigator.pop(context);
+                      stepPageBack(context);
                     },
               ),
                       ),
@@ -47,52 +46,7 @@ class Filters extends StatelessWidget {
             
           ),
           
-        ),
-         Regions(),           
+        ),           
         ])
       ]);
-}
-
-class Regions extends StatelessWidget {
-  const Regions({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child:
-        Text('Regions',
-        style: TextStyle(
-        fontSize: 18.0, color: DefaultColors.textColor),),
-        ),
-        buildFilterButtonRow(['hi', 'hello']),
-      ],
-    );
-  }
-}
-
-class PrepTimeSlider extends StatelessWidget {
-  const PrepTimeSlider({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child:
-        Text('Regions',
-        style: TextStyle(
-        fontSize: 18.0, color: DefaultColors.textColor),),
-        )
-      ],
-    );
-  }
 }

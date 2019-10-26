@@ -4,7 +4,7 @@ import 'package:template_name/shared/page_resolvers/positioning.dart';
 Padding buildAdministratorCardButton(String text, IconData iconData) =>
     addPadding(
         Container(
-          width: 180,
+          width: 160.0,
           child: Card(
             child: Column(
               children: <Widget>[

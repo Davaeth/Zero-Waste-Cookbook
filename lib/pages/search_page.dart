@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:template_name/shared/colors/default_colors.dart';
 import 'package:template_name/shared/ui/cards/card_buttons_panel.dart';
 import 'package:template_name/pages/search_filters.dart';
-import 'package:template_name/pages/slider_selector.dart';
 import 'package:template_name/pages/popular_categories_cards.dart';
 
 class SearchPage extends StatelessWidget {
