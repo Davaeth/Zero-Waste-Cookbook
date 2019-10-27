@@ -3,8 +3,10 @@ import 'package:template_name/main.dart';
 import 'package:template_name/pages/administation_panel/administrator_panel.dart';
 import 'package:template_name/pages/one_recipe/single_recipe.dart';
 import 'package:template_name/shared/enums/page.dart';
+import 'package:template_name/pages/search/search_filters.dart';
+import 'package:template_name/pages/user_profile_settings.dart';
 
-List<Widget> _pages = [MyHomePage(), SingleRecipe(), AdministratorPanel()];
+List<Widget> _pages = [MyHomePage(), SingleRecipe(), AdministratorPanel(), Filters(), Settings()  ];
 
 void navigateToPageByScreen(Page page, BuildContext context) {
   Navigator.push(

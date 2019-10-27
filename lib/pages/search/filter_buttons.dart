@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/colors/default_colors.dart';
 import 'package:template_name/shared/page_resolvers/positioning.dart';
 
 Padding buildFilterButton(String text) =>

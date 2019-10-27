@@ -3,7 +3,8 @@ import 'package:template_name/shared/colors/default_colors.dart';
 import 'package:template_name/shared/enums/page.dart';
 import 'package:template_name/shared/page_resolvers/navigator.dart';
 import 'package:template_name/shared/page_resolvers/positioning.dart';
-import 'package:template_name/pages/filter_buttons.dart';
+import 'package:template_name/pages/search/filter_buttons.dart';
+
 
 class Filters extends StatelessWidget {
   @override

@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:template_name/shared/page_resolvers/navigator.dart';
 import 'package:template_name/shared/page_resolvers/positioning.dart';
 import 'package:template_name/shared/colors/default_colors.dart';
+
 
 Padding buildUserInfoIcon(String amount, IconData iconData) =>
     addPadding(
         Container(
           padding: const EdgeInsets.all(8.0),
-            child: Column(
+            child: Row(
               children: <Widget>[
-                Container(
-                    padding: const EdgeInsets.all(4.0),
-                    child:
                   Icon(
                     iconData,
                   color: DefaultColors.iconColor
                   ),
-                  ),
+                  SizedBox(width: 6.0,),
                   Text(
                     amount,
                     style: TextStyle(
@@ -56,6 +55,7 @@ Column buildUserInfo(List<String> amounts, List<IconData> iconsData, String user
       ]
         ),
       Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[

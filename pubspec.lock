@@ -36,18 +36,25 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.2"
+  flare_dart:
+    dependency: transitive
+    description:
+      name: flare_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.2"
+  flare_flutter:
+    dependency: "direct main"
+    description:
+      name: flare_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.6.2"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_range_slider:
-    dependency: "direct main"
-    description:
-      name: flutter_range_slider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.4.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -151,3 +158,4 @@ packages:
     version: "2.0.8"
 sdks:
   dart: ">=2.2.2 <3.0.0"
+  flutter: ">=1.7.8+hotfix.3"
