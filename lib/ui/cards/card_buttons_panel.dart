@@ -9,14 +9,18 @@ GestureDetector buildAdministratorCardButton(
         addPadding(
             Card(
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Icon(
                     iconData,
                     size: 120.0,
                   ),
-                  Text(
-                    text,
-                    style: TextStyle(fontSize: 18.0),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      text,
+                      style: TextStyle(fontSize: 18.0),
+                    ),
                   )
                 ],
               ),

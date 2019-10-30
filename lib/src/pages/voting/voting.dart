@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_tindercard/flutter_tindercard.dart';
+import 'package:template_name/src/pages/voting/components/hero_tags.dart';
 import 'package:template_name/ui/constants/routes.dart';
 import 'package:template_name/ui/shared/colors/default_colors.dart';
 import 'package:template_name/ui/shared/page_resolvers/navigator.dart';
-import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
 
 class Voting extends StatefulWidget {
   @override
@@ -10,117 +11,88 @@ class Voting extends StatefulWidget {
 }
 
 class _VotingState extends State<Voting> {
-  List<GestureDetector> _votings;
+  CardController _cardController;
+  List<Color> _cardColors;
+  int _activeIndex;
 
   @override
-  Widget build(BuildContext context) => Scaffold(
-        backgroundColor: DefaultColors.backgroundColor,
-        body: addPadding(
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Stack(
-                  alignment: Alignment.center,
-                  children: _votings.length > 0
-                      ? _votings
-                      : [
-                          _buildVotingObjectInterior(
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  'Brak kandydatur',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 20.0),
-                                ),
-                              ),
-                              DefaultColors.backgroundColor)
-                        ],
-                ),
-                addPadding(
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        _buildDragTarget(Colors.green, Icons.add),
-                        _buildDragTarget(Colors.red, Icons.close)
-                      ],
-                    ),
-                    top: 128.0)
-              ],
-            ),
-            top: MediaQuery.of(context).size.height * 0.15),
+  Widget build(BuildContext context) => Container(
+        color: DefaultColors.backgroundColor,
+        height: MediaQuery.of(context).size.height * 0.6,
+        width: MediaQuery.of(context).size.width * 0.6,
+        child: GestureDetector(
+            onTap: () {
+              navigateToPageByRoute(Routes.FakeRecipePage, context);
+            },
+            child: TinderSwapCard(
+                animDuration: 10,
+                orientation: AmassOrientation.BOTTOM,
+                totalNum: 6,
+                stackNum: 4,
+                swipeEdge: 4.0,
+                maxWidth: MediaQuery.of(context).size.width * 0.9,
+                maxHeight: MediaQuery.of(context).size.width * 0.6,
+                minWidth: MediaQuery.of(context).size.width * 0.8,
+                minHeight: MediaQuery.of(context).size.width * 0.5,
+                cardBuilder: (context, int index) {
+                  fakeRecipe = 'fakeRecipe$index';
+                  _activeIndex = index;
+                  return _buildVotingHeroCard(index);
+                },
+                cardController: _cardController,
+                swipeCompleteCallback: _handleSwapComplete,
+                swipeUpdateCallback: _handleSwapUpdate)),
       );
 
   @override
   void initState() {
-    _votings = _buiildVotingObjects(3).toList();
+    _cardController = CardController();
+    _cardColors = List<Color>();
+
+    for (var i = 0; i < 6; i++) {
+      _cardColors.add(DefaultColors.secondaryColor);
+    }
 
     super.initState();
   }
 
-  Iterable<GestureDetector> _buiildVotingObjects(int votingsCount) sync* {
-    for (var i = 0; i < votingsCount; i++) {
-      yield _buildVotingObject(context);
-    }
-  }
-
-  DragTarget<int> _buildDragTarget(Color color, IconData iconData) {
-    return DragTarget(
-      builder: (context, List<int> candidateData, rejectedData) => Container(
-        width: 120.0,
-        height: 120.0,
+  Hero _buildVotingHeroCard(int index) => Hero(
+        tag: fakeRecipe,
         child: Card(
-          color: color,
-          child: Icon(
-            iconData,
-            size: 80.0,
+          borderOnForeground: true,
+          color: _cardColors[index],
+          child: Align(
+            alignment: Alignment.center,
+            child: Text(
+              'Test recipe title',
+              style: TextStyle(color: Colors.white, fontSize: 25.0),
+            ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Align _buildInfoText() => Align(
-        alignment: Alignment.center,
-        child: Text(
-          'Test przepis',
-          style: TextStyle(color: Colors.white, fontSize: 25.0),
         ),
       );
 
-  GestureDetector _buildVotingObject(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        navigateToPageByRoute(Routes.FakeRecipePage, context);
-      },
-      child: Draggable(
-        child: _buildVotingObjectInterior(
-            _buildInfoText(), DefaultColors.secondaryColor),
-        feedback: Material(
-          color: Colors.transparent,
-          child: _buildVotingObjectInterior(
-              _buildInfoText(), DefaultColors.secondaryColor),
-        ),
-        childWhenDragging:
-            _buildVotingObjectInterior(null, DefaultColors.backgroundColor),
-        onDragEnd: (details) {
-          setState(() {
-            _votings.removeLast();
-          });
-        },
-      ),
-    );
+  void _handleSwapComplete(CardSwipeOrientation orientation, int index) {
+    if (orientation == CardSwipeOrientation.LEFT) {
+      setState(() {
+        _cardColors.forEach((color) {
+          color = Colors.green;
+        });
+        print(_cardColors[0]);
+      });
+    } else if (orientation == CardSwipeOrientation.RIGHT) {
+      print('Odrzucam');
+    }
   }
 
-  Container _buildVotingObjectInterior(Widget child, Color color) {
-    return Container(
-      width: 160.0,
-      height: 160.0,
-      child: Card(
-        color: color,
-        child: child,
-      ),
-    );
+  _handleSwapUpdate(DragUpdateDetails details, Alignment align) {
+    setState(() {
+      if (align.x < 0) {
+        _cardColors[_activeIndex] = Colors.green;
+      } else if (align.x > 0) {
+        _cardColors[_activeIndex] = Colors.red;
+      } else {
+        _cardColors[_activeIndex] = DefaultColors.secondaryColor;
+      }
+    });
   }
 }

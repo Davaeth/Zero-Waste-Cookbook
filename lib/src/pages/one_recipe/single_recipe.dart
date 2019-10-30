@@ -1,6 +1,9 @@
+import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:template_name/src/models/review.dart';
+import 'package:template_name/src/models/user.dart';
+import 'package:template_name/src/pages/one_recipe/components/review_craetor.dart';
 import 'package:template_name/ui/cards/recipe_card.dart';
-import 'package:template_name/ui/dialog_builder.dart';
 import 'package:template_name/ui/expansion_tiles/expansion_tile_builder.dart';
 import 'package:template_name/ui/expansion_tiles/section.dart';
 import 'package:template_name/ui/shared/colors/default_colors.dart';
@@ -13,12 +16,19 @@ class SingleRecipe extends StatefulWidget {
   State<StatefulWidget> createState() => _SingleRecipeState();
 }
 
-class _SingleRecipeState extends State<SingleRecipe> {
-  int _reviewsCount = 3;
-  bool areReviewsExpanded = false;
+class _SingleRecipeState extends State<SingleRecipe>
+    with AfterLayoutMixin<SingleRecipe> {
+  User _user;
+  List<Review> _reviews;
+  int _reviewsCountToShow = 0;
+  bool _areReviewsExpanded = false;
 
-  RecipeCard recipeCard = RecipeCard(RecipeCard.createInteriorForCardWithRating(
-      'assets/images/small-food.png', 'elo', 'elo1'));
+  GlobalKey<ReviewsState> _reviewsStateKey = GlobalKey<ReviewsState>();
+
+  @override
+  void afterFirstLayout(BuildContext context) {
+    _expandReviews();
+  }
 
   @override
   Widget build(BuildContext context) => SafeArea(
@@ -31,7 +41,8 @@ class _SingleRecipeState extends State<SingleRecipe> {
           body: ListView(
             shrinkWrap: true,
             children: <Widget>[
-              recipeCard,
+              RecipeCard(RecipeCard.createInteriorForCardWithRating(
+                  'assets/images/small-food.png', 'elo', 'elo1', context)),
               addPadding(
                   ExpansionTileBuilder(Section('INGREDIENTS',
                       entries: ['Test1', 'Test2', 'Test3'])),
@@ -42,12 +53,12 @@ class _SingleRecipeState extends State<SingleRecipe> {
                     'Integer egestas orci sapien, sed tristique massa facilisis eget. Sed pharetra vulputate scelerisque. Suspendisse in congue lorem, at sagittis augue. Pellentesque egestas convallis purus. Curabitur pretium a urna quis tristique. Nullam quis condimentum lacus. Sed nec sem ac dui efficitur ultrices. Mauris in leo nec sapien fermentum fringilla pharetra nec purus.'
                   ])),
                   bottom: 8.0),
-              _createReviewAddingButton(),
-              ListView.builder(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: _reviewsCount,
-                itemBuilder: (context, index) => Reviews('Beleczka', 2),
+              ReviewCreator(_reviews, _callback),
+              Reviews(
+                _user,
+                _reviews,
+                _reviewsCountToShow,
+                key: _reviewsStateKey,
               ),
               _createReviewExpandText()
             ],
@@ -55,11 +66,18 @@ class _SingleRecipeState extends State<SingleRecipe> {
         ),
       );
 
-  void _expandReviews() {
-    setState(() {
-      _reviewsCount = areReviewsExpanded ? 3 : 5;
-      areReviewsExpanded = !areReviewsExpanded;
-    });
+  @override
+  void initState() {
+    _user = User('Belka', '123456');
+    _reviews = List<Review>();
+
+    _reviews.add(Review(_user, 'Jesteś najlepszy!', 2));
+    _reviews.add(Review(_user, 'Słabe', 1));
+    _reviews.add(Review(_user, 'Meh', 3));
+    _reviews.add(Review(_user, 'Kozak kery', 5));
+    _reviews.add(Review(_user, 'Prawie izak', 4));
+
+    super.initState();
   }
 
   Center _createReviewExpandText() => Center(
@@ -67,7 +85,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
           onTap: _expandReviews,
           child: addPadding(
               Text(
-                areReviewsExpanded ? 'Pokaż mniej...' : 'Pokaż więcej...',
+                _areReviewsExpanded ? 'Pokaż więcej...' : 'Pokaż mniej...',
                 style: TextStyle(fontSize: 15.0, color: Colors.white),
               ),
               top: 8.0,
@@ -75,35 +93,34 @@ class _SingleRecipeState extends State<SingleRecipe> {
         ),
       );
 
-  GestureDetector _createReviewAddingButton() => GestureDetector(
-        onTap: () {
-          showDialog(
-              context: context,
-              builder: (context) => DialogBuilder.buildRateReviewDialog());
-        },
-        child: Container(
-          alignment: Alignment.center,
-          color: DefaultColors.secondaryColor,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              addPadding(
-                  Text(
-                    'Dodaj komentarz',
-                    style: TextStyle(color: Colors.white, fontSize: 15.0),
-                  ),
-                  left: 16.0,
-                  top: 8.0,
-                  bottom: 8.0),
-              addPadding(
-                  Icon(
-                    Icons.add,
-                    color: Colors.orange,
-                    size: 25.0,
-                  ),
-                  right: 16.0)
-            ],
-          ),
-        ),
-      );
+  void _expandReviews() {
+    setState(() {
+      _areReviewsExpanded = !_areReviewsExpanded;
+
+      _refresReviewsCountToShow();
+
+      _setReviewsState();
+    });
+  }
+
+  void _refresReviewsCountToShow() {
+    _reviewsCountToShow = _reviews.length > 0
+        ? _reviews.length > 3
+            ? _areReviewsExpanded ? 3 : _reviews.length
+            : _reviews.length
+        : 0;
+  }
+
+  void _callback() {
+    setState(() {
+      _refresReviewsCountToShow();
+      _setReviewsState();
+    });
+  }
+
+  void _setReviewsState() {
+    _reviewsStateKey.currentState.setState(() {
+      _reviewsStateKey.currentState.reviewsCountToShow = _reviewsCountToShow;
+    });
+  }
 }
