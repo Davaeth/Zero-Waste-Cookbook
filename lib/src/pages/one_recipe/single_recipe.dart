@@ -2,7 +2,7 @@ import 'package:after_layout/after_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:template_name/src/models/review.dart';
 import 'package:template_name/src/models/user.dart';
-import 'package:template_name/src/pages/one_recipe/components/review_craetor.dart';
+import 'package:template_name/src/pages/one_recipe/components/review_creator.dart';
 import 'package:template_name/ui/cards/recipe_card.dart';
 import 'package:template_name/ui/expansion_tiles/expansion_tile_builder.dart';
 import 'package:template_name/ui/expansion_tiles/section.dart';
