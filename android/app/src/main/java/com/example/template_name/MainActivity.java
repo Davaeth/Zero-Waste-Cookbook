@@ -1,4 +1,4 @@
-package com.example.template_name;
+package com.example.zero_waste_cookbook;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;
