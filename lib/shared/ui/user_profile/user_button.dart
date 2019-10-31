@@ -59,7 +59,23 @@ Row (
   children: <Widget>[
     Text('Logout', style: TextStyle(color: DefaultColors.textColor)),
     IconButton(
-      icon: new Icon(Icons.exit_to_app),  color: DefaultColors.disabledIconColor, onPressed: (){SystemNavigator.pop();}
+      icon: new Icon(Icons.exit_to_app),  color: DefaultColors.disabledIconColor, onPressed: (){navigateToPageByNumber(5, context);}
           ),
+        ],
+);
+
+Row deleteAccountButton(BuildContext context) =>
+Row (
+    mainAxisSize: MainAxisSize.max,
+    mainAxisAlignment: MainAxisAlignment.start,  
+  children: <Widget>[
+    FlatButton(
+      padding: EdgeInsets.all(0),
+      child: Text('Delete account',style: TextStyle(color: Colors.red)),
+      onPressed: (){
+        SystemNavigator.pop();
+      },
+    )
+      
         ],
 );

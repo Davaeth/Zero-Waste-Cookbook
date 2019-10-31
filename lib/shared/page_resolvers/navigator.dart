@@ -5,8 +5,9 @@ import 'package:template_name/pages/one_recipe/single_recipe.dart';
 import 'package:template_name/shared/enums/page.dart';
 import 'package:template_name/pages/search/search_filters.dart';
 import 'package:template_name/pages/user_profile_settings.dart';
+import 'package:template_name/pages/login/login_page.dart';
 
-List<Widget> _pages = [MyHomePage(), SingleRecipe(), AdministratorPanel(), Filters(), Settings()  ];
+List<Widget> _pages = [MyHomePage(), SingleRecipe(), AdministratorPanel(), Filters(), Settings(), Login()  ];
 
 void navigateToPageByScreen(Page page, BuildContext context) {
   Navigator.push(

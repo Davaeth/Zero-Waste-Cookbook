@@ -39,6 +39,7 @@ class Settings extends StatelessWidget {
           ),
         ),  
         LanguageDropdown(),
+        deleteAccountButton(context),
         logoutButton(context),
         ])
       ]
