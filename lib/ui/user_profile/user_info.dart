@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/page_resolvers/navigator.dart';
-import 'package:template_name/shared/page_resolvers/positioning.dart';
-import 'package:template_name/shared/colors/default_colors.dart';
-
+import 'package:template_name/ui/shared/page_resolvers/navigator.dart';
+import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
+import 'package:template_name/ui/shared/colors/default_colors.dart';
 
 Padding buildUserInfoIcon(String amount, IconData iconData) =>
     addPadding(

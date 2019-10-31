@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/page_resolvers/positioning.dart';
+import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
 
 Padding buildFilterButton(String text) =>
     addPadding(
