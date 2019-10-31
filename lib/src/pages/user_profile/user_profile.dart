@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/colors/default_colors.dart';
-import 'package:template_name/shared/enums/page.dart';
-import 'package:template_name/shared/page_resolvers/navigator.dart';
-import 'package:template_name/shared/page_resolvers/positioning.dart';
-import 'package:template_name/shared/ui/recipes/fav_recipes.dart';
-import 'package:template_name/shared/ui/user_profile/user_info.dart';
-import 'package:template_name/shared/ui/user_profile/user_button.dart';
-import 'package:template_name/pages/administation_panel/administrator_panel.dart';
+import 'package:template_name/ui/constants/routes.dart';
+import 'package:template_name/ui/recipes/fav_recipes.dart';
+import 'package:template_name/ui/shared/colors/default_colors.dart';
+import 'package:template_name/ui/shared/page_resolvers/navigator.dart';
+import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
+import 'package:template_name/ui/user_profile/user_button.dart';
+import 'package:template_name/ui/user_profile/user_info.dart';
+
 
 class UserProfile extends StatelessWidget {
   @override
@@ -14,11 +14,8 @@ class UserProfile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             settingsButton(context, 4),
-            switchPage(
-                context,
                 buildUserInfo(['100k','2'], [Icons.star, Icons.comment], 'BoyMan'),
-                Page.RecipePage),
-                buildUserButtonsRow(context, ['Add new recipe', 'Manage my recipes'], [1,2]),
+                buildUserButtonsRow(context, ['Add new recipe', 'Manage my recipes'], [Routes.FiltersPage, Routes.FiltersPage]),
             addPadding(
                 Text(
                   'Favourite recipes',

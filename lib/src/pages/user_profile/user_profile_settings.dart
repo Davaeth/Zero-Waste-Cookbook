@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/colors/default_colors.dart';
-import 'package:template_name/pages/search/filter_buttons.dart';
-import 'package:template_name/shared/page_resolvers/navigator.dart';
-import 'package:template_name/shared/ui/user_profile/user_button.dart';
-import 'package:template_name/pages/language_dropdown.dart';
+import 'package:template_name/ui/shared/colors/default_colors.dart';
+import 'package:template_name/ui/user_profile/language_dropdown.dart';
+import 'package:template_name/ui/user_profile/user_button.dart';
 
 class Settings extends StatelessWidget {
    @override

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-import 'package:template_name/shared/colors/default_colors.dart';
-import 'package:template_name/pages/user_profile.dart';
 import 'package:flare_flutter/flare_actor.dart';
+import 'package:template_name/src/pages/user_profile/user_profile.dart';
+import 'package:template_name/ui/shared/colors/default_colors.dart';
 
 class MySplashScreen extends StatefulWidget {
   @override

@@ -6,6 +6,10 @@ import 'package:template_name/src/pages/administation_panel/actions/users_action
 import 'package:template_name/src/pages/one_recipe/single_recipe.dart';
 import 'package:template_name/src/pages/voting/fake_recipe/fake_recipe.dart';
 import 'package:template_name/src/pages/voting/voting.dart';
+import 'package:template_name/src/pages/search/search_filters.dart';
+import 'package:template_name/src/pages/search/search_page.dart';
+import 'package:template_name/src/pages/user_profile/user_profile_settings.dart';
+import 'package:template_name/src/pages/login/login_page.dart';
 
 class Routes {
   static const Home = '/';
@@ -15,6 +19,10 @@ class Routes {
   static const Recipe = '/recipe';
   static const FakeRecipePage = '/voting/fakeRecipe';
   static const VotingPage = '/voting';
+  static const FiltersPage ='/search/search_filters';
+  static const SearchPage ='/search/search_page';
+  static const LoginPage ='/login/login_page';
+  static const SettingsPage = '/user_profile/user_profile_settings';
 
   static handleGeneratingRoutes() => (RouteSettings routes) {
         switch (routes.name) {
@@ -37,6 +45,18 @@ class Routes {
           case Routes.VotingPage:
             return MaterialPageRoute(builder: (context) => Voting());
             break;
+          case Routes.FiltersPage:
+            return MaterialPageRoute(builder: (context) => Filters());
+            break;
+          case Routes.SearchPage:
+            return MaterialPageRoute(builder: (context) => Search());
+            break;
+          case Routes.LoginPage:
+            return MaterialPageRoute(builder: (context) => Login());
+            break;   
+          case Routes.SettingsPage:
+            return MaterialPageRoute(builder: (context) => Settings());
+            break;            
         }
 
         return MaterialPageRoute(builder: (context) => MyHomePage());

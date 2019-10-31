@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:template_name/shared/page_resolvers/navigator.dart';
-import 'package:template_name/shared/colors/default_colors.dart';
+import 'package:template_name/ui/constants/routes.dart';
+import 'package:template_name/ui/shared/colors/default_colors.dart';
+import 'package:template_name/ui/shared/page_resolvers/navigator.dart';
 
-Widget buildUserButtons(BuildContext context, String buttonName, int pageNumber) {
+Widget buildUserButtons(BuildContext context, String buttonName, String pageNumber) {
    return new FlatButton(
                     child: Text(buttonName),
                     color: DefaultColors.iconColor,
                     textColor: DefaultColors.textColor,
                     shape: RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(18.0),
-                      side: BorderSide(color:DefaultColors.iconColor),
+                    borderRadius: new BorderRadius.circular(18.0),
+                    side: BorderSide(color:DefaultColors.iconColor),
                     ),
-                    onPressed: (){navigateToPageByNumber(pageNumber, context);},
+                    onPressed: (){navigateToPageByRoute(pageNumber, context);},
           );
 }
 
-Row buildUserButtonsRow(context, List<String> buttonNamesList, List<int> pageNumberList) =>
+Row buildUserButtonsRow(context, List<String> buttonNamesList, List<String> pageNumberList) =>
 Row(
   mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -35,7 +36,7 @@ Row (
           mainAxisSize: MainAxisSize.max,
   children: <Widget>[
     IconButton(
-      icon: new Icon(Icons.settings), padding: new EdgeInsets.only(top: 8.0, right: 16.0), color: DefaultColors.disabledIconColor, onPressed: (){navigateToPageByNumber(pageNumber, context);}
+      icon: new Icon(Icons.settings), padding: new EdgeInsets.only(top: 8.0, right: 16.0), color: DefaultColors.disabledIconColor, onPressed: (){navigateToPageByRoute(Routes.SettingsPage, context);}
           ),
         ],
 );
@@ -59,7 +60,7 @@ Row (
   children: <Widget>[
     Text('Logout', style: TextStyle(color: DefaultColors.textColor)),
     IconButton(
-      icon: new Icon(Icons.exit_to_app),  color: DefaultColors.disabledIconColor, onPressed: (){navigateToPageByNumber(5, context);}
+      icon: new Icon(Icons.exit_to_app),  color: DefaultColors.disabledIconColor, onPressed: (){navigateToPageByRoute(Routes.LoginPage, context);}
           ),
         ],
 );
