@@ -6,7 +6,7 @@ class AdministratorPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) => GridView.count(
         crossAxisCount: 2,
-        childAspectRatio: 1.2,
+        childAspectRatio: 1,
         padding: EdgeInsets.only(left: 8.0, right: 4.0, top: 8.0, bottom: 4.0),
         children: <Widget>[
           buildAdministratorCardButton("Manage users",

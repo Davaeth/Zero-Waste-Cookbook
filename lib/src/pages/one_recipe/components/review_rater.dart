@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
 
-class RatingsToBeRated extends StatefulWidget {
+class ReviewRater extends StatefulWidget {
+  Function _rateReview;
+
+  ReviewRater(this._rateReview);
+
   @override
-  _RatingsEditable createState() => _RatingsEditable();
+  ReviewRaterState createState() => ReviewRaterState();
 }
 
-class _RatingsEditable extends State<RatingsToBeRated> {
+class ReviewRaterState extends State<ReviewRater> {
   List<IconButton> _starButtons = List<IconButton>();
+  Function _rateReview;
 
   @override
   Widget build(BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: _starButtons,
+      );
+
+  @override
+  void initState() {
+    _starButtons = _createFavouriteIconButtonsWithRatedStatus().toList();
+    _rateReview = widget._rateReview;
+    super.initState();
+  }
+
+  IconButton _createFavouriteIconButton(int index, Icon icon) => IconButton(
+        icon: icon,
+        onPressed: () => _rateRecipe(index),
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
       );
 
   Iterable<IconButton> _createFavouriteIconButtonsWithRatedStatus() sync* {
@@ -20,8 +39,16 @@ class _RatingsEditable extends State<RatingsToBeRated> {
     }
   }
 
+  Icon _createRatingIcon(IconData icon) => Icon(
+        icon,
+        size: 27.0,
+        color: Colors.orange,
+      );
+
   void _rateRecipe(int index) {
     setState(() {
+      _rateReview(index + 1);
+
       for (var i = 0; i < _starButtons.length; i++) {
         if (i <= index) {
           _starButtons[i] =
@@ -33,24 +60,5 @@ class _RatingsEditable extends State<RatingsToBeRated> {
             _createFavouriteIconButton(i, _createRatingIcon(Icons.star_border));
       }
     });
-  }
-
-  IconButton _createFavouriteIconButton(int index, Icon icon) => IconButton(
-        icon: icon,
-        onPressed: () => _rateRecipe(index),
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-      );
-
-  Icon _createRatingIcon(IconData icon) => Icon(
-        icon,
-        size: 27.0,
-        color: Colors.orange,
-      );
-
-  @override
-  void initState() {
-    _starButtons = _createFavouriteIconButtonsWithRatedStatus().toList();
-    super.initState();
   }
 }
