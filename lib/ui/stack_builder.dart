@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/colors/default_colors.dart';
+
+import 'shared/colors/default_colors.dart';
 
 class StackBuilder {
   static Stack createImageWithIconButton(String imagePath, IconData icon) =>
