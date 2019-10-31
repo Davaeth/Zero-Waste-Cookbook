@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/shared/behaviours/custom_scroll_behavior.dart';
-import 'package:template_name/shared/enums/page.dart';
-import 'package:template_name/shared/page_resolvers/navigator.dart';
-import 'package:template_name/shared/page_resolvers/positioning.dart';
-import 'package:template_name/shared/page_resolvers/page_resolver.dart';
-import 'package:template_name/shared/ui/cards/recipe_card.dart';
-import 'package:template_name/shared/ui/recipes/recipes_manager.dart';
+import 'package:template_name/ui/cards/recipe_card.dart';
+
 
 class FavRecipesManager extends StatefulWidget {
   @override
