@@ -15,7 +15,7 @@ class UserProfile extends StatelessWidget {
             buildUserButtonsRow(
                 context,
                 ['Add new recipe', 'Manage my recipes'],
-                [Routes.FiltersPage, Routes.FiltersPage]),
+                [Routes.NewRecipe, Routes.FiltersPage]),
             addPadding(
                 Text(
                   'Favourite recipes',
