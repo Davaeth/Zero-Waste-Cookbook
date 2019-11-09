@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "107461447332",
+    "firebase_url": "https://zero-waste-cookbook.firebaseio.com",
+    "project_id": "zero-waste-cookbook",
+    "storage_bucket": "zero-waste-cookbook.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:107461447332:android:9f5af16ee54c321c106031",
+        "android_client_info": {
+          "package_name": "com.example.zero_waste_cookbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "107461447332-avoqvlrdkn66cfqqkv1nrp145o7huoi1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDyMDGb5VvikkSGVA1d9nQ3xrF4iJzJu10"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "107461447332-avoqvlrdkn66cfqqkv1nrp145o7huoi1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
