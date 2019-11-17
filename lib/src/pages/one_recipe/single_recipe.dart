@@ -68,7 +68,7 @@ class _SingleRecipeState extends State<SingleRecipe>
 
   @override
   void initState() {
-    _user = User('Belka', '123456');
+    _user = User(id:'123456', username: 'Belka');
     _reviews = List<Review>();
 
     _reviews.add(Review(_user, 'Jesteś najlepszy!', 2));
