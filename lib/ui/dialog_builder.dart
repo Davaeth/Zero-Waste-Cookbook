@@ -102,7 +102,7 @@ class _DialogBuilderState extends State<DialogBuilder> {
     setState(() {
       if (_rateValue != null) {
         _reviews.add(Review(
-            User('Belkowen', 'eee'), _descriptionController.text, _rateValue));
+            User(username:'Belkowen', id:'2'), _descriptionController.text, _rateValue));
 
         stepPageBack(context);
 
