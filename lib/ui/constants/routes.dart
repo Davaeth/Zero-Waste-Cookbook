@@ -20,9 +20,9 @@ class Routes {
   static const Recipe = '/recipe';
   static const FakeRecipePage = '/voting/fakeRecipe';
   static const VotingPage = '/voting';
-  static const FiltersPage ='/search/search_filters';
-  static const SearchPage ='/search/search_page';
-  static const LoginPage ='/login/login_page';
+  static const FiltersPage = '/search/search_filters';
+  static const SearchPage = '/search/search_page';
+  static const LoginPage = '/login/login_page';
   static const SettingsPage = '/user_profile/user_profile_settings';
   static const NewRecipePage = '/new_recipe/new_recipe';
 
@@ -55,7 +55,7 @@ class Routes {
             break;
           case Routes.LoginPage:
             return MaterialPageRoute(builder: (context) => Login());
-            break;   
+            break;
           case Routes.SettingsPage:
             return MaterialPageRoute(builder: (context) => Settings());
             break;
