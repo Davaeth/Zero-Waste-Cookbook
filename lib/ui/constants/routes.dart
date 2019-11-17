@@ -3,7 +3,7 @@ import 'package:template_name/main.dart';
 import 'package:template_name/src/pages/administation_panel/actions/applications_actions.dart';
 import 'package:template_name/src/pages/administation_panel/actions/recipes_actions.dart';
 import 'package:template_name/src/pages/administation_panel/actions/users_actions.dart';
-import 'package:template_name/src/pages/new_recipe/new_recipe.dart' as prefix0;
+import 'package:template_name/src/pages/new_recipe/new_recipe.dart';
 import 'package:template_name/src/pages/one_recipe/single_recipe.dart';
 import 'package:template_name/src/pages/voting/fake_recipe/fake_recipe.dart';
 import 'package:template_name/src/pages/voting/voting.dart';
@@ -24,7 +24,7 @@ class Routes {
   static const SearchPage = '/search/search_page';
   static const LoginPage = '/login/login_page';
   static const SettingsPage = '/user_profile/user_profile_settings';
-  static const NewRecipe = '/user_profile/newRecipe';
+  static const NewRecipePage = '/new_recipe/new_recipe';
 
   static handleGeneratingRoutes() => (RouteSettings routes) {
         switch (routes.name) {
@@ -59,9 +59,9 @@ class Routes {
           case Routes.SettingsPage:
             return MaterialPageRoute(builder: (context) => Settings());
             break;
-          case Routes.NewRecipe:
-            return MaterialPageRoute(builder: (context) => prefix0.NewRecipe());
-            break;
+            case Routes.NewRecipePage:
+            return MaterialPageRoute(builder: (context) => NewRecipe());
+            break;             
         }
 
         return MaterialPageRoute(builder: (context) => MyHomePage());

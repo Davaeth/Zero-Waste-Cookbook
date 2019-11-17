@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:template_name/src/pages/new_recipe/new_recipe.dart';
 import 'package:template_name/ui/constants/routes.dart';
 import 'package:template_name/ui/recipes/fav_recipes.dart';
 import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
@@ -15,7 +16,7 @@ class UserProfile extends StatelessWidget {
             buildUserButtonsRow(
                 context,
                 ['Add new recipe', 'Manage my recipes'],
-                [Routes.NewRecipe, Routes.FiltersPage]),
+                [Routes.NewRecipePage, Routes.FiltersPage]),
             addPadding(
                 Text(
                   'Favourite recipes',
