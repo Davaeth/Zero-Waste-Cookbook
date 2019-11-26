@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/ui/cards/recipe_card.dart';
-
+import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
 
 class FavRecipesManager extends StatefulWidget {
   @override
@@ -15,7 +14,7 @@ class _FavRecipesManager extends State<FavRecipesManager> {
         scrollDirection: Axis.vertical,
         itemCount: 5,
         itemBuilder: (BuildContext context, int index) => RecipeCard(
-            RecipeCard.createInteriorForListOfCards(
+            interior: RecipeCard.createInteriorForListOfCards(
                 'assets/images/small-food.png', 'Russian', '20min')),
       );
 }

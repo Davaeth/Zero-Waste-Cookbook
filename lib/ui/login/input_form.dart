@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 
 class InputField extends StatelessWidget {
   InputField(
@@ -16,7 +16,7 @@ class InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top:8.0, bottom: 8.0, left:40.0, right:40.0),
+      padding: EdgeInsets.only(top: 8.0, bottom: 8.0, left: 40.0, right: 40.0),
       child: TextFormField(
         onSaved: onSaved,
         validator: validator,
@@ -28,14 +28,15 @@ class InputField extends StatelessWidget {
         decoration: InputDecoration(
             hintStyle: TextStyle(color: DefaultColors.disabledIconColor),
             hintText: hint,
-             enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                        borderSide: BorderSide(color: DefaultColors.disabledIconColor),),
-             focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                        borderSide: BorderSide(color: DefaultColors.iconColor),)
-                        ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(25.0)),
+              borderSide: BorderSide(color: DefaultColors.disabledIconColor),
             ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(25.0)),
+              borderSide: BorderSide(color: DefaultColors.iconColor),
+            )),
+      ),
     );
   }
 }

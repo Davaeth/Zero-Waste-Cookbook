@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/src/models/user.dart';
-import 'package:template_name/src/pages/new_recipe/components/new_recipe_section.dart';
-import 'package:template_name/ui/shared/colors/default_colors.dart';
-import 'package:template_name/ui/shared/page_resolvers/navigator.dart';
-import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
-import 'package:template_name/src/database/database_service.dart';
+import 'package:zero_waste_cookbook/src/pages/new_recipe/components/new_recipe_section.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 class NewRecipe extends StatefulWidget {
   @override
   _NewRecipeState createState() => _NewRecipeState();
 }
- 
+
 class _NewRecipeState extends State<NewRecipe> {
   TextEditingController _descriptionController;
- 
+
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: DefaultColors.backgroundColor,
@@ -45,21 +43,12 @@ class _NewRecipeState extends State<NewRecipe> {
                     ],
                   )),
               addPadding(
-                  Container(
-                    width: 1.0,
-                    child: FlatButton(
-                      child: Text('Add an ingredient'),
-                      onPressed: () {
-                        final _user = User(username: 'Belka');
- 
-                        final _dbService = DatabaseService();
- 
-                        _dbService.createUser(_user.toJson());
-                      },
-                      color: DefaultColors.iconColor,
-                      splashColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                    ),
+                  FlatButton(
+                    child: Text('Add an ingredient'),
+                    onPressed: () {},
+                    color: DefaultColors.iconColor,
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
                   ),
                   top: 16.0),
               NewRecipeSection(
@@ -70,7 +59,7 @@ class _NewRecipeState extends State<NewRecipe> {
           ),
         ),
       );
- 
+
   Row _buildIngredient() => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -91,7 +80,7 @@ class _NewRecipeState extends State<NewRecipe> {
           ),
         ],
       );
- 
+
   Container _buildTextField(TextInputType inputType, BuildContext context,
           {int maxLines = 1, int length = 20}) =>
       Container(

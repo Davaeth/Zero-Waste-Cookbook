@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
-
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 Padding buildPopularCategoriesCardButton(String text, Image assetImage) =>
     addPadding(
@@ -16,7 +15,8 @@ Padding buildPopularCategoriesCardButton(String text, Image assetImage) =>
                       text,
                       style: TextStyle(fontSize: 16.0),
                     ),
-                    bottom: 8.0, top: 8.0)
+                    bottom: 8.0,
+                    top: 8.0)
               ],
             ),
           ),
@@ -25,8 +25,7 @@ Padding buildPopularCategoriesCardButton(String text, Image assetImage) =>
         right: 8.0,
         bottom: 16.0);
 
-Row buildFullCardPopularRow(List<String> texts, List<Image> imageData) =>
-    Row(
+Row buildFullCardPopularRow(List<String> texts, List<Image> imageData) => Row(
       children: <Widget>[
         buildPopularCategoriesCardButton(texts.first, imageData.first),
         buildPopularCategoriesCardButton(texts.last, imageData.last),
