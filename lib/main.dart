@@ -10,6 +10,7 @@ import 'ui/shared/behaviours/custom_scroll_behavior.dart';
 import 'ui/shared/page_resolvers/navigator.dart';
 import 'ui/shared/page_resolvers/page_resolver.dart';
 import 'ui/shared/page_resolvers/positioning.dart';
+import 'package:template_name/src/pages/login/login_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
       title: 'Zero Waste Cookbook',
       builder: (context, child) => configureScrollBehavior(child),
-      home: buildPage(context),
+      home: Login(),
       routes: {
         Routes.AdministratorUsers: (context) => UsersActions(),
         Routes.AdministratorRecipes: (context) => RecipesActions(),
@@ -59,6 +60,17 @@ class MyHomePage extends StatelessWidget {
               onPressed: () {
                 navigateToPageByRoute(Routes.VotingPage, context);
               },
+            ),
+            IconButton(
+              icon: Icon(
+                Icons.account_circle,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                navigateToPageByRoute(Routes.LoginPage, context);
+              },
             )
-          ]));
+          ]
+        )
+      );
 }

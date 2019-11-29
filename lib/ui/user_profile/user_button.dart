@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:template_name/ui/constants/routes.dart';
+import 'package:template_name/ui/login/google_login.dart';
 import 'package:template_name/ui/shared/colors/default_colors.dart';
 import 'package:template_name/ui/shared/page_resolvers/navigator.dart';
 
@@ -73,6 +74,7 @@ Row logoutButton(BuildContext context) => Row(
             icon: new Icon(Icons.exit_to_app),
             color: DefaultColors.disabledIconColor,
             onPressed: () {
+              signOutGoogle();
               navigateToPageByRoute(Routes.LoginPage, context);
             }),
       ],
