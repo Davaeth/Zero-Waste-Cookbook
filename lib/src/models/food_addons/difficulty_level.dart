@@ -11,7 +11,7 @@ class DifficultyLevel {
 
     return DifficultyLevel(
         id: doc.documentID,
-        difficultyLevelName: data['difficulty_level_name'] ?? 'Empty name');
+        difficultyLevelName: data['difficultyLevelName'] ?? 'Empty name');
   }
 
   toJson() => {'difficultyLevelName': difficultyLevelName};

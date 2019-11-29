@@ -3,14 +3,16 @@ import 'package:zero_waste_cookbook/main.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/applications_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/recipes_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/users_actions.dart';
+import 'package:zero_waste_cookbook/src/pages/login/login_page.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/new_recipe.dart';
-import 'package:zero_waste_cookbook/src/pages/single_recipe/single_recipe.dart';
-import 'package:zero_waste_cookbook/src/pages/voting/fake_recipe/fake_recipe.dart';
-import 'package:zero_waste_cookbook/src/pages/voting/voting.dart';
 import 'package:zero_waste_cookbook/src/pages/search/search_filters.dart';
 import 'package:zero_waste_cookbook/src/pages/search/search_page.dart';
+import 'package:zero_waste_cookbook/src/pages/single_recipe/single_recipe.dart';
+import 'package:zero_waste_cookbook/src/pages/user_profile/recipes_manager/user_recipes_manager.dart'
+    as prefix0;
 import 'package:zero_waste_cookbook/src/pages/user_profile/user_profile_settings.dart';
-import 'package:zero_waste_cookbook/src/pages/login/login_page.dart';
+import 'package:zero_waste_cookbook/src/pages/voting/fake_recipe/fake_recipe.dart';
+import 'package:zero_waste_cookbook/src/pages/voting/voting.dart';
 
 class Routes {
   static const Home = '/';
@@ -24,7 +26,8 @@ class Routes {
   static const SearchPage = '/search/search_page';
   static const LoginPage = '/login/login_page';
   static const SettingsPage = '/user_profile/user_profile_settings';
-  static const NewRecipePage = '/new_recipe/new_recipe';
+  static const UserRecipesManager = '/user_profile/user_recipes_manager';
+  static const NewRecipePage = '/user_profile/new_recipe';
 
   static handleGeneratingRoutes() => (RouteSettings routes) {
         final String recipeID = routes.arguments;
@@ -61,6 +64,10 @@ class Routes {
             break;
           case Routes.SettingsPage:
             return MaterialPageRoute(builder: (context) => Settings());
+            break;
+          case Routes.UserRecipesManager:
+            return MaterialPageRoute(
+                builder: (context) => prefix0.UserRecipesManager());
             break;
           case Routes.NewRecipePage:
             return MaterialPageRoute(builder: (context) => NewRecipe());

@@ -10,7 +10,7 @@ class DishRegion {
     Map data = doc.data;
 
     return DishRegion(
-        id: doc.documentID, regionName: data['region_name'] ?? 'Empty name');
+        id: doc.documentID, regionName: data['regionName'] ?? 'Empty name');
   }
 
   toJson() => {'regionName': regionName};

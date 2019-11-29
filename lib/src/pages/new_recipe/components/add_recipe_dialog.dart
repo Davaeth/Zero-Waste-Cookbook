@@ -1,56 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:zero_waste_cookbook/src/models/administration/review.dart';
-import 'package:zero_waste_cookbook/ui/custom_dropdown.dart';
+import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
-class AddRecipeDialog extends StatefulWidget {
-  final List<Review> _reviews;
-  final Function _singleRecipeCallback;
+import 'dropdowns/ingredients_dropdown.dart';
 
-  AddRecipeDialog(this._reviews, this._singleRecipeCallback);
+class AddRecipeDialog extends StatefulWidget {
+  final Function(Ingredient) _newRecipeCallback;
+
+  AddRecipeDialog(this._newRecipeCallback);
 
   @override
   _AddRecipeDialogState createState() => _AddRecipeDialogState();
 }
 
 class _AddRecipeDialogState extends State<AddRecipeDialog> {
-  List<Review> _reviews;
-  Function _singleRecipeCallback;
+  Function(Ingredient) _newRecipeCallback;
 
-  int _rateValue;
-
-  void addReview() {
-    setState(() {
-      if (_rateValue != null) {
-        // _reviews.add(Reviews(Users(username: 'Belkowen', id: '2'),
-        //     _descriptionController.text, _rateValue));
-
-        stepPageBack(context);
-
-        _singleRecipeCallback();
-      } else {
-        // Builder(
-        //   builder: (BuildContext context) {
-        //     return Scaffold.of(context).showSnackBar(SnackBar(
-        //       content: Text('Przepis musi być oceniony!'),
-        //     ));
-        //   },
-        // );
-      }
-    });
-  }
+  Ingredient _ingredient;
 
   @override
   Widget build(BuildContext context) => _buildRateReviewDialog();
 
   @override
   void initState() {
-    _reviews = widget._reviews;
-    _singleRecipeCallback = widget._singleRecipeCallback;
+    _newRecipeCallback = widget._newRecipeCallback;
 
     super.initState();
+  }
+
+  void _addAnIngredient() {
+    setState(() {
+      _newRecipeCallback(_ingredient);
+
+      stepPageBack(context);
+    });
   }
 
   SimpleDialog _buildRateReviewDialog() => SimpleDialog(
@@ -74,16 +59,36 @@ class _AddRecipeDialogState extends State<AddRecipeDialog> {
             'Choose an ingredient',
             style: TextStyle(color: Colors.white, fontSize: 20.0),
           )),
-          _createIngredientDropdown()
+          _createIngredientDropdown(),
+          _createAddIngredientButton()
         ],
         elevation: 0,
       );
 
-  Padding _createIngredientDropdown() => addPadding(
-      Container(
-        color: DefaultColors.backgroundColor,
-        child: CustomDropdown(),
+  _chooseAnIngredient(Ingredient ingredient) {
+    setState(() {
+      _ingredient = ingredient;
+    });
+  }
+
+  Padding _createAddIngredientButton() => addPadding(
+      MaterialButton(
+        onPressed: () => _addAnIngredient(),
+        color: DefaultColors.iconColor,
+        child: Text('ADD'),
+        textColor: Colors.black,
+        highlightColor: Colors.transparent,
+        splashColor: Colors.transparent,
       ),
       left: 16.0,
       right: 16.0);
+
+  Padding _createIngredientDropdown() => addPadding(
+      Container(
+        color: DefaultColors.backgroundColor,
+        child: IngredientsDropdown(callback: _chooseAnIngredient),
+      ),
+      left: 16.0,
+      right: 16.0,
+      top: 16.0);
 }

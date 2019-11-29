@@ -24,7 +24,6 @@ class _RecipesManager extends State<RecipesManager> {
   @override
   void initState() {
     _databaseService = DatabaseService();
-
     super.initState();
   }
 
@@ -32,13 +31,15 @@ class _RecipesManager extends State<RecipesManager> {
       AsyncSnapshot<QuerySnapshot> snapshots) {
     List<RecipeCard> gestures = List<RecipeCard>();
 
-    for (var snapshot in snapshots.data.documents) {
+    var docs = snapshots?.data?.documents;
+
+    for (var snapshot in docs) {
       gestures.add(
         RecipeCard(
           interior: RecipeCard.createInteriorForListOfCards(
             'assets/images/small-food.png',
             snapshot['recipeTitle'],
-            snapshot['user'],
+            'User', // snapshot['user'],
           ),
           recipeID: snapshot.documentID,
         ),

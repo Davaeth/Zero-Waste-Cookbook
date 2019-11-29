@@ -7,6 +7,9 @@ class DatabaseService {
     _db.collection(collection).add(data);
   }
 
+  Stream<QuerySnapshot> getAllData(String collection) =>
+      _db.collection(collection).getDocuments().asStream();
+
   getDataByField(String collection, String field, String expectedField) async {
     List<DocumentSnapshot> value;
 
@@ -90,6 +93,16 @@ class DatabaseService {
     print(list);
 
     return null;
+  }
+
+  Stream<QuerySnapshot> getUserRecipes(String id) {
+    DocumentReference userRef = getDocumentReference('Users', id);
+
+    return _db
+        .collection('Recipes')
+        .where('user', isEqualTo: userRef)
+        .getDocuments()
+        .asStream();
   }
 
   // List<Recipe> getUserFavRecipes(String id) {
