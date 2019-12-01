@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:template_name/src/models/review.dart';
 import 'package:template_name/src/models/user.dart';
 import 'package:template_name/ui/ratings.dart';
+import 'package:template_name/ui/shared/colors/default_colors.dart';
 import 'package:template_name/ui/shared/colors/recipe_colors.dart';
 import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
 
@@ -45,30 +46,41 @@ class ReviewsState extends State<Reviews> {
       );
 
   Container _buildSingleReview(Review review) => Container(
-        padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 16.0),
+        //margin: EdgeInsets.all(8.0),
+        padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
         decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: RecipeColors.bordercolor)),
+          //borderRadius: new BorderRadius.all(const Radius.circular(8.0)),
+          color: DefaultColors.backgroundColor,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             addPadding(
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween, 
                   children: <Widget>[
                     Text(
                       review.user.username,
                       style: TextStyle(
-                          color: RecipeColors.usernameColor, fontSize: 25.0),
+                          color: RecipeColors.usernameColor, fontSize: 20.0),
                     ),
-                    addPadding(Ratings(review.rate), left: 8.0),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child:Ratings(review.rate)),
                   ],
                 ),
-                bottom: 8.0),
+                bottom: 12.0),
             Text(
               review.description,
               style: TextStyle(color: RecipeColors.longTextColor),
               textAlign: TextAlign.justify,
-            )
+            ),
+            addPadding(
+            Container(
+                  height: 1.5,
+                  color: DefaultColors.secondaryColor,
+                  ),
+                  top: 12.0),
           ],
         ),
       );

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:template_name/src/pages/administation_panel/actions/applications_actions.dart';
 import 'package:template_name/src/pages/administation_panel/actions/recipes_actions.dart';
 import 'package:template_name/src/pages/administation_panel/actions/users_actions.dart';
+import 'package:template_name/src/pages/login/authentication.dart';
 import 'package:template_name/src/pages/one_recipe/single_recipe.dart';
 import 'package:template_name/ui/constants/routes.dart';
 import 'ui/cards/recipe_card.dart';
@@ -10,15 +11,17 @@ import 'ui/shared/behaviours/custom_scroll_behavior.dart';
 import 'ui/shared/page_resolvers/navigator.dart';
 import 'ui/shared/page_resolvers/page_resolver.dart';
 import 'ui/shared/page_resolvers/positioning.dart';
+import 'package:template_name/src/pages/login/login_page.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) => MaterialApp(
       title: 'Zero Waste Cookbook',
       builder: (context, child) => configureScrollBehavior(child),
-      home: buildPage(context),
+      home: AuthenticationCheck(),
       routes: {
         Routes.AdministratorUsers: (context) => UsersActions(),
         Routes.AdministratorRecipes: (context) => RecipesActions(),
@@ -59,6 +62,8 @@ class MyHomePage extends StatelessWidget {
               onPressed: () {
                 navigateToPageByRoute(Routes.VotingPage, context);
               },
-            )
-          ]));
+            ),
+          ]
+        )
+      );
 }

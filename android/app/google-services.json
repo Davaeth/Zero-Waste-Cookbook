@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "107461447332-rukp148qt25tro1t0qghlufi3ll8l65d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zero_waste_cookbook",
+            "certificate_hash": "11a712358601be45e664cc3794663751ad08ae1f"
+          }
+        },
+        {
           "client_id": "107461447332-avoqvlrdkn66cfqqkv1nrp145o7huoi1.apps.googleusercontent.com",
           "client_type": 3
         }
