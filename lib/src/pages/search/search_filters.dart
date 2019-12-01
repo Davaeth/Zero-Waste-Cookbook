@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/ui/shared/colors/default_colors.dart';
-import 'package:template_name/ui/search/filter_buttons.dart';
-import 'package:template_name/ui/user_profile/user_button.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/search/filter_buttons.dart';
+import 'package:zero_waste_cookbook/ui/user_profile/user_button.dart';
 
 class Filters extends StatelessWidget {
   @override

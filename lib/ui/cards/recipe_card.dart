@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/ui/recipes/multiple_tags.dart';
-import 'package:template_name/ui/shared/colors/default_colors.dart';
-import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+import 'package:zero_waste_cookbook/ui/recipes/multiple_tags.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 import '../ratings.dart';
 import '../stack_builder.dart';
 
 class RecipeCard extends StatefulWidget {
-  final List<Widget> _interior;
+  final List<Widget> interior;
+  final String recipeID;
+  final bool isTappable;
 
-  RecipeCard(this._interior);
+  RecipeCard({@required this.interior, this.recipeID, this.isTappable = true});
 
   @override
   _RecipeCardState createState() => _RecipeCardState();
@@ -98,20 +102,29 @@ class RecipeCard extends StatefulWidget {
 
 class _RecipeCardState extends State<RecipeCard> {
   List<Widget> _interior;
+  String _recipeID;
+  bool _isTappable;
 
   @override
-  Widget build(BuildContext context) => Card(
+  Widget build(BuildContext context) => switchPage(
+      context,
+      Card(
         color: DefaultColors.secondaryColor,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: _interior,
         ),
-      );
+      ),
+      Routes.Recipe,
+      recipeID: _recipeID,
+      isTappable: _isTappable);
 
   @override
   void initState() {
-    _interior = widget._interior;
+    _interior = widget.interior;
+    _recipeID = widget.recipeID;
+    _isTappable = widget.isTappable;
 
     super.initState();
   }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:template_name/ui/constants/routes.dart';
-import 'package:template_name/ui/login/google_login.dart';
-import 'package:template_name/ui/shared/colors/default_colors.dart';
-import 'package:template_name/ui/shared/page_resolvers/navigator.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
+import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 
 Widget buildUserButtons(
     BuildContext context, String buttonName, String pageNumber) {

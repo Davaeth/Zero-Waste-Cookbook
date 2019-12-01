@@ -1,34 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/ui/shared/colors/default_colors.dart';
-import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 class NewRecipeSection extends StatefulWidget {
   final String _text;
   final Widget _child;
 
-  NewRecipeSection(this._text, this._child);
+  NewRecipeSection(this._text, this._child, {Key key}) : super(key: key);
 
   @override
-  _NewRecipeSectionState createState() => _NewRecipeSectionState();
+  NewRecipeSectionState createState() => NewRecipeSectionState();
 }
 
-class _NewRecipeSectionState extends State<NewRecipeSection> {
+class NewRecipeSectionState extends State<NewRecipeSection> {
   String _text;
-  Widget _child;
-
-  @override
-  void initState() {
-    _text = widget._text;
-    _child = widget._child;
-
-    super.initState();
-  }
+  Widget child;
 
   @override
   Widget build(BuildContext context) => addPadding(
       Column(
         children: <Widget>[
           Container(
+            width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.all(8.0),
             decoration: BoxDecoration(
                 border: Border.all(color: DefaultColors.iconColor),
@@ -41,11 +34,19 @@ class _NewRecipeSectionState extends State<NewRecipeSection> {
                       style: TextStyle(color: Colors.white, fontSize: 25.0),
                     ),
                     bottom: 8.0),
-                _child
+                child
               ],
             ),
           )
         ],
       ),
       top: 16.0);
+
+  @override
+  void initState() {
+    _text = widget._text;
+    child = widget._child;
+
+    super.initState();
+  }
 }

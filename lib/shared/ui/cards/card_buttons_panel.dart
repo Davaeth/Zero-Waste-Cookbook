@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 Padding buildAdministratorCardButton(String text, IconData iconData) =>
     addPadding(

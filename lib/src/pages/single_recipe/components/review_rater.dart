@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ReviewRater extends StatefulWidget {
-  Function _rateReview;
+  final Function _rateReview;
 
   ReviewRater(this._rateReview);
 

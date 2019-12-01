@@ -1,20 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/src/models/review.dart';
-import 'package:template_name/src/models/user.dart';
-import 'package:template_name/ui/ratings.dart';
-import 'package:template_name/ui/shared/colors/default_colors.dart';
-import 'package:template_name/ui/shared/colors/recipe_colors.dart';
-import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/src/models/administration/review.dart';
+import 'package:zero_waste_cookbook/ui/ratings.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/recipe_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 class Reviews extends StatefulWidget {
-  final User _user;
-  final List<Review> _reviews;
-  final int _reviewsCountToShow;
+  final int reviewsCountToShow;
+  final List<Review> reviews;
 
-  final Icon icon;
-
-  Reviews(this._user, this._reviews, this._reviewsCountToShow,
-      {this.icon, Key key})
+  Reviews({@required this.reviews, @required this.reviewsCountToShow, Key key})
       : super(key: key);
 
   @override
@@ -22,20 +17,9 @@ class Reviews extends StatefulWidget {
 }
 
 class ReviewsState extends State<Reviews> {
-  User _user;
-  List<Review> _reviews;
   int reviewsCountToShow;
 
-  Icon icon;
-
-  @override
-  void initState() {
-    _user = widget._user;
-    _reviews = widget._reviews;
-    reviewsCountToShow = widget._reviewsCountToShow;
-
-    super.initState();
-  }
+  List<Review> _reviews;
 
   @override
   Widget build(BuildContext context) => ListView.builder(
@@ -44,6 +28,15 @@ class ReviewsState extends State<Reviews> {
         itemCount: reviewsCountToShow,
         itemBuilder: (context, index) => _buildSingleReview(_reviews[index]),
       );
+
+  @override
+  void initState() {
+    reviewsCountToShow = widget.reviewsCountToShow;
+
+    _reviews = widget.reviews;
+
+    super.initState();
+  }
 
   Container _buildSingleReview(Review review) => Container(
         //margin: EdgeInsets.all(8.0),
@@ -60,7 +53,7 @@ class ReviewsState extends State<Reviews> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween, 
                   children: <Widget>[
                     Text(
-                      review.user.username,
+                      'User',
                       style: TextStyle(
                           color: RecipeColors.usernameColor, fontSize: 20.0),
                     ),

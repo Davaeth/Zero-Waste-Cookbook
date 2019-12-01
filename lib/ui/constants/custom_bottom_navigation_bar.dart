@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 
 class CustomNavigationBar extends StatefulWidget {
   @override

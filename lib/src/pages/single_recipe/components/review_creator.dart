@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/src/models/review.dart';
-import 'package:template_name/ui/dialog_builder.dart';
-import 'package:template_name/ui/shared/colors/default_colors.dart';
-import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/ui/dialog_builder.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 class ReviewCreator extends StatelessWidget {
-  List<Review> _reviews;
-  Function _singleRecipeCallback;
+  final Function _singleRecipeCallback;
+  final String _recipeId;
 
-  ReviewCreator(this._reviews, this._singleRecipeCallback);
+  ReviewCreator(this._singleRecipeCallback, this._recipeId);
 
   @override
   Widget build(BuildContext context) => _createReviewAddingButton(context);
@@ -18,8 +17,9 @@ class ReviewCreator extends StatelessWidget {
         onTap: () {
           showDialog(
               context: context,
-              builder: (context) =>
-                  DialogBuilder(_reviews, _singleRecipeCallback));
+              builder: (context) => DialogBuilder(
+                  singleRecipeCallback: _singleRecipeCallback,
+                  recipeId: _recipeId));
         },
         child: Container(
           alignment: Alignment.center,
