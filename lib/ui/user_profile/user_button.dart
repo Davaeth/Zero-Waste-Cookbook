@@ -88,7 +88,7 @@ Row deleteAccountButton(BuildContext context) => Row(
           padding: EdgeInsets.all(0),
           child: Text('Delete account', style: TextStyle(color: Colors.red)),
           onPressed: () {
-            SystemNavigator.pop();
+            
           },
         )
       ],

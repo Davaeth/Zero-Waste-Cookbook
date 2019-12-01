@@ -6,4 +6,5 @@ class DefaultColors {
   static const iconColor = const Color(0xFFee801e);
   static const disabledIconColor = const Color(0xFFD7D7D7);
   static const textColor = const Color(0xFFFFFAFA);
+  static const backgroundCommentColor = const Color(0xFF484f52);
 }

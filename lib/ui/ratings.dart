@@ -21,7 +21,7 @@ class _RatingsState extends State<Ratings> {
       5,
       (i) => Icon(
             (i + 1) <= _ratingValue ? Icons.star : Icons.star_border,
-            size: 27.0,
+            size: 25.0,
             color: Colors.orange,
           ));
 

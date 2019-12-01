@@ -14,8 +14,7 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+ Widget build(BuildContext context) => Scaffold(
       body: Container(
         color: DefaultColors.backgroundColor,
         child: Center(
@@ -31,14 +30,14 @@ class _LoginState extends State<Login> {
         ),
       ),
     );
-  }
+
 
 Widget _signInButton() {
     return OutlineButton(
       splashColor: Colors.grey,
       onPressed: () {
     signInWithGoogle().whenComplete(() {
-            navigateToPageByRoute(Routes.UserProfilePage, context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => buildPage(context)));
           });
         },
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
@@ -61,11 +60,9 @@ Widget _signInButton() {
                 ),
               ),
             )
-            
           ],
         ),
       ),
-      
     );
   }
 }
