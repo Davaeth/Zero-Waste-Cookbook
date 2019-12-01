@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/src/pages/administation_panel/actions/models/administrator_action.dart';
-import 'package:template_name/ui/shared/colors/default_colors.dart';
-import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/models/administrator_action.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 class ActionsViewBuilder extends StatefulWidget {
   final List<AdministratorAction> _administratorActions;

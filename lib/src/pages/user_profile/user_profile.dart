@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/src/pages/new_recipe/new_recipe.dart';
-import 'package:template_name/ui/constants/routes.dart';
-import 'package:template_name/ui/recipes/fav_recipes.dart';
-import 'package:template_name/ui/shared/page_resolvers/positioning.dart';
-import 'package:template_name/ui/user_profile/user_button.dart';
-import 'package:template_name/ui/user_profile/user_info.dart';
+import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+import 'package:zero_waste_cookbook/ui/recipes/fav_recipes.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/ui/user_profile/user_button.dart';
+import 'package:zero_waste_cookbook/ui/user_profile/user_info.dart';
 
 class UserProfile extends StatelessWidget {
   @override
@@ -16,7 +15,7 @@ class UserProfile extends StatelessWidget {
             buildUserButtonsRow(
                 context,
                 ['Add new recipe', 'Manage my recipes'],
-                [Routes.NewRecipePage, Routes.FiltersPage]),
+                [Routes.NewRecipePage, Routes.UserRecipesManager]),
             addPadding(
                 Text(
                   'Favourite recipes',

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/main.dart';
-import 'package:template_name/src/pages/administation_panel/actions/applications_actions.dart';
-import 'package:template_name/src/pages/administation_panel/actions/recipes_actions.dart';
-import 'package:template_name/src/pages/administation_panel/actions/users_actions.dart';
-import 'package:template_name/src/pages/new_recipe/new_recipe.dart';
-import 'package:template_name/src/pages/one_recipe/single_recipe.dart';
-import 'package:template_name/src/pages/voting/fake_recipe/fake_recipe.dart';
-import 'package:template_name/src/pages/voting/voting.dart';
-import 'package:template_name/src/pages/search/search_filters.dart';
-import 'package:template_name/src/pages/search/search_page.dart';
-import 'package:template_name/src/pages/user_profile/user_profile_settings.dart';
-import 'package:template_name/src/pages/login/login_page.dart';
+import 'package:zero_waste_cookbook/main.dart';
+import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/applications_actions.dart';
+import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/recipes_actions.dart';
+import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/users_actions.dart';
+import 'package:zero_waste_cookbook/src/pages/login/login_page.dart';
+import 'package:zero_waste_cookbook/src/pages/new_recipe/new_recipe.dart';
+import 'package:zero_waste_cookbook/src/pages/search/search_filters.dart';
+import 'package:zero_waste_cookbook/src/pages/search/search_page.dart';
+import 'package:zero_waste_cookbook/src/pages/single_recipe/single_recipe.dart';
+import 'package:zero_waste_cookbook/src/pages/user_profile/recipes_manager/user_recipes_manager.dart'
+    as prefix0;
+import 'package:zero_waste_cookbook/src/pages/user_profile/user_profile_settings.dart';
+import 'package:zero_waste_cookbook/src/pages/voting/fake_recipe/fake_recipe.dart';
+import 'package:zero_waste_cookbook/src/pages/voting/voting.dart';
 
 class Routes {
   static const Home = '/';
@@ -24,9 +26,12 @@ class Routes {
   static const SearchPage = '/search/search_page';
   static const LoginPage = '/login/login_page';
   static const SettingsPage = '/user_profile/user_profile_settings';
-  static const NewRecipePage = '/new_recipe/new_recipe';
+  static const UserRecipesManager = '/user_profile/user_recipes_manager';
+  static const NewRecipePage = '/user_profile/new_recipe';
 
   static handleGeneratingRoutes() => (RouteSettings routes) {
+        final String recipeID = routes.arguments;
+
         switch (routes.name) {
           case Routes.AdministratorUsers:
             return MaterialPageRoute(builder: (context) => UsersActions());
@@ -39,7 +44,8 @@ class Routes {
             return MaterialPageRoute(builder: (context) => RecipesActions());
             break;
           case Routes.Recipe:
-            return MaterialPageRoute(builder: (context) => SingleRecipe());
+            return MaterialPageRoute(
+                builder: (context) => SingleRecipe(recipeID: recipeID));
             break;
           case Routes.FakeRecipePage:
             return MaterialPageRoute(builder: (context) => FakeRecipe());
@@ -59,9 +65,13 @@ class Routes {
           case Routes.SettingsPage:
             return MaterialPageRoute(builder: (context) => Settings());
             break;
-            case Routes.NewRecipePage:
+          case Routes.UserRecipesManager:
+            return MaterialPageRoute(
+                builder: (context) => prefix0.UserRecipesManager());
+            break;
+          case Routes.NewRecipePage:
             return MaterialPageRoute(builder: (context) => NewRecipe());
-            break;             
+            break;
         }
 
         return MaterialPageRoute(builder: (context) => MyHomePage());

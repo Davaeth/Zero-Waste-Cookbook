@@ -1,35 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:template_name/src/models/review.dart';
-import 'package:template_name/src/models/user.dart';
-import 'package:template_name/src/pages/one_recipe/components/review_rater.dart';
-import 'package:template_name/ui/shared/page_resolvers/navigator.dart';
+import 'package:zero_waste_cookbook/src/database/database_service.dart';
+import 'package:zero_waste_cookbook/src/models/administration/review.dart';
+import 'package:zero_waste_cookbook/src/pages/single_recipe/components/review_rater.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 
 import 'shared/colors/default_colors.dart';
 import 'shared/page_resolvers/positioning.dart';
 
 class DialogBuilder extends StatefulWidget {
-  List<Review> _reviews;
-  Function _singleRecipeCallback;
+  final Function singleRecipeCallback;
+  final String recipeId;
 
-  DialogBuilder(this._reviews, this._singleRecipeCallback);
+  DialogBuilder({this.singleRecipeCallback, this.recipeId});
 
   @override
   _DialogBuilderState createState() => _DialogBuilderState();
 }
 
 class _DialogBuilderState extends State<DialogBuilder> {
-  List<Review> _reviews;
   Function _singleRecipeCallback;
 
   TextEditingController _descriptionController;
 
   int _rateValue;
+  String _recipeId;
 
   @override
   void initState() {
-    _reviews = widget._reviews;
     _descriptionController = TextEditingController();
-    _singleRecipeCallback = widget._singleRecipeCallback;
+    _singleRecipeCallback = widget.singleRecipeCallback;
+    _recipeId = widget.recipeId;
 
     super.initState();
   }
@@ -101,12 +101,24 @@ class _DialogBuilderState extends State<DialogBuilder> {
   void addReview() {
     setState(() {
       if (_rateValue != null) {
-        _reviews.add(Review(
-            User(username:'Belkowen', id:'2'), _descriptionController.text, _rateValue));
+        DatabaseService _db = DatabaseService();
+
+        _db.createDatum(
+          'Reviews',
+          Review(
+            rate: _rateValue,
+            description: _descriptionController.text,
+            rank: 0,
+            reviewType: 'Cool',
+            user: _db.getDocumentReference('Users', 'MtcBAWcygoW6ERK83agC'),
+            recipe: _db.getDocumentReference('Recipes', _recipeId),
+          ).toJson(),
+        );
+        setState(() {
+          _singleRecipeCallback();
+        });
 
         stepPageBack(context);
-
-        _singleRecipeCallback();
       } else {
         // Builder(
         //   builder: (BuildContext context) {
