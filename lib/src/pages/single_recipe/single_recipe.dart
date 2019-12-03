@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/administration/review.dart';
+import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
+import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/pages/single_recipe/components/review_creator.dart';
 import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
 import 'package:zero_waste_cookbook/ui/expansion_tiles/expansion_tile_builder.dart';
@@ -34,8 +36,10 @@ class _SingleRecipeState extends State<SingleRecipe>
   List<Review> _reviews;
   String _recipeID;
 
+  Recipe _this;
+
   @override
-  void afterFirstLayout(BuildContext context) {
+  void afterFirstLayout(BuildContext context) async {
     _expandReviews();
     _isPageBuilt = true;
   }
@@ -48,32 +52,60 @@ class _SingleRecipeState extends State<SingleRecipe>
         right: true,
         child: Scaffold(
           backgroundColor: DefaultColors.backgroundColor,
-          body: ListView(
-            shrinkWrap: true,
-            children: <Widget>[
-              RecipeCard(
-                interior: RecipeCard.createInteriorForCardWithRating(
-                    'assets/images/small-food.png', 'elo', 'elo1', context),
-                isTappable: false,
-              ),
-              addPadding(
-                  ExpansionTileBuilder(Section('INGREDIENTS',
-                      entries: ['Test1', 'Test2', 'Test3'])),
-                  top: 4.0,
-                  bottom: 8.0),
-              addPadding(
-                  ExpansionTileBuilder(Section('DESCRIPTION', entries: [
-                    'Integer egestas orci sapien, sed tristique massa facilisis eget. Sed pharetra vulputate scelerisque. Suspendisse in congue lorem, at sagittis augue. Pellentesque egestas convallis purus. Curabitur pretium a urna quis tristique. Nullam quis condimentum lacus. Sed nec sem ac dui efficitur ultrices. Mauris in leo nec sapien fermentum fringilla pharetra nec purus.'
-                  ])),
-                  bottom: 8.0),
-              ReviewCreator(_callback, _recipeID),
-              StreamBuilder(
-                stream: _databaseService.getRecipeReviews(_recipeID),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) =>
-                    _buildReviewsList(snapshots),
-              ),
-              _createReviewExpandText()
-            ],
+          body: FutureBuilder(
+            future: _databaseService.getDatumByID('Recipes', _recipeID),
+            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              _getRecipeData(snapshot);
+
+              return ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  RecipeCard(
+                    interior: RecipeCard.createInteriorForCardWithRating(
+                      imagePath: 'assets/images/small-food.png',
+                      recipe: _this,
+                      userId: 'MtcBAWcygoW6ERK83agC',
+                      context: context,
+                    ),
+                    isTappable: false,
+                  ),
+                  FutureBuilder(
+                    future: _databaseService
+                        .getRecipeIngredients(_this.ingredients),
+                    builder: (context,
+                        AsyncSnapshot<List<DocumentSnapshot>> snapshots) {
+                      var ingredientsNames = _extractIngredients(snapshots);
+
+                      return addPadding(
+                          ExpansionTileBuilder(
+                            Section(
+                              'INGREDIENTS',
+                              entries: ingredientsNames.toList(),
+                            ),
+                          ),
+                          top: 4.0,
+                          bottom: 8.0);
+                    },
+                  ),
+                  addPadding(
+                      ExpansionTileBuilder(
+                        Section(
+                          'DESCRIPTION',
+                          entries: [_this.description],
+                        ),
+                      ),
+                      bottom: 8.0),
+                  ReviewCreator(_callback, _recipeID),
+                  StreamBuilder(
+                    stream: _databaseService.getRecipeReviews(_recipeID),
+                    builder:
+                        (context, AsyncSnapshot<QuerySnapshot> snapshots) =>
+                            _buildReviewsList(snapshots),
+                  ),
+                  _createReviewExpandText()
+                ],
+              );
+            },
           ),
         ),
       );
@@ -138,6 +170,17 @@ class _SingleRecipeState extends State<SingleRecipe>
 
       _setReviewsState();
     });
+  }
+
+  Iterable<String> _extractIngredients(
+      AsyncSnapshot<List<DocumentSnapshot>> snapshots) sync* {
+    for (var snapshot in snapshots.data) {
+      yield Ingredient.fromFirestore(snapshot).ingredientName;
+    }
+  }
+
+  void _getRecipeData(AsyncSnapshot<DocumentSnapshot> snapshot) {
+    _this = Recipe.fromFirestore(snapshot.data);
   }
 
   void _refresReviewsCountToShow() {

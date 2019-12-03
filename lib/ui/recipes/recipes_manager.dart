@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
+import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
 
 class RecipesManager extends StatefulWidget {
@@ -13,12 +14,13 @@ class _RecipesManager extends State<RecipesManager> {
 
   @override
   Widget build(BuildContext context) => StreamBuilder(
-        stream: _databaseService.getNewestRecipes(),
+        stream: _databaseService.streamNewestRecipes(),
         builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) => ListView(
-            padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 5.0),
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            children: _createRecipeDetectors(snapshots)),
+          padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 5.0),
+          shrinkWrap: true,
+          scrollDirection: Axis.horizontal,
+          children: _createRecipeDetectors(snapshots),
+        ),
       );
 
   @override
@@ -37,10 +39,9 @@ class _RecipesManager extends State<RecipesManager> {
       gestures.add(
         RecipeCard(
           interior: RecipeCard.createInteriorForListOfCards(
-            'assets/images/small-food.png',
-            snapshot['recipeTitle'],
-            'User', // snapshot['user'],
-          ),
+              recipe: Recipe.fromFirestore(snapshot),
+              imagePath: 'assets/images/small-food.png',
+              userId: 'MtcBAWcygoW6ERK83agC'),
           recipeID: snapshot.documentID,
         ),
       );

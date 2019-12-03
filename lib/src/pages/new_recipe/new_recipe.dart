@@ -107,20 +107,32 @@ class _NewRecipeState extends State<NewRecipe> {
   void _addRecipe() {
     DatabaseService _databaseService = DatabaseService();
 
+    List<String> ingredientsId = List<String>();
+
+    for (var ingredient in _ingredients) {
+      ingredientsId.add(ingredient.id);
+    }
+
     _databaseService.createDatum(
       'Recipes',
       Recipe(
-              creationTime: DateTime.now(),
-              deleted: false,
-              rank: 0,
-              photoPath: null,
-              prepTime: int.parse(_prepTimeController.text),
               recipeTitle: _titleController.text,
-              reviews: List<DocumentReference>(),
+              prepTime: int.parse(_prepTimeController.text),
+              description: _descriptionController.text,
+              creationTime: Timestamp.fromDate(DateTime.now()),
+              photoPath: null,
+              rank: 0,
+              deleted: false,
               difficultyLevel: _databaseService.getDocumentReference(
                   'DifficultyLevels', _difficultyLevel.id),
               dishRegions: _databaseService.getDocumentReference(
                   'DishRegions', _dishRegion.id),
+              ingredients: _databaseService
+                  .getDocumentsReferences(
+                    'Ingredients',
+                    ingredientsId,
+                  )
+                  .toList(),
               user: null)
           .toJson(),
     );
