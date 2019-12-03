@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Application {
   final String id;
   final String message;
-  final String status;
+  final DocumentReference status;
   final DocumentReference user;
 
   Application({this.id, this.message, this.status, this.user});

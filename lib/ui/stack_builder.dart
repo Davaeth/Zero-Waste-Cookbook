@@ -1,43 +1,68 @@
 import 'package:flutter/material.dart';
+import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 
 import 'shared/colors/default_colors.dart';
 
 class StackBuilder {
-  static Stack createImageWithFavButton(String imagePath, IconData icon) =>
-      Stack(alignment: Alignment.topRight, children: <Widget>[
-        Image.asset(imagePath),
-        _createFavIconButton(icon)
-      ]);
+  static Stack createImageWithFavButton(
+          {@required String imagePath,
+          @required IconData icon,
+          @required String recipeId,
+          @required String userId}) =>
+      Stack(
+        alignment: Alignment.topRight,
+        children: <Widget>[
+          Image.asset(imagePath),
+          _createFavIconButton(icon: icon, recipeId: recipeId, userId: userId)
+        ],
+      );
 
   static Stack createImageWithIconButtons(
-          String imagePath, IconData icon, BuildContext context) =>
-      Stack(alignment: Alignment.topRight, children: <Widget>[
-        Image.asset(imagePath),
-        Align(
-          alignment: Alignment.topLeft,
-          child: IconButton(
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              stepPageBack(context);
-            },
-            iconSize: 24.0,
-            color: DefaultColors.iconColor,
+          {@required String imagePath,
+          @required IconData icon,
+          @required String recipeId,
+          @required String userId,
+          @required BuildContext context}) =>
+      Stack(
+        alignment: Alignment.topRight,
+        children: <Widget>[
+          Image.asset(imagePath),
+          Align(
+            alignment: Alignment.topLeft,
+            child: IconButton(
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                stepPageBack(context);
+              },
+              iconSize: 24.0,
+              color: DefaultColors.iconColor,
+            ),
           ),
-        ),
-        _createFavIconButton(icon)
-      ]);
+          _createFavIconButton(icon: icon, recipeId: recipeId, userId: userId)
+        ],
+      );
 
-  static IconButton _createFavIconButton(IconData icon) {
-    return IconButton(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      icon: Icon(icon),
-      onPressed: () {},
-      iconSize: 40.0,
-      color: DefaultColors.iconColor,
-    );
+  static IconButton _createFavIconButton(
+          {@required IconData icon,
+          @required String recipeId,
+          @required String userId}) =>
+      IconButton(
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        icon: Icon(icon),
+        onPressed: () => _addRecipeToFavs(recipeId, userId),
+        iconSize: 40.0,
+        color: DefaultColors.iconColor,
+      );
+
+  static _addRecipeToFavs(String recipeId, String userId) {
+    DatabaseService _db = DatabaseService();
+
+    _db.addRecipeToFavourites(recipeId, userId);
+
+    print('I AAAAAAM');
   }
 }

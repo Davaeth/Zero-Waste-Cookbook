@@ -15,7 +15,6 @@ import 'package:zero_waste_cookbook/src/pages/user_profile/user_profile_settings
 import 'package:zero_waste_cookbook/src/pages/voting/fake_recipe/fake_recipe.dart';
 import 'package:zero_waste_cookbook/src/pages/voting/voting.dart';
 
-
 class Routes {
   static const Home = '/';
   static const AdministratorUsers = '/administration/users';
@@ -30,7 +29,7 @@ class Routes {
   static const SettingsPage = '/user_profile/user_profile_settings';
   static const UserRecipesManager = '/user_profile/user_recipes_manager';
   static const NewRecipePage = '/user_profile/new_recipe';
-  static const UserProfilePage = '/user_profile/user_profile';  
+  static const UserProfilePage = '/user_profile/user_profile';
 
   static handleGeneratingRoutes() => (RouteSettings routes) {
         final String recipeID = routes.arguments;
@@ -74,10 +73,10 @@ class Routes {
             break;
           case Routes.NewRecipePage:
             return MaterialPageRoute(builder: (context) => NewRecipe());
-            break; 
-            case Routes.UserProfilePage:
+            break;
+          case Routes.UserProfilePage:
             return MaterialPageRoute(builder: (context) => UserProfile());
-            break;     
+            break;
         }
 
         return MaterialPageRoute(builder: (context) => MyHomePage());

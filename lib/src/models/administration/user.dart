@@ -3,8 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class User {
   final String id;
   final String username;
-  final DateTime createTime;
-  final DateTime roleAssignmentDate;
+  final Timestamp createTime;
   final bool deleted;
   final DocumentReference role;
   final List<DocumentReference> favouriteRecipes;
@@ -14,7 +13,6 @@ class User {
       {this.id,
       this.username,
       this.createTime,
-      this.roleAssignmentDate,
       this.deleted,
       this.role,
       this.favouriteRecipes,
@@ -24,20 +22,22 @@ class User {
     Map data = doc.data;
 
     return User(
-        id: doc.documentID,
-        username: data['username'] ?? 'Guest',
-        createTime: data['createTime'] ?? DateTime(2019),
-        roleAssignmentDate: data['roleAssignmentDate'] ?? DateTime(2019),
-        deleted: data['deleted'] ?? false,
-        role: data['role'],
-        favouriteRecipes: data['favouriteRecipes'],
-        recipes: data['recipes']);
+      id: doc.documentID,
+      username: data['username'] ?? 'Guest',
+      createTime: data['createTime'] ?? Timestamp.fromDate(DateTime.now()),
+      deleted: data['deleted'] ?? false,
+      role: data['role'],
+      favouriteRecipes:
+          List<DocumentReference>.from(data['favouriteRecipes']) ??
+              List<DocumentReference>(),
+      recipes: List<DocumentReference>.from(data['recipes']) ??
+          List<DocumentReference>(),
+    );
   }
 
   toJson() => {
         'username': username,
         'createTime': createTime,
-        'roleAssignmentDate': roleAssignmentDate,
         'deleted': deleted,
         'role': role,
         'favouriteRecipes': favouriteRecipes,

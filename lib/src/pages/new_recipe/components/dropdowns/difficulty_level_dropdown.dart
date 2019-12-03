@@ -30,7 +30,7 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
           child: StreamBuilder(
             stream: _databaseService.getAllData('DifficultyLevels'),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              _createDropdownData(context, snapshot);
+              _createDropdownData(snapshot);
 
               return DropdownButton<String>(
                 icon: Icon(Icons.keyboard_arrow_down),
@@ -59,7 +59,7 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
     super.initState();
   }
 
-  _createDropdownData(context, AsyncSnapshot<QuerySnapshot> snapshot) {
+  _createDropdownData(AsyncSnapshot<QuerySnapshot> snapshot) {
     _difficultyLevels = List<DifficultyLevel>();
 
     snapshot.data.documents.forEach((difficultyLevel) {
