@@ -5,6 +5,7 @@ import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/difficulty_level.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/dish_region.dart';
+import 'package:zero_waste_cookbook/src/models/food_addons/tag.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/new_recipe_section.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/recipe_ingredients.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
@@ -25,12 +26,14 @@ class _NewRecipeState extends State<NewRecipe> {
   TextEditingController _descriptionController;
   TextEditingController _titleController;
   TextEditingController _prepTimeController;
+  List<TextEditingController> tagsControllers;
 
   List<Ingredient> _ingredients;
   DifficultyLevel _difficultyLevel;
   DishRegion _dishRegion;
 
   GlobalKey<NewRecipeSectionState> _newRecipeSectionKey;
+  GlobalKey<NewRecipeSectionState> _tagsSectionKey;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -47,10 +50,11 @@ class _NewRecipeState extends State<NewRecipe> {
                   _createBackButton(context),
                   _createTitleTextField(context),
                   _buildRecipeIngredients(),
-                  _createDirectionsTextField(context),
+                  _createDescriptionsTextField(context),
                   _buildDifficultyLevelDropdown(),
                   _buildDishRegionsDropdown(),
                   _buildPerpTimeField(context),
+                  _buildTagsSection(),
                   _createAddRecipeButton(context),
                 ],
               ),
@@ -59,52 +63,32 @@ class _NewRecipeState extends State<NewRecipe> {
         ),
       );
 
-  NewRecipeSection _buildPerpTimeField(BuildContext context) {
-    return NewRecipeSection(
-      'Prep Time',
-      _buildTextField(TextInputType.number, _prepTimeController, context),
-    );
-  }
-
-  NewRecipeSection _buildDishRegionsDropdown() {
-    return NewRecipeSection(
-      'Regions',
-      DishRegionsDropdown(
-        callback: _dishRegionsDropdownCallback,
-      ),
-    );
-  }
-
-  NewRecipeSection _buildDifficultyLevelDropdown() {
-    return NewRecipeSection(
-      'Difficulty level',
-      DifficultyLevelDropdown(
-        callback: _difficultyLevelDropdownCallback,
-      ),
-    );
-  }
-
-  RecipeIngredients _buildRecipeIngredients() {
-    return RecipeIngredients(
-      _newRecipeSectionKey,
-      _ingredientDialogCallback,
-      _buildIngredientsListView(),
-    );
-  }
-
   @override
   void initState() {
     _ingredients = List<Ingredient>();
+
     _newRecipeSectionKey = GlobalKey<NewRecipeSectionState>();
+    _tagsSectionKey = GlobalKey<NewRecipeSectionState>();
 
     _titleController = TextEditingController();
     _descriptionController = TextEditingController();
     _prepTimeController = TextEditingController();
+    tagsControllers = List<TextEditingController>();
+
+    tagsControllers.add(TextEditingController());
 
     super.initState();
   }
 
-  void _addRecipe() {
+  void _addNewTag() {
+    tagsControllers.add(TextEditingController());
+
+    _tagsSectionKey.currentState.setState(() {
+      _tagsSectionKey.currentState.child = _buildTagsTextFields();
+    });
+  }
+
+  Future<void> _addRecipe() async {
     DatabaseService _databaseService = DatabaseService();
 
     List<String> ingredientsId = List<String>();
@@ -136,7 +120,32 @@ class _NewRecipeState extends State<NewRecipe> {
               user: null)
           .toJson(),
     );
+
+    for (var tag in tagsControllers) {
+      _databaseService.createDatum(
+          'Tags',
+          Tag(
+            tagName: tag.text,
+            recipe: await _databaseService
+                .getNewestRecipes(limit: 1)
+                .then((value) => value.documents.single.reference),
+          ).toJson());
+    }
   }
+
+  NewRecipeSection _buildDifficultyLevelDropdown() => NewRecipeSection(
+        'Difficulty level',
+        DifficultyLevelDropdown(
+          callback: _difficultyLevelDropdownCallback,
+        ),
+      );
+
+  NewRecipeSection _buildDishRegionsDropdown() => NewRecipeSection(
+        'Regions',
+        DishRegionsDropdown(
+          callback: _dishRegionsDropdownCallback,
+        ),
+      );
 
   Row _buildIngredient(Ingredient ingredient) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -161,6 +170,48 @@ class _NewRecipeState extends State<NewRecipe> {
         shrinkWrap: true,
         itemCount: _ingredients.length,
         itemBuilder: (context, index) => _buildIngredient(_ingredients[index]),
+      );
+
+  NewRecipeSection _buildPerpTimeField(BuildContext context) =>
+      NewRecipeSection(
+        'Prep Time',
+        _buildTextField(TextInputType.number, _prepTimeController, context),
+      );
+
+  RecipeIngredients _buildRecipeIngredients() => RecipeIngredients(
+        _newRecipeSectionKey,
+        _ingredientDialogCallback,
+        _buildIngredientsListView(),
+      );
+
+  Column _buildTagsSection() => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          NewRecipeSection(
+            'Tags',
+            _buildTagsTextFields(),
+            key: _tagsSectionKey,
+          ),
+          addPadding(
+              FlatButton(
+                color: DefaultColors.iconColor,
+                onPressed: () {
+                  setState(() => _addNewTag());
+                },
+                child: Text('Add new tag'),
+              ),
+              top: 8.0),
+        ],
+      );
+
+  ListView _buildTagsTextFields() => ListView.builder(
+        shrinkWrap: true,
+        itemCount: tagsControllers.length,
+        itemBuilder: (context, index) => addPadding(
+            _buildTextField(
+                TextInputType.text, tagsControllers[index], context),
+            top: 8.0,
+            bottom: 8.0),
       );
 
   Container _buildTextField(TextInputType inputType,
@@ -209,9 +260,9 @@ class _NewRecipeState extends State<NewRecipe> {
         },
       );
 
-  NewRecipeSection _createDirectionsTextField(BuildContext context) =>
+  NewRecipeSection _createDescriptionsTextField(BuildContext context) =>
       NewRecipeSection(
-        'Directions',
+        'Descriptions',
         _buildTextField(
             TextInputType.multiline, _descriptionController, context,
             maxLines: null, length: null),

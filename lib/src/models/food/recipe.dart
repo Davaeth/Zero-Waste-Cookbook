@@ -33,7 +33,7 @@ class Recipe {
 
     return Recipe(
       id: doc.documentID,
-      recipeTitle: data['recipeTitle'],
+      recipeTitle: data['recipeTitle'] ?? '',
       prepTime: data['prepTime'],
       description: data['description'],
       photoPath: data['photoPath'],

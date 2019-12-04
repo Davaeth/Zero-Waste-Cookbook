@@ -22,23 +22,23 @@ Padding buildUserInfoIcon(String amount, IconData iconData) => addPadding(
       bottom: 8.0,
     );
 
-Column buildUserInfo(List<String> amounts, List<IconData> iconsData, String username, String imageUrl) =>
+Column buildUserInfo(List<String> amounts, List<IconData> iconsData,
+        String username, String imageUrl) =>
     Column(
       children: <Widget>[
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            addPadding(
-          CircleAvatar(
-                  radius: 50.0,
-                  backgroundImage: NetworkImage(
-                  imageUrl,)
-                ),
-            top:16.0,
-            bottom: 16.0),
-                ]
-        ),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              addPadding(
+                  CircleAvatar(
+                      radius: 50.0,
+                      backgroundImage: NetworkImage(
+                        imageUrl,
+                      )),
+                  top: 16.0,
+                  bottom: 16.0),
+            ]),
         Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,

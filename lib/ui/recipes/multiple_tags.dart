@@ -8,8 +8,10 @@ class MultipleTags extends StatelessWidget {
 
   MultipleTags(this._namedTags, {this.cookingTimeTag}) {
     _widgets.add(cookingTimeTag);
-    _widgets.add(_namedTags.first);
-    _widgets.add(_namedTags.length > 1 ? _namedTags[1] : null);
+
+    for (var namedTag in _namedTags) {
+      _widgets.add(namedTag);
+    }
   }
 
   @override
@@ -21,12 +23,13 @@ class MultipleTags extends StatelessWidget {
   static Card createTag(String text, {IconData icon}) => Card(
         color: Colors.transparent,
         shape: StadiumBorder(
-            side: BorderSide(
-          color: Colors.grey,
-          width: 2.0,
-        )),
+          side: BorderSide(
+            color: Colors.grey,
+            width: 2.0,
+          ),
+        ),
         child: Padding(
-          padding: const EdgeInsets.all(6.0),
+          padding: const EdgeInsets.all(8.0),
           child: icon == null
               ? _createTag(text)
               : _createCookingTimeTag(text, icon),

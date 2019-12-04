@@ -6,14 +6,13 @@ import 'package:zero_waste_cookbook/ui/user_profile/user_button.dart';
 import 'package:zero_waste_cookbook/ui/user_profile/user_info.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 
-
 class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) => wrapWithScrollingView(Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             settingsButton(context, 4),
-            buildUserInfo(['100k', '2'], [Icons.star, Icons.comment], name, imageUrl),
+            // buildUserInfo(['100k', '2'], [Icons.star, Icons.comment], name, imageUrl),
             buildUserButtonsRow(
                 context,
                 ['Add new recipe', 'Manage my recipes'],
