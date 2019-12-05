@@ -8,7 +8,8 @@ import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 
 class UserProfile extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => wrapWithScrollingView(Column(
+  Widget build(BuildContext context) => wrapWithScrollingView(
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             settingsButton(context, 4),
@@ -29,5 +30,7 @@ class UserProfile extends StatelessWidget {
             Expanded(
               child: FavRecipesManager(),
             )
-          ]));
+          ],
+        ),
+      );
 }
