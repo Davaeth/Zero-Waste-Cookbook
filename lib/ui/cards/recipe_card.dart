@@ -54,7 +54,7 @@ class RecipeCard extends StatefulWidget {
 
             return addPadding(
                 MultipleTags(
-                  _createTag().toList(),
+                  _createTags().toList(),
                   cookingTimeTag: MultipleTags.createTag(
                       recipe.prepTime.toString(),
                       icon: Icons.access_time),
@@ -99,7 +99,7 @@ class RecipeCard extends StatefulWidget {
 
             return addPadding(
                 MultipleTags(
-                  _createTag().toList(),
+                  _createTags().toList(),
                   cookingTimeTag: MultipleTags.createTag(
                       recipe.prepTime.toString(),
                       icon: Icons.access_time),
@@ -110,10 +110,11 @@ class RecipeCard extends StatefulWidget {
         ),
       ];
 
-  static List<Widget> createInteriorForSingleCard(
-          {@required Recipe recipe,
-          @required String imagePath,
-          @required String userId}) =>
+  static List<Widget> createInteriorForSingleCard({
+    @required Recipe recipe,
+    @required String imagePath,
+    @required String userId,
+  }) =>
       <Widget>[
         StackBuilder.createImageWithFavButton(
           imagePath: imagePath,
@@ -122,8 +123,10 @@ class RecipeCard extends StatefulWidget {
           userId: userId,
         ),
         addPadding(
-            Text('Przepis dnia',
-                style: TextStyle(color: Colors.white, fontSize: 16.0)),
+            Text(
+              'Przepis dnia',
+              style: TextStyle(color: Colors.white, fontSize: 16.0),
+            ),
             left: 16.0,
             top: 8.0),
         addPadding(
@@ -140,7 +143,7 @@ class RecipeCard extends StatefulWidget {
 
             return addPadding(
                 MultipleTags(
-                  _createTag().toList(),
+                  _createTags().toList(),
                   cookingTimeTag: MultipleTags.createTag(
                       recipe.prepTime.toString(),
                       icon: Icons.access_time),
@@ -151,7 +154,7 @@ class RecipeCard extends StatefulWidget {
         ),
       ];
 
-  static Iterable<Card> _createTag() sync* {
+  static Iterable<Card> _createTags() sync* {
     for (var tag in _tags) {
       yield MultipleTags.createTag(tag.tagName);
     }

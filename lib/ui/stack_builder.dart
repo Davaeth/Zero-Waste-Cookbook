@@ -45,6 +45,14 @@ class StackBuilder {
         ],
       );
 
+  static _addRecipeToFavs(String recipeId, String userId) {
+    DatabaseService _db = DatabaseService();
+
+    _db.addRecipeToFavourites(recipeId, userId);
+
+    print('I AAAAAAM');
+  }
+
   static IconButton _createFavIconButton(
           {@required IconData icon,
           @required String recipeId,
@@ -57,12 +65,4 @@ class StackBuilder {
         iconSize: 40.0,
         color: DefaultColors.iconColor,
       );
-
-  static _addRecipeToFavs(String recipeId, String userId) {
-    DatabaseService _db = DatabaseService();
-
-    _db.addRecipeToFavourites(recipeId, userId);
-
-    print('I AAAAAAM');
-  }
 }

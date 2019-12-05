@@ -29,20 +29,23 @@ class _RecipesManager extends State<RecipesManager> {
     super.initState();
   }
 
-  List<RecipeCard> _createRecipeDetectors(
+  List<Container> _createRecipeDetectors(
       AsyncSnapshot<QuerySnapshot> snapshots) {
-    List<RecipeCard> gestures = List<RecipeCard>();
+    List<Container> gestures = List<Container>();
 
     var docs = snapshots?.data?.documents;
 
     for (var snapshot in docs) {
       gestures.add(
-        RecipeCard(
-          interior: RecipeCard.createInteriorForListOfCards(
-              recipe: Recipe.fromFirestore(snapshot),
-              imagePath: 'assets/images/small-food.png',
-              userId: 'MtcBAWcygoW6ERK83agC'),
-          recipeID: snapshot.documentID,
+        Container(
+          height: (MediaQuery.of(context).size.height / 100) * 50,
+          child: RecipeCard(
+            interior: RecipeCard.createInteriorForListOfCards(
+                recipe: Recipe.fromFirestore(snapshot),
+                imagePath: 'assets/images/small-food.png',
+                userId: 'MtcBAWcygoW6ERK83agC'),
+            recipeID: snapshot.documentID,
+          ),
         ),
       );
     }

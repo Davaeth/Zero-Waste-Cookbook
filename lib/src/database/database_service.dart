@@ -175,14 +175,13 @@ class DatabaseService {
   //   return null;
   // }
 
-  Stream<QuerySnapshot> getUserRecipes(String id) {
+  Future<QuerySnapshot> getUserRecipes(String id) async {
     DocumentReference userRef = getDocumentReference('Users', id);
 
-    return _db
+    return await _db
         .collection('Recipes')
         .where('user', isEqualTo: userRef)
-        .getDocuments()
-        .asStream();
+        .getDocuments();
   }
 
   streamCollection(String collection, String id) =>

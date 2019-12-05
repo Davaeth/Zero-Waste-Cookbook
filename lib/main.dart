@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
-import 'package:zero_waste_cookbook/src/pages/login/authentication.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/applications_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/recipes_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/users_actions.dart';
+import 'package:zero_waste_cookbook/src/pages/login/authentication.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+
 import 'ui/cards/recipe_card.dart';
 import 'ui/recipes/recipes_manager.dart';
 import 'ui/shared/behaviours/custom_scroll_behavior.dart';
@@ -44,7 +45,7 @@ class MyHomePage extends StatelessWidget {
                 bottom: 8.0),
             Expanded(
               child: Container(
-                height: (MediaQuery.of(context).size.height / 100) * 80,
+                height: (MediaQuery.of(context).size.height / 100) * 50,
                 child: RecipesManager(),
               ),
             ),
@@ -56,9 +57,9 @@ class MyHomePage extends StatelessWidget {
     DatabaseService _db = DatabaseService();
 
     return FutureBuilder(
-      future: _db.getDatumByID('Recipes', 'Bxu5wk2DKnA14VzCtDlh'),
+      future: _db.getDatumByID('Recipes', '9dINDS1sKiIJglqtmAXE'),
       builder: (context, AsyncSnapshot<dynamic> snapshot) {
-        var recipe = Recipe.fromFirestore(snapshot.data);
+        Recipe recipe = Recipe.fromFirestore(snapshot?.data);
 
         return RecipeCard(
           interior: RecipeCard.createInteriorForSingleCard(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 import 'components/user_recipes_manager_item.dart';
@@ -18,22 +19,39 @@ class _UserRecipesManagerState extends State<UserRecipesManager> {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: DefaultColors.backgroundColor,
-        body: StreamBuilder(
-            stream: _databaseService.getUserRecipes('id'),
-            builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
-              var recipes = _getRecipesInfo(snapshots);
+        body: ListView(
+          shrinkWrap: true,
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.close, color: DefaultColors.iconColor),
+              alignment: Alignment.topRight,
+              splashColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              iconSize: 30.0,
+              onPressed: () {
+                stepPageBack(context);
+              },
+            ),
+            FutureBuilder(
+                future: _databaseService
+                    .getUserRecipes('E5ewEF8YxDO0rl8Zue2zMrU7Yd43'),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
+                  var recipes = _getRecipesInfo(snapshots);
 
-              ListView.builder(
-                itemCount: 2,
-                itemBuilder: (context, index) => addPadding(
-                  UserRecipesManagerItem(
-                    title: recipes[index].recipeTitle,
-                    rate: double.parse(recipes[index].rank.toString()),
-                  ),
-                  top: 16.0,
-                ),
-              );
-            }),
+                  return ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: recipes.length,
+                    itemBuilder: (context, index) => addPadding(
+                      UserRecipesManagerItem(
+                        title: recipes[index].recipeTitle,
+                        rate: double.parse(recipes[index].rank.toString()),
+                      ),
+                      top: 16.0,
+                    ),
+                  );
+                }),
+          ],
+        ),
       );
 
   @override
