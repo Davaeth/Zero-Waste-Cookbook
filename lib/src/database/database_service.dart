@@ -18,6 +18,34 @@ class DatabaseService {
     _db.collection(collection).add(data);
   }
 
+  Future<void> deleteDataByRelation(String collection, String field,
+      String refColletion, String refId) async {
+    var reference = getDocumentReference(refColletion, refId);
+
+    var tags = await _db
+        .collection(collection)
+        .where(field, isEqualTo: reference)
+        .getDocuments()
+        .then((value) => value.documents);
+
+    for (var tag in tags) {
+      await _db.collection(collection).document(tag.documentID).delete();
+    }
+  }
+
+  Future<void> deleteDatum(String collection, String id) async {
+    _db.collection(collection).document(id).delete();
+  }
+
+  Future<void> deleteRelatedData(String collection, String id,
+      String fieldToModify, String relatedCollection, String relatedId) async {
+    var reference = getDocumentReference(relatedCollection, relatedId);
+
+    await _db.collection(collection).document(id).updateData({
+      fieldToModify: FieldValue.arrayRemove([reference])
+    });
+  }
+
   Stream<QuerySnapshot> getAllData(String collection) =>
       _db.collection(collection).getDocuments().asStream();
 
@@ -194,10 +222,11 @@ class DatabaseService {
           .snapshots()
           .map((snap) => snap.documents);
 
-  Stream<QuerySnapshot> streamNewestRecipes({int limit = 5}) => _db
-      .collection('Recipes')
-      .orderBy('creationTime', descending: true)
-      .limit(limit)
-      .getDocuments()
-      .asStream();
+  Stream<QuerySnapshot> streamNewestRecipes({int limit = 5}) async* {
+    yield await _db
+        .collection('Recipes')
+        .orderBy('creationTime', descending: true)
+        .limit(limit)
+        .getDocuments();
+  }
 }

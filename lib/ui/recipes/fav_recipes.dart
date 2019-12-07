@@ -16,20 +16,24 @@ class _FavRecipesManager extends State<FavRecipesManager> {
   Widget build(BuildContext context) => FutureBuilder(
         future: _db.getUserFavouriteRecipes('MtcBAWcygoW6ERK83agC'),
         builder: (context, AsyncSnapshot<List<DocumentSnapshot>> snapshots) {
-          var favRecipes = _extractFavRecipes(snapshots).toList();
+          if (snapshots.hasData) {
+            var favRecipes = _extractFavRecipes(snapshots).toList();
 
-          return ListView.builder(
-            padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
-            shrinkWrap: true,
-            scrollDirection: Axis.vertical,
-            itemCount: 5,
-            itemBuilder: (BuildContext context, int index) => RecipeCard(
-              interior: RecipeCard.createInteriorForListOfCards(
-                  recipe: favRecipes[index],
-                  imagePath: 'assets/images/small-food.png',
-                  userId: 'MtcBAWcygoW6ERK83agC'),
-            ),
-          );
+            return ListView.builder(
+              padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
+              shrinkWrap: true,
+              scrollDirection: Axis.vertical,
+              itemCount: 5,
+              itemBuilder: (BuildContext context, int index) => RecipeCard(
+                interior: RecipeCard.createInteriorForListOfCards(
+                    recipe: favRecipes[index],
+                    imagePath: 'assets/images/small-food.png',
+                    userId: 'MtcBAWcygoW6ERK83agC'),
+              ),
+            );
+          } else {
+            return ListView();
+          }
         },
       );
 

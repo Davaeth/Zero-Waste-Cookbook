@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
@@ -87,9 +86,7 @@ Row deleteAccountButton(BuildContext context) => Row(
         FlatButton(
           padding: EdgeInsets.all(0),
           child: Text('Delete account', style: TextStyle(color: Colors.red)),
-          onPressed: () {
-            
-          },
+          onPressed: () {},
         )
       ],
     );

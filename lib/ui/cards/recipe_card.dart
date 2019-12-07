@@ -50,17 +50,21 @@ class RecipeCard extends StatefulWidget {
         FutureBuilder(
           future: _dbService.getRecipeTags(recipe.id),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
-            _getTags(snapshots);
+            if (snapshots.hasData) {
+              _getTags(snapshots);
 
-            return addPadding(
-                MultipleTags(
-                  _createTags().toList(),
-                  cookingTimeTag: MultipleTags.createTag(
-                      recipe.prepTime.toString(),
-                      icon: Icons.access_time),
-                ),
-                left: 8.0,
-                top: 8.0);
+              return addPadding(
+                  MultipleTags(
+                    _createTags().toList(),
+                    cookingTimeTag: MultipleTags.createTag(
+                        recipe.prepTime.toString(),
+                        icon: Icons.access_time),
+                  ),
+                  left: 8.0,
+                  top: 8.0);
+            } else {
+              return Card();
+            }
           },
         ),
         addPadding(
@@ -95,17 +99,21 @@ class RecipeCard extends StatefulWidget {
         FutureBuilder(
           future: _dbService.getRecipeTags(recipe.id),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
-            _getTags(snapshots);
+            if (snapshots.hasData) {
+              _getTags(snapshots);
 
-            return addPadding(
-                MultipleTags(
-                  _createTags().toList(),
-                  cookingTimeTag: MultipleTags.createTag(
-                      recipe.prepTime.toString(),
-                      icon: Icons.access_time),
-                ),
-                left: 8.0,
-                top: 8.0);
+              return addPadding(
+                  MultipleTags(
+                    _createTags().toList(),
+                    cookingTimeTag: MultipleTags.createTag(
+                        recipe.prepTime.toString(),
+                        icon: Icons.access_time),
+                  ),
+                  left: 8.0,
+                  top: 8.0);
+            } else {
+              return Card();
+            }
           },
         ),
       ];
@@ -139,17 +147,21 @@ class RecipeCard extends StatefulWidget {
         FutureBuilder(
           future: _dbService.getRecipeTags(recipe.id),
           builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
-            _getTags(snapshots);
+            if (snapshots.hasData) {
+              _getTags(snapshots);
 
-            return addPadding(
-                MultipleTags(
-                  _createTags().toList(),
-                  cookingTimeTag: MultipleTags.createTag(
-                      recipe.prepTime.toString(),
-                      icon: Icons.access_time),
-                ),
-                left: 8.0,
-                top: 8.0);
+              return addPadding(
+                  MultipleTags(
+                    _createTags().toList(),
+                    cookingTimeTag: MultipleTags.createTag(
+                        recipe.prepTime.toString(),
+                        icon: Icons.access_time),
+                  ),
+                  left: 8.0,
+                  top: 8.0);
+            } else {
+              return Card();
+            }
           },
         ),
       ];
