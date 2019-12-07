@@ -7,23 +7,29 @@ import 'shared/colors/default_colors.dart';
 class StackBuilder {
   static Stack createImageWithFavButton(
           {@required String imagePath,
-          @required IconData icon,
+          @required bool isFav,
           @required String recipeId,
-          @required String userId}) =>
+          @required String userId,
+          Function(bool) callback}) =>
       Stack(
         alignment: Alignment.topRight,
         children: <Widget>[
           Image.asset(imagePath),
-          _createFavIconButton(icon: icon, recipeId: recipeId, userId: userId)
+          _createFavIconButton(
+              isFav: isFav,
+              recipeId: recipeId,
+              userId: userId,
+              callback: callback)
         ],
       );
 
   static Stack createImageWithIconButtons(
           {@required String imagePath,
-          @required IconData icon,
+          @required bool isFav,
           @required String recipeId,
           @required String userId,
-          @required BuildContext context}) =>
+          @required BuildContext context,
+          Function(bool) callback}) =>
       Stack(
         alignment: Alignment.topRight,
         children: <Widget>[
@@ -41,28 +47,40 @@ class StackBuilder {
               color: DefaultColors.iconColor,
             ),
           ),
-          _createFavIconButton(icon: icon, recipeId: recipeId, userId: userId)
+          _createFavIconButton(
+              isFav: isFav,
+              recipeId: recipeId,
+              userId: userId,
+              callback: callback)
         ],
       );
 
-  static _addRecipeToFavs(String recipeId, String userId) {
-    DatabaseService _db = DatabaseService();
-
-    _db.addRecipeToFavourites(recipeId, userId);
-
-    print('I AAAAAAM');
-  }
-
   static IconButton _createFavIconButton(
-          {@required IconData icon,
+          {@required bool isFav,
           @required String recipeId,
-          @required String userId}) =>
+          @required String userId,
+          Function(bool) callback}) =>
       IconButton(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        icon: Icon(icon),
-        onPressed: () => _addRecipeToFavs(recipeId, userId),
+        icon: Icon(isFav ? Icons.favorite : Icons.favorite_border),
+        onPressed: () =>
+            _handleFavRecipeIconButton(recipeId, userId, callback: callback),
         iconSize: 40.0,
         color: DefaultColors.iconColor,
       );
+
+  static _handleFavRecipeIconButton(String recipeId, String userId,
+      {Function callback}) async {
+    DatabaseService _db = DatabaseService();
+
+    if (await _db.checkIfRecipeIsFaved(
+        'E5ewEF8YxDO0rl8Zue2zMrU7Yd43', recipeId)) {
+      _db.removeRecipeFromFavourites(recipeId, 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43');
+      callback(true);
+    } else {
+      _db.addRecipeToFavourites(recipeId, 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43');
+      callback(false);
+    }
+  }
 }

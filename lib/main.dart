@@ -28,7 +28,14 @@ class MyApp extends StatelessWidget {
       onGenerateRoute: Routes.handleGeneratingRoutes());
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  bool _isFav;
+
   @override
   Widget build(BuildContext context) => wrapWithScrollingView(
         Column(
@@ -53,6 +60,13 @@ class MyHomePage extends StatelessWidget {
         ),
       );
 
+  @override
+  void initState() {
+    _isFav = false;
+
+    super.initState();
+  }
+
   FutureBuilder _buildRecipeOfTheDay() {
     DatabaseService _db = DatabaseService();
 
@@ -67,6 +81,8 @@ class MyHomePage extends StatelessWidget {
               recipe: recipe,
               imagePath: 'assets/images/small-food.png',
               userId: 'MtcBAWcygoW6ERK83agC',
+              isFav: _isFav,
+              callback: (bool isFav) => _callback(isFav),
             ),
           );
         } else {
@@ -74,5 +90,11 @@ class MyHomePage extends StatelessWidget {
         }
       },
     );
+  }
+
+  _callback(bool isFav) {
+    setState(() {
+      _isFav = isFav;
+    });
   }
 }

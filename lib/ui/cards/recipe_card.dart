@@ -14,7 +14,6 @@ import '../stack_builder.dart';
 
 class RecipeCard extends StatefulWidget {
   static List<Tag> _tags;
-  static DatabaseService _dbService = DatabaseService();
 
   final List<Widget> interior;
 
@@ -28,143 +27,157 @@ class RecipeCard extends StatefulWidget {
   _RecipeCardState createState() => _RecipeCardState();
 
   static List<Widget> createInteriorForCardWithRating(
-          {@required String imagePath,
-          @required Recipe recipe,
-          @required BuildContext context,
-          @required String userId}) =>
-      <Widget>[
-        StackBuilder.createImageWithIconButtons(
+      {@required String imagePath,
+      @required Recipe recipe,
+      @required BuildContext context,
+      @required String userId,
+      @required bool isFav,
+      Function(bool) callback}) {
+    DatabaseService _dbService = DatabaseService();
+
+    return <Widget>[
+      StackBuilder.createImageWithIconButtons(
           imagePath: imagePath,
-          icon: Icons.favorite_border,
+          isFav: isFav,
           recipeId: recipe.id,
           userId: userId,
           context: context,
-        ),
-        addPadding(
-            Text(
-              recipe.recipeTitle,
-              style: TextStyle(color: Colors.white, fontSize: 30.0),
-            ),
-            left: 16.0,
-            top: 8.0),
-        FutureBuilder(
-          future: _dbService.getRecipeTags(recipe.id),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
-            if (snapshots.hasData) {
-              _getTags(snapshots);
+          callback: callback),
+      addPadding(
+          Text(
+            recipe.recipeTitle,
+            style: TextStyle(color: Colors.white, fontSize: 30.0),
+          ),
+          left: 16.0,
+          top: 8.0),
+      FutureBuilder(
+        future: _dbService.getRecipeTags(recipe.id),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
+          if (snapshots.hasData) {
+            _getTags(snapshots);
 
-              return addPadding(
-                  MultipleTags(
-                    _createTags().toList(),
-                    cookingTimeTag: MultipleTags.createTag(
-                        recipe.prepTime.toString(),
-                        icon: Icons.access_time),
-                  ),
-                  left: 8.0,
-                  top: 8.0);
-            } else {
-              return Card();
-            }
-          },
-        ),
-        addPadding(
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[Ratings(recipe.rank)],
-            ),
-            top: 8.0,
-            left: 16.0,
-            bottom: 16.0),
-      ];
+            return addPadding(
+                MultipleTags(
+                  _createTags().toList(),
+                  cookingTimeTag: MultipleTags.createTag(
+                      recipe.prepTime.toString(),
+                      icon: Icons.access_time),
+                ),
+                left: 8.0,
+                top: 8.0);
+          } else {
+            return Card();
+          }
+        },
+      ),
+      addPadding(
+          Row(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[Ratings(recipe.rank)],
+          ),
+          top: 8.0,
+          left: 16.0,
+          bottom: 16.0),
+    ];
+  }
 
   static List<Widget> createInteriorForListOfCards(
-          {@required Recipe recipe,
-          @required String imagePath,
-          @required String userId}) =>
-      <Widget>[
-        StackBuilder.createImageWithFavButton(
+      {@required Recipe recipe,
+      @required String imagePath,
+      @required bool isFav,
+      @required String userId,
+      Function(bool) callback}) {
+    DatabaseService _dbService = DatabaseService();
+
+    return <Widget>[
+      StackBuilder.createImageWithFavButton(
           imagePath: imagePath,
-          icon: Icons.favorite_border,
+          isFav: isFav,
           recipeId: recipe.id,
           userId: userId,
-        ),
-        addPadding(
-            Text(
-              recipe.recipeTitle,
-              style: TextStyle(color: Colors.white, fontSize: 30.0),
-            ),
-            left: 16.0,
-            top: 8.0),
-        FutureBuilder(
-          future: _dbService.getRecipeTags(recipe.id),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
-            if (snapshots.hasData) {
-              _getTags(snapshots);
+          callback: callback),
+      addPadding(
+          Text(
+            recipe.recipeTitle,
+            style: TextStyle(color: Colors.white, fontSize: 30.0),
+          ),
+          left: 16.0,
+          top: 8.0),
+      FutureBuilder(
+        future: _dbService.getRecipeTags(recipe.id),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
+          if (snapshots.hasData) {
+            _getTags(snapshots);
 
-              return addPadding(
-                  MultipleTags(
-                    _createTags().toList(),
-                    cookingTimeTag: MultipleTags.createTag(
-                        recipe.prepTime.toString(),
-                        icon: Icons.access_time),
-                  ),
-                  left: 8.0,
-                  top: 8.0);
-            } else {
-              return Card();
-            }
-          },
-        ),
-      ];
+            return addPadding(
+                MultipleTags(
+                  _createTags().toList(),
+                  cookingTimeTag: MultipleTags.createTag(
+                      recipe.prepTime.toString(),
+                      icon: Icons.access_time),
+                ),
+                left: 8.0,
+                top: 8.0);
+          } else {
+            return Card();
+          }
+        },
+      ),
+    ];
+  }
 
-  static List<Widget> createInteriorForSingleCard({
-    @required Recipe recipe,
-    @required String imagePath,
-    @required String userId,
-  }) =>
-      <Widget>[
-        StackBuilder.createImageWithFavButton(
+  static List<Widget> createInteriorForSingleCard(
+      {@required Recipe recipe,
+      @required String imagePath,
+      @required String userId,
+      @required bool isFav,
+      Function(bool) callback}) {
+    DatabaseService _dbService = DatabaseService();
+
+    return <Widget>[
+      StackBuilder.createImageWithFavButton(
           imagePath: imagePath,
-          icon: Icons.favorite_border,
+          isFav: isFav,
           recipeId: recipe.id,
           userId: userId,
-        ),
-        addPadding(
-            Text(
-              'Przepis dnia',
-              style: TextStyle(color: Colors.white, fontSize: 16.0),
-            ),
-            left: 16.0,
-            top: 8.0),
-        addPadding(
-            Text(
-              recipe.recipeTitle,
-              style: TextStyle(color: Colors.white, fontSize: 30.0),
-            ),
-            left: 16.0,
-            top: 8.0),
-        FutureBuilder(
-          future: _dbService.getRecipeTags(recipe.id),
-          builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
-            if (snapshots.hasData) {
-              _getTags(snapshots);
+          callback: callback),
+      addPadding(
+          Text(
+            'Przepis dnia',
+            style: TextStyle(color: Colors.white, fontSize: 16.0),
+          ),
+          left: 16.0,
+          top: 8.0),
+      addPadding(
+          Text(
+            recipe.recipeTitle,
+            style: TextStyle(color: Colors.white, fontSize: 30.0),
+          ),
+          left: 16.0,
+          top: 8.0),
+      FutureBuilder(
+        future: _dbService.getRecipeTags(recipe.id),
+        builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
+          if (snapshots.hasData) {
+            _getTags(snapshots);
 
-              return addPadding(
-                  MultipleTags(
-                    _createTags().toList(),
-                    cookingTimeTag: MultipleTags.createTag(
-                        recipe.prepTime.toString(),
-                        icon: Icons.access_time),
-                  ),
-                  left: 8.0,
-                  top: 8.0);
-            } else {
-              return Card();
-            }
-          },
-        ),
-      ];
+            return addPadding(
+                MultipleTags(
+                  _createTags().toList(),
+                  cookingTimeTag: MultipleTags.createTag(
+                      recipe.prepTime.toString(),
+                      icon: Icons.access_time),
+                ),
+                left: 8.0,
+                top: 8.0);
+          } else {
+            return Card();
+          }
+        },
+      ),
+    ];
+  }
 
   static Iterable<Card> _createTags() sync* {
     for (var tag in _tags) {

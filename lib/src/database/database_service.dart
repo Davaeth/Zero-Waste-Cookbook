@@ -5,13 +5,26 @@ class DatabaseService {
   final _db = Firestore.instance;
 
   Future<void> addRecipeToFavourites(String recipeId, String userId) async {
-    var recipeRef = getDocumentReference('Recipes', 'SOWUsKMR4vmK6e4FgoRZ');
+    var recipeRef = getDocumentReference('Recipes', recipeId);
 
     await _db.collection('Users').document(userId).updateData(
       {
         'favouriteRecipes': FieldValue.arrayUnion([recipeRef])
       },
     );
+  }
+
+  Future<bool> checkIfExists(String collection, String id) async => await _db
+      .collection(collection)
+      .document(id)
+      .get()
+      .then((value) => value.exists);
+
+  Future<bool> checkIfRecipeIsFaved(String userId, String recipeId) async {
+    var user = User.fromFirestore(await getDatumByID('Users', userId));
+    var recipesRef = getDocumentReference('Recipes', recipeId);
+
+    return user.favouriteRecipes.contains(recipesRef);
   }
 
   Future<void> createDatum(String collection, Map data) async {
@@ -77,15 +90,12 @@ class DatabaseService {
     return value;
   }
 
-  Future<DocumentSnapshot> getDatumByID(String collection, String id) async {
-    DocumentSnapshot value;
-
-    await _db.collection(collection).document(id).get().then((snapshot) {
-      value = snapshot;
-    });
-
-    return value;
-  }
+  Future<DocumentSnapshot> getDatumByID(String collection, String id) async =>
+      await _db
+          .collection(collection)
+          .document(id)
+          .get()
+          .then((snapshot) => snapshot);
 
   DocumentReference getDocumentReference(String collection, String id) =>
       _db.collection(collection).document(id);
@@ -134,20 +144,26 @@ class DatabaseService {
         .getDocuments();
   }
 
-  Future<List<DocumentSnapshot>> getUserFavouriteRecipes(String userId) async {
-    var userSnapshot =
-        await getDatumByID('Users', userId).then((value) => value);
-
-    var user = User.fromFirestore(userSnapshot);
+  Stream<List<DocumentSnapshot>> getUserFavouriteRecipes(String userId) async* {
+    var user = User.fromFirestore(await getDatumByID('Users', userId));
 
     var favRecipes = List<DocumentSnapshot>();
 
-    for (var recipe in user.recipes) {
+    for (var recipe in user.favouriteRecipes) {
       favRecipes
           .add(await _db.document(recipe.path).get().then((value) => value));
     }
 
-    return favRecipes;
+    yield favRecipes;
+  }
+
+  Future<QuerySnapshot> getUserRecipes(String id) async {
+    DocumentReference userRef = getDocumentReference('Users', id);
+
+    return await _db
+        .collection('Recipes')
+        .where('user', isEqualTo: userRef)
+        .getDocuments();
   }
 
   // Future<List<Recipe>> getRecipesByIngredients(
@@ -203,13 +219,15 @@ class DatabaseService {
   //   return null;
   // }
 
-  Future<QuerySnapshot> getUserRecipes(String id) async {
-    DocumentReference userRef = getDocumentReference('Users', id);
+  Future<void> removeRecipeFromFavourites(
+      String recipeId, String userId) async {
+    var recipeRef = getDocumentReference('Recipes', recipeId);
 
-    return await _db
-        .collection('Recipes')
-        .where('user', isEqualTo: userRef)
-        .getDocuments();
+    await _db.collection('Users').document(userId).updateData(
+      {
+        'favouriteRecipes': FieldValue.arrayRemove([recipeRef])
+      },
+    );
   }
 
   streamCollection(String collection, String id) =>

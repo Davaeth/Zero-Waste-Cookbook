@@ -15,7 +15,7 @@ class DifficultyLevelDropdown extends StatefulWidget {
 }
 
 class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
-  String _value = 'test';
+  String _value = 'Easy';
 
   List<DifficultyLevel> _difficultyLevels;
 
