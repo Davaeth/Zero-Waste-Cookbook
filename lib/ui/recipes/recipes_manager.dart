@@ -12,6 +12,8 @@ class RecipesManager extends StatefulWidget {
 class _RecipesManager extends State<RecipesManager> {
   DatabaseService _databaseService;
 
+  bool _isFav;
+
   @override
   Widget build(BuildContext context) => StreamBuilder(
       stream: _databaseService.streamNewestRecipes(),
@@ -31,8 +33,15 @@ class _RecipesManager extends State<RecipesManager> {
   @override
   void initState() {
     _databaseService = DatabaseService();
+    _isFav = false;
 
     super.initState();
+  }
+
+  _callback(bool isFav) {
+    setState(() {
+      _isFav = isFav;
+    });
   }
 
   List<Container> _createRecipeDetectors(
@@ -49,9 +58,12 @@ class _RecipesManager extends State<RecipesManager> {
           height: (MediaQuery.of(context).size.height / 100) * 50,
           child: RecipeCard(
             interior: RecipeCard.createInteriorForListOfCards(
-                recipe: recipe,
-                imagePath: 'assets/images/small-food.png',
-                userId: 'MtcBAWcygoW6ERK83agC'),
+              recipe: recipe,
+              imagePath: 'assets/images/small-food.png',
+              userId: 'MtcBAWcygoW6ERK83agC',
+              isFav: _isFav,
+              callback: (bool isFav) => _callback(isFav),
+            ),
             recipeID: snapshot.documentID,
           ),
         ),

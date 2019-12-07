@@ -14,7 +14,7 @@ class DishRegionsDropdown extends StatefulWidget {
 }
 
 class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
-  String _value = 'Polska';
+  String _value = 'Poland';
 
   List<DishRegion> _dishRegions;
 

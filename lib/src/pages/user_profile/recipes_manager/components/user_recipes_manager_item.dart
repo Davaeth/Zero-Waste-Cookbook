@@ -76,14 +76,6 @@ class _UserRecipesManagerItemState extends State<UserRecipesManagerItem>
     _recipe = widget.recipe;
 
     return ListTile(
-      // onTap: () {
-      //   _iconAnimationController.reverse();
-      //   _isSelected = false;
-      // },
-      // onLongPress: () {
-      //   _iconAnimationController.forward();
-      //   _isSelected = true;
-      // },
       leading: Icon(
         Icons.text_fields,
         size: 55.0,
