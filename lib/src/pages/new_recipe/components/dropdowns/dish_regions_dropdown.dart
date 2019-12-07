@@ -29,21 +29,25 @@ class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
           child: StreamBuilder(
             stream: _databaseService.getAllData('Regions'),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              _createDropdownData(context, snapshot);
+              if (snapshot.hasData) {
+                _createDropdownData(context, snapshot);
 
-              return DropdownButton<String>(
-                icon: Icon(Icons.keyboard_arrow_down),
-                iconSize: 20.0,
-                style: TextStyle(color: Colors.white),
-                items: _createDropdownItems(_dishRegions).toList(),
-                onChanged: (String value) {
-                  setState(() {
-                    _value = value;
-                    _callback(_getChosenDishRegion(value));
-                  });
-                },
-                value: _value,
-              );
+                return DropdownButton<String>(
+                  icon: Icon(Icons.keyboard_arrow_down),
+                  iconSize: 20.0,
+                  style: TextStyle(color: Colors.white),
+                  items: _createDropdownItems(_dishRegions).toList(),
+                  onChanged: (String value) {
+                    setState(() {
+                      _value = value;
+                      _callback(_getChosenDishRegion(value));
+                    });
+                  },
+                  value: _value,
+                );
+              } else {
+                return Container();
+              }
             },
           ),
         ),

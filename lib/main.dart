@@ -59,15 +59,19 @@ class MyHomePage extends StatelessWidget {
     return FutureBuilder(
       future: _db.getDatumByID('Recipes', '9dINDS1sKiIJglqtmAXE'),
       builder: (context, AsyncSnapshot<dynamic> snapshot) {
-        Recipe recipe = Recipe.fromFirestore(snapshot?.data);
+        if (snapshot.hasData) {
+          Recipe recipe = Recipe.fromFirestore(snapshot?.data);
 
-        return RecipeCard(
-          interior: RecipeCard.createInteriorForSingleCard(
-            recipe: recipe,
-            imagePath: 'assets/images/small-food.png',
-            userId: 'MtcBAWcygoW6ERK83agC',
-          ),
-        );
+          return RecipeCard(
+            interior: RecipeCard.createInteriorForSingleCard(
+              recipe: recipe,
+              imagePath: 'assets/images/small-food.png',
+              userId: 'MtcBAWcygoW6ERK83agC',
+            ),
+          );
+        } else {
+          return Card();
+        }
       },
     );
   }

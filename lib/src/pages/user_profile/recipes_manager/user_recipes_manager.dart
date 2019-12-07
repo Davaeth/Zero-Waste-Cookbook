@@ -36,23 +36,29 @@ class _UserRecipesManagerState extends State<UserRecipesManager> {
                 future: _databaseService
                     .getUserRecipes('E5ewEF8YxDO0rl8Zue2zMrU7Yd43'),
                 builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
-                  var recipes = _getRecipesInfo(snapshots);
+                  if (snapshots.hasData) {
+                    var recipes = _getRecipesInfo(snapshots);
 
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: recipes.length,
-                    itemBuilder: (context, index) => addPadding(
-                      UserRecipesManagerItem(
-                        title: recipes[index].recipeTitle,
-                        rate: double.parse(recipes[index].rank.toString()),
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: recipes.length,
+                      itemBuilder: (context, index) => addPadding(
+                        UserRecipesManagerItem(
+                            recipe: recipes[index], callback: _managerCallback),
+                        top: 16.0,
                       ),
-                      top: 16.0,
-                    ),
-                  );
+                    );
+                  } else {
+                    return ListView();
+                  }
                 }),
           ],
         ),
       );
+
+  void _managerCallback() {
+    setState(() {});
+  }
 
   @override
   void initState() {

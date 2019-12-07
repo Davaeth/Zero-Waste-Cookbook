@@ -30,21 +30,25 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
           child: StreamBuilder(
             stream: _databaseService.getAllData('DifficultyLevels'),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              _createDropdownData(snapshot);
+              if (snapshot.hasData) {
+                _createDropdownData(snapshot);
 
-              return DropdownButton<String>(
-                icon: Icon(Icons.keyboard_arrow_down),
-                iconSize: 20.0,
-                style: TextStyle(color: Colors.white),
-                items: _createDropdownItems(_difficultyLevels).toList(),
-                onChanged: (String value) {
-                  setState(() {
-                    _value = value;
-                    _callback(_getChosenDifficultyLevel(value));
-                  });
-                },
-                value: _value,
-              );
+                return DropdownButton<String>(
+                  icon: Icon(Icons.keyboard_arrow_down),
+                  iconSize: 20.0,
+                  style: TextStyle(color: Colors.white),
+                  items: _createDropdownItems(_difficultyLevels).toList(),
+                  onChanged: (String value) {
+                    setState(() {
+                      _value = value;
+                      _callback(_getChosenDifficultyLevel(value));
+                    });
+                  },
+                  value: _value,
+                );
+              } else {
+                return Container();
+              }
             },
           ),
         ),

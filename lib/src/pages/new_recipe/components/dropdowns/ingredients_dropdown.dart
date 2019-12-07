@@ -29,21 +29,25 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
           child: StreamBuilder(
             stream: _databaseService.getAllData('Ingredients'),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-              _createDropdownData(context, snapshot);
+              if (snapshot.hasData) {
+                _createDropdownData(context, snapshot);
 
-              return DropdownButton<String>(
-                icon: Icon(Icons.keyboard_arrow_down),
-                iconSize: 20.0,
-                style: TextStyle(color: Colors.white),
-                items: _createDropdownItems(_ingredients).toList(),
-                onChanged: (String value) {
-                  setState(() {
-                    _value = value;
-                    _callback(_getChosenIngredient(value));
-                  });
-                },
-                value: _value,
-              );
+                return DropdownButton<String>(
+                  icon: Icon(Icons.keyboard_arrow_down),
+                  iconSize: 20.0,
+                  style: TextStyle(color: Colors.white),
+                  items: _createDropdownItems(_ingredients).toList(),
+                  onChanged: (String value) {
+                    setState(() {
+                      _value = value;
+                      _callback(_getChosenIngredient(value));
+                    });
+                  },
+                  value: _value,
+                );
+              } else {
+                return Container();
+              }
             },
           ),
         ),
@@ -64,9 +68,6 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
     snapshot.data.documents.forEach((ingredient) {
       _ingredients.add(Ingredient.fromFirestore(ingredient));
     });
-
-    /* TODO('why is this not working when others are the same and they are working?) 
-    _callback(_ingredients.first);*/
   }
 
   Iterable<DropdownMenuItem<String>> _createDropdownItems(

@@ -14,18 +14,24 @@ class _RecipesManager extends State<RecipesManager> {
 
   @override
   Widget build(BuildContext context) => StreamBuilder(
-        stream: _databaseService.streamNewestRecipes(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) => ListView(
-          padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 5.0),
-          shrinkWrap: true,
-          scrollDirection: Axis.horizontal,
-          children: _createRecipeDetectors(snapshots),
-        ),
-      );
+      stream: _databaseService.streamNewestRecipes(),
+      builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
+        if (snapshots.hasData) {
+          return ListView(
+            padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 5.0),
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            children: _createRecipeDetectors(snapshots),
+          );
+        } else {
+          return ListView();
+        }
+      });
 
   @override
   void initState() {
     _databaseService = DatabaseService();
+
     super.initState();
   }
 
@@ -36,12 +42,14 @@ class _RecipesManager extends State<RecipesManager> {
     var docs = snapshots?.data?.documents;
 
     for (var snapshot in docs) {
+      var recipe = Recipe.fromFirestore(snapshot);
+
       gestures.add(
         Container(
           height: (MediaQuery.of(context).size.height / 100) * 50,
           child: RecipeCard(
             interior: RecipeCard.createInteriorForListOfCards(
-                recipe: Recipe.fromFirestore(snapshot),
+                recipe: recipe,
                 imagePath: 'assets/images/small-food.png',
                 userId: 'MtcBAWcygoW6ERK83agC'),
             recipeID: snapshot.documentID,
