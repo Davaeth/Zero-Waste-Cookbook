@@ -5,12 +5,20 @@ import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
 
 class RecipesManager extends StatefulWidget {
+  final Axis scrollDirection;
+
+  RecipesManager({@required this.scrollDirection});
+
   @override
   State<StatefulWidget> createState() => _RecipesManager();
 }
 
 class _RecipesManager extends State<RecipesManager> {
   DatabaseService _databaseService;
+
+  bool _isFav;
+
+  Axis _scrollDirection;
 
   @override
   Widget build(BuildContext context) => StreamBuilder(
@@ -20,7 +28,7 @@ class _RecipesManager extends State<RecipesManager> {
           return ListView(
             padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 5.0),
             shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
+            scrollDirection: _scrollDirection,
             children: _createRecipeDetectors(snapshots),
           );
         } else {
@@ -31,8 +39,16 @@ class _RecipesManager extends State<RecipesManager> {
   @override
   void initState() {
     _databaseService = DatabaseService();
+    _isFav = false;
+    _scrollDirection = widget.scrollDirection;
 
     super.initState();
+  }
+
+  _callback(bool isFav) {
+    setState(() {
+      _isFav = isFav;
+    });
   }
 
   List<Container> _createRecipeDetectors(
@@ -49,8 +65,12 @@ class _RecipesManager extends State<RecipesManager> {
           height: (MediaQuery.of(context).size.height / 100) * 50,
           child: RecipeCard(
             interior: RecipeCard.createInteriorForListOfCards(
-                recipe: recipe,
-                userId: 'MtcBAWcygoW6ERK83agC'),
+              recipe: recipe,
+              imagePath: 'assets/images/small-food.png',
+              userId: 'MtcBAWcygoW6ERK83agC',
+              isFav: _isFav,
+              callback: (bool isFav) => _callback(isFav),
+            ),
             recipeID: snapshot.documentID,
           ),
         ),
