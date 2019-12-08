@@ -26,8 +26,8 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
   Widget build(BuildContext context) => DropdownButtonHideUnderline(
         child: Theme(
           data: ThemeData(canvasColor: DefaultColors.backgroundColor),
-          child: StreamBuilder(
-            stream: _databaseService.getAllData('Ingredients'),
+          child: FutureBuilder(
+            future: _databaseService.getAllData('Ingredients'),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 _createDropdownData(context, snapshot);
@@ -74,9 +74,9 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
       List<Ingredient> ingredients) sync* {
     for (var ingredient in ingredients) {
       yield DropdownMenuItem<String>(
-        value: ingredient.ingredientName,
+        value: ingredient.name,
         child: Text(
-          ingredient.ingredientName,
+          ingredient.name,
           style: TextStyle(color: Colors.white, fontSize: 20.0),
           textAlign: TextAlign.center,
         ),
@@ -86,7 +86,7 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
 
   Ingredient _getChosenIngredient(String name) {
     for (var ingredient in _ingredients) {
-      if (ingredient.ingredientName == name) {
+      if (ingredient.name == name) {
         return ingredient;
       }
     }

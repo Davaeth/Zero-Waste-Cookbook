@@ -13,9 +13,8 @@ class UserProfile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             settingsButton(context, 4),
-           buildUserInfo(
-               ['100k', '2'], [Icons.star, Icons.comment], name, imageUrl),
-               SizedBox(height: 16.0,),
+            buildUserInfo(
+                ['100k', '2'], [Icons.star, Icons.comment], name, imageUrl),
             buildUserButtonsRow(
                 context,
                 ['Add new recipe', 'Manage my recipes'],

@@ -1,18 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/difficulty_level.dart';
-import 'package:zero_waste_cookbook/src/models/food_addons/dish_region.dart';
+import 'package:zero_waste_cookbook/src/models/food_addons/region.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/tag.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/new_recipe_section.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/recipe_ingredients.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
-import 'package:zero_waste_cookbook/src/pages/new_recipe/components/add_photo.dart';
+
 import 'components/dropdowns/difficulty_level_dropdown.dart';
 import 'components/dropdowns/dish_regions_dropdown.dart';
 
@@ -31,12 +30,10 @@ class _NewRecipeState extends State<NewRecipe> {
 
   List<Ingredient> _ingredients;
   DifficultyLevel _difficultyLevel;
-  DishRegion _dishRegion;
+  Region _dishRegion;
 
   GlobalKey<NewRecipeSectionState> _newRecipeSectionKey;
   GlobalKey<NewRecipeSectionState> _tagsSectionKey;
-
-  String _recipePhoto;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -52,7 +49,6 @@ class _NewRecipeState extends State<NewRecipe> {
                 children: <Widget>[
                   _createBackButton(context),
                   _createTitleTextField(context),
-                  _createAddPhotoButton(),                  
                   _buildRecipeIngredients(),
                   _createDescriptionsTextField(context),
                   _buildDifficultyLevelDropdown(),
@@ -62,8 +58,8 @@ class _NewRecipeState extends State<NewRecipe> {
                   _createAddRecipeButton(context),
                 ],
               ),
-              left: 16.0,
-              right: 16.0),
+              left: 32.0,
+              right: 32.0),
         ),
       );
 
@@ -81,8 +77,6 @@ class _NewRecipeState extends State<NewRecipe> {
 
     tagsControllers.add(TextEditingController());
 
-    _recipePhoto =  'recipe${new DateTime.now().millisecond}';
-
     super.initState();
   }
 
@@ -96,7 +90,6 @@ class _NewRecipeState extends State<NewRecipe> {
 
   Future<void> _addRecipe() async {
     DatabaseService _databaseService = DatabaseService();
-    // String recipePhoto = '123';
 
     List<String> ingredientsId = List<String>();
 
@@ -111,7 +104,7 @@ class _NewRecipeState extends State<NewRecipe> {
               prepTime: int.parse(_prepTimeController.text),
               description: _descriptionController.text,
               creationTime: Timestamp.fromDate(DateTime.now()),
-              photoPath: _recipePhoto,
+              photoPath: null,
               rank: 0,
               deleted: false,
               difficultyLevel: _databaseService.getDocumentReference(
@@ -140,21 +133,15 @@ class _NewRecipeState extends State<NewRecipe> {
     }
   }
 
-  NewRecipeSection _createAddPhotoButton() => NewRecipeSection(
-        'Zdjęcie',
-//        AddPhoto(photoPath :  'recipe${new DateTime.now()}'),
-        AddPhoto(photoPath: _recipePhoto),
-      );  
-
   NewRecipeSection _buildDifficultyLevelDropdown() => NewRecipeSection(
-        'Poziom trudności',
+        'Difficulty level',
         DifficultyLevelDropdown(
           callback: _difficultyLevelDropdownCallback,
         ),
       );
 
   NewRecipeSection _buildDishRegionsDropdown() => NewRecipeSection(
-        'Region',
+        'Regions',
         DishRegionsDropdown(
           callback: _dishRegionsDropdownCallback,
         ),
@@ -165,7 +152,7 @@ class _NewRecipeState extends State<NewRecipe> {
         children: <Widget>[
           addPadding(
               Text(
-                ingredient.ingredientName,
+                ingredient.name,
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
               ),
               left: 8.0),
@@ -187,7 +174,7 @@ class _NewRecipeState extends State<NewRecipe> {
 
   NewRecipeSection _buildPerpTimeField(BuildContext context) =>
       NewRecipeSection(
-        'Czas przygotowania (min)',
+        'Prep Time',
         _buildTextField(TextInputType.number, _prepTimeController, context),
       );
 
@@ -201,7 +188,7 @@ class _NewRecipeState extends State<NewRecipe> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           NewRecipeSection(
-            'Tagi',
+            'Tags',
             _buildTagsTextFields(),
             key: _tagsSectionKey,
           ),
@@ -211,7 +198,7 @@ class _NewRecipeState extends State<NewRecipe> {
                 onPressed: () {
                   setState(() => _addNewTag());
                 },
-                child: Text('Dodaj nowy tag'),
+                child: Text('Add new tag'),
               ),
               top: 8.0),
         ],
@@ -251,7 +238,7 @@ class _NewRecipeState extends State<NewRecipe> {
 
   Padding _createAddRecipeButton(BuildContext context) => addPadding(
         FlatButton(
-          child: Text('Dodaj przepis'),
+          child: Text('Add recipe'),
           onPressed: () => _addRecipe(),
           color: DefaultColors.iconColor,
           splashColor: Colors.transparent,
@@ -275,7 +262,7 @@ class _NewRecipeState extends State<NewRecipe> {
 
   NewRecipeSection _createDescriptionsTextField(BuildContext context) =>
       NewRecipeSection(
-        'Opis przygotowania',
+        'Descriptions',
         _buildTextField(
             TextInputType.multiline, _descriptionController, context,
             maxLines: null, length: null),
@@ -283,7 +270,7 @@ class _NewRecipeState extends State<NewRecipe> {
 
   NewRecipeSection _createTitleTextField(BuildContext context) =>
       NewRecipeSection(
-        'Tytuł',
+        'Title',
         _buildTextField(TextInputType.text, _titleController, context),
       );
 
@@ -291,7 +278,7 @@ class _NewRecipeState extends State<NewRecipe> {
     _difficultyLevel = difficultyLevel;
   }
 
-  void _dishRegionsDropdownCallback(DishRegion dishRegion) {
+  void _dishRegionsDropdownCallback(Region dishRegion) {
     _dishRegion = dishRegion;
   }
 

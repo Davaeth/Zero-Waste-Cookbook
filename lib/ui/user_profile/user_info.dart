@@ -43,17 +43,19 @@ Column buildUserInfo(List<String> amounts, List<IconData> iconsData,
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              
+              Text(
+                username,
+                style: TextStyle(fontSize: 24.0, color: Colors.white),
+              ),
+            ]),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.max,
           children: <Widget>[
-            Text(
-                username,
-                style: TextStyle(fontSize: 24.0, color: Colors.white),
-              ),
-            ]),
+            buildUserInfoIcon(amounts.first, iconsData.first),
+            buildUserInfoIcon(amounts.first, iconsData.last),
+            buildUserInfoIcon(amounts.last, iconsData.last),
           ],
         )
       ],
