@@ -27,7 +27,6 @@ class _FavRecipesManager extends State<FavRecipesManager> {
               itemBuilder: (BuildContext context, int index) => RecipeCard(
                 interior: RecipeCard.createInteriorForListOfCards(
                     recipe: favRecipes[index],
-                    imagePath: 'assets/images/small-food.png',
                     userId: 'MtcBAWcygoW6ERK83agC'),
               ),
             );

@@ -63,7 +63,6 @@ class _SingleRecipeState extends State<SingleRecipe>
                   children: <Widget>[
                     RecipeCard(
                       interior: RecipeCard.createInteriorForCardWithRating(
-                        imagePath: 'assets/images/small-food.png',
                         recipe: _this,
                         userId: 'MtcBAWcygoW6ERK83agC',
                         context: context,
@@ -80,7 +79,7 @@ class _SingleRecipeState extends State<SingleRecipe>
                         return addPadding(
                             ExpansionTileBuilder(
                               Section(
-                                'INGREDIENTS',
+                                'Składniki',
                                 entries: ingredientsNames.toList(),
                               ),
                             ),
@@ -91,7 +90,7 @@ class _SingleRecipeState extends State<SingleRecipe>
                     addPadding(
                         ExpansionTileBuilder(
                           Section(
-                            'DESCRIPTION',
+                            'Sposób przygotowania',
                             entries: [_this.description],
                           ),
                         ),
@@ -162,7 +161,7 @@ class _SingleRecipeState extends State<SingleRecipe>
           onTap: _expandReviews,
           child: addPadding(
               Text(
-                _areReviewsExpanded ? 'Pokaż mniej...' : 'Pokaż więcej...',
+                _areReviewsExpanded ? 'Pokaż więcej...' : 'Pokaż mniej...',
                 style: TextStyle(fontSize: 15.0, color: Colors.white),
               ),
               top: 8.0,

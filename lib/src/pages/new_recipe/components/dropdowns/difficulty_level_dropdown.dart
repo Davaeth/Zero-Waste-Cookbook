@@ -15,7 +15,7 @@ class DifficultyLevelDropdown extends StatefulWidget {
 }
 
 class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
-  String _value = 'test';
+  String _value = '-choose-';
 
   List<DifficultyLevel> _difficultyLevels;
 
@@ -70,7 +70,7 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
       _difficultyLevels.add(DifficultyLevel.fromFirestore(difficultyLevel));
     });
 
-    _callback(_difficultyLevels.first);
+    //_callback(_difficultyLevels.first);
   }
 
   Iterable<DropdownMenuItem<String>> _createDropdownItems(

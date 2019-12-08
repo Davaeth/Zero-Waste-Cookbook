@@ -9,6 +9,8 @@ import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
+import 'package:global_configuration/global_configuration.dart';
+
 import '../ratings.dart';
 import '../stack_builder.dart';
 
@@ -28,13 +30,12 @@ class RecipeCard extends StatefulWidget {
   _RecipeCardState createState() => _RecipeCardState();
 
   static List<Widget> createInteriorForCardWithRating(
-          {@required String imagePath,
-          @required Recipe recipe,
+          {@required Recipe recipe,
           @required BuildContext context,
           @required String userId}) =>
       <Widget>[
         StackBuilder.createImageWithIconButtons(
-          imagePath: imagePath,
+          imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           icon: Icons.favorite_border,
           recipeId: recipe.id,
           userId: userId,
@@ -80,11 +81,10 @@ class RecipeCard extends StatefulWidget {
 
   static List<Widget> createInteriorForListOfCards(
           {@required Recipe recipe,
-          @required String imagePath,
           @required String userId}) =>
       <Widget>[
         StackBuilder.createImageWithFavButton(
-          imagePath: imagePath,
+          imagePath:  GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           icon: Icons.favorite_border,
           recipeId: recipe.id,
           userId: userId,
@@ -107,7 +107,8 @@ class RecipeCard extends StatefulWidget {
                     _createTags().toList(),
                     cookingTimeTag: MultipleTags.createTag(
                         recipe.prepTime.toString(),
-                        icon: Icons.access_time),
+                        icon: Icons.access_time,
+                        ),
                   ),
                   left: 8.0,
                   top: 8.0);
@@ -120,19 +121,18 @@ class RecipeCard extends StatefulWidget {
 
   static List<Widget> createInteriorForSingleCard({
     @required Recipe recipe,
-    @required String imagePath,
     @required String userId,
   }) =>
       <Widget>[
         StackBuilder.createImageWithFavButton(
-          imagePath: imagePath,
+          imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           icon: Icons.favorite_border,
           recipeId: recipe.id,
           userId: userId,
         ),
         addPadding(
             Text(
-              'Przepis dnia',
+              'Recipe of the day',
               style: TextStyle(color: Colors.white, fontSize: 16.0),
             ),
             left: 16.0,

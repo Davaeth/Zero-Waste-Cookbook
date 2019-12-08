@@ -14,7 +14,7 @@ class DishRegionsDropdown extends StatefulWidget {
 }
 
 class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
-  String _value = 'Polska';
+  String _value = '-choose-';
 
   List<DishRegion> _dishRegions;
 
@@ -69,7 +69,7 @@ class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
       _dishRegions.add(DishRegion.fromFirestore(dishRegion));
     });
 
-    _callback(_dishRegions.first);
+   // _callback(_dishRegions.first);
   }
 
   Iterable<DropdownMenuItem<String>> _createDropdownItems(

@@ -55,7 +55,7 @@ class _DialogBuilderState extends State<DialogBuilder> {
           ),
           Center(
               child: Text(
-            'Rate the recipe',
+            'Oceń przepis',
             style: TextStyle(color: Colors.white, fontSize: 20.0),
           )),
           ReviewRater(_rateReview),
@@ -84,7 +84,7 @@ class _DialogBuilderState extends State<DialogBuilder> {
       MaterialButton(
         onPressed: addReview,
         color: DefaultColors.iconColor,
-        child: Text('SUBMIT'),
+        child: Text('Wyślij'),
         textColor: Colors.black,
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
@@ -110,7 +110,7 @@ class _DialogBuilderState extends State<DialogBuilder> {
             description: _descriptionController.text,
             rank: 0,
             reviewType: 'Cool',
-            user: _db.getDocumentReference('Users', 'MtcBAWcygoW6ERK83agC'),
+            user: _db.getDocumentReference('Users', 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43'),
             recipe: _db.getDocumentReference('Recipes', _recipeId),
           ).toJson(),
         );

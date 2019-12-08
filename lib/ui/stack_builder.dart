@@ -1,3 +1,4 @@
+import 'package:firebase_storage_image/firebase_storage_image.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
@@ -13,7 +14,7 @@ class StackBuilder {
       Stack(
         alignment: Alignment.topRight,
         children: <Widget>[
-          Image.asset(imagePath),
+          Image(image: FirebaseStorageImage(imagePath)),
           _createFavIconButton(icon: icon, recipeId: recipeId, userId: userId)
         ],
       );
@@ -27,7 +28,8 @@ class StackBuilder {
       Stack(
         alignment: Alignment.topRight,
         children: <Widget>[
-          Image.asset(imagePath),
+          Image(image: FirebaseStorageImage(imagePath)),
+          //Image.asset(imagePath),
           Align(
             alignment: Alignment.topLeft,
             child: IconButton(
