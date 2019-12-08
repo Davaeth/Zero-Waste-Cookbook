@@ -16,14 +16,12 @@ SafeArea buildPage(BuildContext context) => SafeArea(
         child: Scaffold(
           backgroundColor: DefaultColors.backgroundColor,
           bottomNavigationBar: CustomNavigationBar(),
-          body: TabBarView(
-            children: [
-              MyHomePage(),
-              AdministratorPanel(),
-              Search(),
-              UserProfile()
-            ],
-          ),
+          body: TabBarView(children: [
+            MyHomePage(),
+            AdministratorPanel(),
+            Search(),
+            UserProfile()
+          ]),
         ),
       ),
     );

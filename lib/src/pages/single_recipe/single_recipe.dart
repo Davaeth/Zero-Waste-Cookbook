@@ -23,11 +23,11 @@ class SingleRecipe extends StatefulWidget {
   State<StatefulWidget> createState() => _SingleRecipeState();
 }
 
-class _SingleRecipeState extends State<SingleRecipe> {
+class _SingleRecipeState extends State<SingleRecipe>
+    with AfterLayoutMixin<SingleRecipe> {
   int _reviewsCountToShow = 0;
+  bool _areReviewsExpanded = false;
   bool _isPageBuilt = false;
-  bool _areReviewsExpanded;
-  bool _isFav;
 
   GlobalKey<ReviewsState> _reviewsStateKey = GlobalKey<ReviewsState>();
 
@@ -37,6 +37,12 @@ class _SingleRecipeState extends State<SingleRecipe> {
   String _recipeID;
 
   Recipe _this;
+
+  @override
+  void afterFirstLayout(BuildContext context) async {
+    _expandReviews();
+    _isPageBuilt = true;
+  }
 
   @override
   Widget build(BuildContext context) => SafeArea(
@@ -60,9 +66,6 @@ class _SingleRecipeState extends State<SingleRecipe> {
                         recipe: _this,
                         userId: 'MtcBAWcygoW6ERK83agC',
                         context: context,
-                        isFav: _isFav,
-                        callback: (bool isFav) =>
-                            _recipeStackCardCallback(isFav),
                       ),
                       isTappable: false,
                     ),
@@ -92,24 +95,17 @@ class _SingleRecipeState extends State<SingleRecipe> {
                           ),
                         ),
                         bottom: 8.0),
-                    ReviewCreator(_reviewsCallback, _recipeID),
+                    ReviewCreator(_callback, _recipeID),
                     StreamBuilder(
-                      stream: _databaseService.getRecipeReviews(_recipeID),
-                      builder:
-                          (context, AsyncSnapshot<QuerySnapshot> snapshots) {
-                        if (snapshot.hasData) {
-                          _buildReviewsList(snapshots);
-
-                          return Reviews(
-                            reviews: _reviews,
-                            reviewsCountToShow: _reviewsCountToShow,
-                            key: _reviewsStateKey,
-                          );
-                        } else {
-                          return ListView();
-                        }
-                      },
-                    ),
+                        stream: _databaseService.getRecipeReviews(_recipeID),
+                        builder:
+                            (context, AsyncSnapshot<QuerySnapshot> snapshots) {
+                          if (snapshot.hasData) {
+                            return _buildReviewsList(snapshots);
+                          } else {
+                            return ListView();
+                          }
+                        }),
                     _createReviewExpandText()
                   ],
                 );
@@ -128,29 +124,44 @@ class _SingleRecipeState extends State<SingleRecipe> {
     _recipeID = widget.recipeID;
     _reviews = List<Review>();
 
-    _areReviewsExpanded = false;
-    _isFav = false;
-
     super.initState();
   }
 
-  _buildReviewsList(AsyncSnapshot<QuerySnapshot> asyncSnapshots) {
+  Reviews _buildReviewsList(AsyncSnapshot<QuerySnapshot> asyncSnapshots) {
     _reviews = List<Review>();
 
     for (var review in asyncSnapshots.data.documents) {
       _reviews.add(Review.fromFirestore(review));
     }
 
-    _refreshReviewsCountToShow();
+    if (_isPageBuilt) {
+      setState(() {
+        _refresReviewsCountToShow();
+      });
+    } else {
+      _refresReviewsCountToShow();
+    }
+
+    return Reviews(
+      reviews: _reviews,
+      reviewsCountToShow: _reviewsCountToShow,
+      key: _reviewsStateKey,
+    );
+  }
+
+  void _callback() {
+    setState(() {
+      _refresReviewsCountToShow();
+      _setReviewsState();
+    });
   }
 
   Center _createReviewExpandText() => Center(
         child: GestureDetector(
-          onTap: () => _expandReviews(),
+          onTap: _expandReviews,
           child: addPadding(
               Text(
                 _areReviewsExpanded ? 'Pokaż więcej...' : 'Pokaż mniej...',
-
                 style: TextStyle(fontSize: 15.0, color: Colors.white),
               ),
               top: 8.0,
@@ -162,7 +173,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
     setState(() {
       _areReviewsExpanded = !_areReviewsExpanded;
 
-      _refreshReviewsCountToShow();
+      _refresReviewsCountToShow();
 
       _setReviewsState();
     });
@@ -171,7 +182,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
   Iterable<String> _extractIngredients(
       AsyncSnapshot<List<DocumentSnapshot>> snapshots) sync* {
     for (var snapshot in snapshots.data) {
-      yield Ingredient.fromFirestore(snapshot).name;
+      yield Ingredient.fromFirestore(snapshot).ingredientName;
     }
   }
 
@@ -179,38 +190,17 @@ class _SingleRecipeState extends State<SingleRecipe> {
     _this = Recipe.fromFirestore(snapshot.data);
   }
 
-  _recipeStackCardCallback(bool isFav) {
-    setState(() {
-      _isFav = isFav;
-    });
-  }
-
-  void _refreshReviewsCountToShow() {
-    _reviewsCountToShow = _areReviewsExpanded ? _reviews.length : 3;
-
-    if (_areReviewsExpanded) {
-      _reviewsCountToShow = _reviews.length;
-      return;
-    }
-
-    if (_reviews.length > 3) {
-      _reviewsCountToShow = 3;
-    } else {
-      _reviewsCountToShow = _reviews.length;
-    }
-  }
-
-  void _reviewsCallback() {
-    setState(() {
-      _refreshReviewsCountToShow();
-      _setReviewsState();
-    });
+  void _refresReviewsCountToShow() {
+    _reviewsCountToShow = _reviews.length > 0
+        ? _reviews.length > 3
+            ? _areReviewsExpanded ? 3 : _reviews.length
+            : _reviews.length
+        : 0;
   }
 
   void _setReviewsState() {
     _reviewsStateKey.currentState.setState(() {
       _reviewsStateKey.currentState.reviewsCountToShow = _reviewsCountToShow;
-      _reviewsStateKey.currentState.reviews = _reviews;
     });
   }
 }

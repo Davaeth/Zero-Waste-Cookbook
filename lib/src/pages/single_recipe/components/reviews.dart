@@ -19,28 +19,30 @@ class Reviews extends StatefulWidget {
 class ReviewsState extends State<Reviews> {
   int reviewsCountToShow;
 
-  List<Review> reviews;
+  List<Review> _reviews;
 
   @override
   Widget build(BuildContext context) => ListView.builder(
         shrinkWrap: true,
         physics: ClampingScrollPhysics(),
         itemCount: reviewsCountToShow,
-        itemBuilder: (context, index) => _buildSingleReview(reviews[index]),
+        itemBuilder: (context, index) => _buildSingleReview(_reviews[index]),
       );
 
   @override
   void initState() {
     reviewsCountToShow = widget.reviewsCountToShow;
 
-    reviews = widget.reviews;
+    _reviews = widget.reviews;
 
     super.initState();
   }
 
   Container _buildSingleReview(Review review) => Container(
+        //margin: EdgeInsets.all(8.0),
         padding: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 8.0),
         decoration: BoxDecoration(
+          //borderRadius: new BorderRadius.all(const Radius.circular(8.0)),
           color: DefaultColors.backgroundColor,
         ),
         child: Column(
@@ -48,7 +50,7 @@ class ReviewsState extends State<Reviews> {
           children: <Widget>[
             addPadding(
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween, 
                   children: <Widget>[
                     Text(
                       'User',
@@ -56,8 +58,8 @@ class ReviewsState extends State<Reviews> {
                           color: RecipeColors.usernameColor, fontSize: 20.0),
                     ),
                     Align(
-                        alignment: Alignment.topCenter,
-                        child: Ratings(review.rate)),
+                      alignment: Alignment.topCenter,
+                      child:Ratings(review.rate)),
                   ],
                 ),
                 bottom: 12.0),
@@ -67,11 +69,11 @@ class ReviewsState extends State<Reviews> {
               textAlign: TextAlign.justify,
             ),
             addPadding(
-                Container(
+            Container(
                   height: 1.5,
                   color: DefaultColors.secondaryColor,
-                ),
-                top: 12.0),
+                  ),
+                  top: 12.0),
           ],
         ),
       );

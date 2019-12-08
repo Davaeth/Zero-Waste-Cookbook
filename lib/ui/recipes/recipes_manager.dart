@@ -5,20 +5,12 @@ import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
 
 class RecipesManager extends StatefulWidget {
-  final Axis scrollDirection;
-
-  RecipesManager({@required this.scrollDirection});
-
   @override
   State<StatefulWidget> createState() => _RecipesManager();
 }
 
 class _RecipesManager extends State<RecipesManager> {
   DatabaseService _databaseService;
-
-  bool _isFav;
-
-  Axis _scrollDirection;
 
   @override
   Widget build(BuildContext context) => StreamBuilder(
@@ -28,7 +20,7 @@ class _RecipesManager extends State<RecipesManager> {
           return ListView(
             padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 5.0),
             shrinkWrap: true,
-            scrollDirection: _scrollDirection,
+            scrollDirection: Axis.horizontal,
             children: _createRecipeDetectors(snapshots),
           );
         } else {
@@ -39,16 +31,8 @@ class _RecipesManager extends State<RecipesManager> {
   @override
   void initState() {
     _databaseService = DatabaseService();
-    _isFav = false;
-    _scrollDirection = widget.scrollDirection;
 
     super.initState();
-  }
-
-  _callback(bool isFav) {
-    setState(() {
-      _isFav = isFav;
-    });
   }
 
   List<Container> _createRecipeDetectors(
@@ -67,7 +51,6 @@ class _RecipesManager extends State<RecipesManager> {
             interior: RecipeCard.createInteriorForListOfCards(
                 recipe: recipe,
                 userId: 'MtcBAWcygoW6ERK83agC'),
-
             recipeID: snapshot.documentID,
           ),
         ),
