@@ -31,7 +31,7 @@ class NewRecipeSectionState extends State<NewRecipeSection> {
                 addPadding(
                     Text(
                       _text,
-                      style: TextStyle(color: Colors.white, fontSize: 25.0),
+                      style: TextStyle(color: Colors.white, fontSize: 22.0),
                     ),
                     bottom: 8.0),
                 child

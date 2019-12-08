@@ -23,14 +23,14 @@ class ReviewCreator extends StatelessWidget {
         },
         child: Container(
           alignment: Alignment.center,
-          color: DefaultColors.secondaryColor,
+          color: Colors.orange,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               addPadding(
                   Text(
                     'Dodaj komentarz',
-                    style: TextStyle(color: Colors.white, fontSize: 15.0),
+                    style: TextStyle(color: Colors.black, fontSize: 15.0),
                   ),
                   left: 16.0,
                   top: 8.0,
@@ -38,7 +38,7 @@ class ReviewCreator extends StatelessWidget {
               addPadding(
                   Icon(
                     Icons.add,
-                    color: Colors.orange,
+                    color: Colors.black,
                     size: 25.0,
                   ),
                   right: 16.0)

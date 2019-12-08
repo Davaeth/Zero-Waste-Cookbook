@@ -12,18 +12,23 @@ class FavRecipesManager extends StatefulWidget {
 class _FavRecipesManager extends State<FavRecipesManager> {
   DatabaseService _db = DatabaseService();
 
-  bool _isFav;
-
   @override
-  Widget build(BuildContext context) => StreamBuilder(
-        stream: _db.getUserFavouriteRecipes('E5ewEF8YxDO0rl8Zue2zMrU7Yd43'),
+  Widget build(BuildContext context) => FutureBuilder(
+        future: _db.getUserFavouriteRecipes('MtcBAWcygoW6ERK83agC'),
         builder: (context, AsyncSnapshot<List<DocumentSnapshot>> snapshots) {
           if (snapshots.hasData) {
-            return ListView(
+            var favRecipes = _extractFavRecipes(snapshots).toList();
+
+            return ListView.builder(
               padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              children: _extractFavRecipes(snapshots).toList(),
+              itemCount: 5,
+              itemBuilder: (BuildContext context, int index) => RecipeCard(
+                interior: RecipeCard.createInteriorForListOfCards(
+                    recipe: favRecipes[index],
+                    userId: 'MtcBAWcygoW6ERK83agC'),
+              ),
             );
           } else {
             return ListView();
@@ -31,31 +36,10 @@ class _FavRecipesManager extends State<FavRecipesManager> {
         },
       );
 
-  @override
-  void initState() {
-    _isFav = false;
-
-    super.initState();
-  }
-
-  _callback(bool ifFav) {
-    setState(() {
-      _isFav = _isFav;
-    });
-  }
-
-  Iterable<RecipeCard> _extractFavRecipes(
+  Iterable<Recipe> _extractFavRecipes(
       AsyncSnapshot<List<DocumentSnapshot>> snapshots) sync* {
     for (var snapshot in snapshots.data) {
-      yield RecipeCard(
-        interior: RecipeCard.createInteriorForListOfCards(
-          recipe: Recipe.fromFirestore(snapshot),
-          imagePath: 'assets/images/small-food.png',
-          userId: 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43',
-          isFav: _isFav,
-          callback: (bool isFav) => _callback(isFav),
-        ),
-      );
+      yield Recipe.fromFirestore(snapshot);
     }
   }
 }

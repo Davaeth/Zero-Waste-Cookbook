@@ -15,7 +15,7 @@ class DifficultyLevelDropdown extends StatefulWidget {
 }
 
 class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
-  String _value = 'Easy';
+  String _value = '-choose-';
 
   List<DifficultyLevel> _difficultyLevels;
 
@@ -27,8 +27,8 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
   Widget build(BuildContext context) => DropdownButtonHideUnderline(
         child: Theme(
           data: ThemeData(canvasColor: DefaultColors.backgroundColor),
-          child: FutureBuilder(
-            future: _databaseService.getAllData('DifficultyLevels'),
+          child: StreamBuilder(
+            stream: _databaseService.getAllData('DifficultyLevels'),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 _createDropdownData(snapshot);
@@ -70,7 +70,7 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
       _difficultyLevels.add(DifficultyLevel.fromFirestore(difficultyLevel));
     });
 
-    _callback(_difficultyLevels.first);
+    //_callback(_difficultyLevels.first);
   }
 
   Iterable<DropdownMenuItem<String>> _createDropdownItems(
