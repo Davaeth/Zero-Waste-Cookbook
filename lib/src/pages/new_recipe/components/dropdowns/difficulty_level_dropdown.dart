@@ -27,8 +27,8 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
   Widget build(BuildContext context) => DropdownButtonHideUnderline(
         child: Theme(
           data: ThemeData(canvasColor: DefaultColors.backgroundColor),
-          child: StreamBuilder(
-            stream: _databaseService.getAllData('DifficultyLevels'),
+          child: FutureBuilder(
+            future: _databaseService.getAllData('DifficultyLevels'),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 _createDropdownData(snapshot);

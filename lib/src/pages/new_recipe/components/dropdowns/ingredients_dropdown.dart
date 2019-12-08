@@ -26,8 +26,8 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
   Widget build(BuildContext context) => DropdownButtonHideUnderline(
         child: Theme(
           data: ThemeData(canvasColor: DefaultColors.backgroundColor),
-          child: StreamBuilder(
-            stream: _databaseService.getAllData('Ingredients'),
+          child: FutureBuilder(
+            future: _databaseService.getAllData('Ingredients'),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 _createDropdownData(context, snapshot);
