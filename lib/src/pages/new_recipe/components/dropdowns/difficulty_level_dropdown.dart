@@ -15,7 +15,9 @@ class DifficultyLevelDropdown extends StatefulWidget {
 }
 
 class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
+
   String _value = '-choose-';
+
 
   List<DifficultyLevel> _difficultyLevels;
 
@@ -27,8 +29,8 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
   Widget build(BuildContext context) => DropdownButtonHideUnderline(
         child: Theme(
           data: ThemeData(canvasColor: DefaultColors.backgroundColor),
-          child: StreamBuilder(
-            stream: _databaseService.getAllData('DifficultyLevels'),
+          child: FutureBuilder(
+            future: _databaseService.getAllData('DifficultyLevels'),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 _createDropdownData(snapshot);
