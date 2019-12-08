@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
@@ -46,27 +47,25 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _isFav;
 
   @override
-  Widget build(BuildContext context) => wrapWithScrollingView(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildRecipeOfTheDay(),
-            addPadding(
-                Text(
-                  'Nowe przepisy',
-                  style: TextStyle(fontSize: 20.0, color: Colors.white),
-                ),
-                left: 16.0,
-                top: 16.0,
-                bottom: 8.0),
-            Expanded(
-              child: Container(
-                height: (MediaQuery.of(context).size.height / 100) * 50,
-                child: RecipesManager(),
+  Widget build(BuildContext context) => ListView(
+        shrinkWrap: true,
+        children: <Widget>[
+          _buildRecipeOfTheDay(),
+          addPadding(
+              Text(
+                'Nowe przepisy',
+                style: TextStyle(fontSize: 20.0, color: Colors.white),
               ),
+              left: 16.0,
+              top: 16.0,
+              bottom: 8.0),
+          Container(
+            height: (MediaQuery.of(context).size.height / 100) * 50,
+            child: RecipesManager(
+              scrollDirection: Axis.horizontal,
             ),
-          ],
-        ),
+          ),
+        ],
       );
 
   @override
@@ -79,9 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
   FutureBuilder _buildRecipeOfTheDay() {
     DatabaseService _db = DatabaseService();
 
-    return FutureBuilder(
+    return FutureBuilder<DocumentSnapshot>(
       future: _db.getDatumByID('Recipes', '9dINDS1sKiIJglqtmAXE'),
-      builder: (context, AsyncSnapshot<dynamic> snapshot) {
+      builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
           Recipe recipe = Recipe.fromFirestore(snapshot?.data);
 

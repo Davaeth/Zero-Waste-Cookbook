@@ -136,31 +136,36 @@ class DatabaseService {
         .asStream();
   }
 
-  Stream<Recipe> getRecipesByIngredients(List<String> ingredientsIds) async* {
-    print('elkoo');
-    var ingredientsRefs = getDocumentsReferences('Ingredients', ingredientsIds);
+  Future<List<Recipe>> getRecipesByIngredients(
+      List<String> ingredientsIds) async {
+    var ingredientsRefs =
+        getDocumentsReferences('Ingredients', ingredientsIds).toList();
 
-    var recipes = await getAllData('Recipes');
+    print('Skłądniki :: ${ingredientsRefs}');
 
-    for (var recipeSnapshot in recipes.documents) {
+    var recipesSnapshots = await getAllData('Recipes');
+
+    List<Recipe> recipes = List<Recipe>();
+
+    for (var recipeSnapshot in recipesSnapshots.documents) {
       var recipe = Recipe.fromFirestore(recipeSnapshot);
 
-      if (recipe.ingredients == ingredientsRefs) {
-        yield recipe;
+      if (recipe.ingredients.length > ingredientsRefs.length) {
+        continue;
       }
 
-      for (var recipeIngredient in recipe.ingredients) {
-        if (recipe.ingredients.length > ingredientsRefs.length) {
-          continue;
-        }
+      bool hasMoreThanGivenIngredients = recipe.ingredients
+          .every((ingredient) => ingredientsRefs.contains(ingredient));
 
-        if (!ingredientsRefs.contains(recipeIngredient)) {
-          continue;
-        }
+      bool hasRefsMoreThanRecipeIngredients = ingredientsRefs
+          .any((ingredient) => recipe.ingredients.contains(ingredient));
 
-        yield recipe;
+      if (hasMoreThanGivenIngredients && hasRefsMoreThanRecipeIngredients) {
+        recipes.add(recipe);
       }
     }
+
+    return recipes;
   }
 
   Future<QuerySnapshot> getRecipeTags(String recipeId) {
@@ -203,6 +208,13 @@ class DatabaseService {
         'favouriteRecipes': FieldValue.arrayRemove([recipeRef])
       },
     );
+  }
+
+  Stream<QuerySnapshot> streamAllData(String collection) async* {
+    yield await _db
+        .collection(collection)
+        .orderBy('name', descending: false)
+        .getDocuments();
   }
 
   streamCollection(String collection, String id) =>

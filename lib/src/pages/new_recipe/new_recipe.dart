@@ -4,7 +4,7 @@ import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/difficulty_level.dart';
-import 'package:zero_waste_cookbook/src/models/food_addons/dish_region.dart';
+import 'package:zero_waste_cookbook/src/models/food_addons/region.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/tag.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/new_recipe_section.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/recipe_ingredients.dart';
@@ -30,7 +30,7 @@ class _NewRecipeState extends State<NewRecipe> {
 
   List<Ingredient> _ingredients;
   DifficultyLevel _difficultyLevel;
-  DishRegion _dishRegion;
+  Region _dishRegion;
 
   GlobalKey<NewRecipeSectionState> _newRecipeSectionKey;
   GlobalKey<NewRecipeSectionState> _tagsSectionKey;
@@ -152,7 +152,7 @@ class _NewRecipeState extends State<NewRecipe> {
         children: <Widget>[
           addPadding(
               Text(
-                ingredient.ingredientName,
+                ingredient.name,
                 style: TextStyle(color: Colors.white, fontSize: 20.0),
               ),
               left: 8.0),
@@ -278,7 +278,7 @@ class _NewRecipeState extends State<NewRecipe> {
     _difficultyLevel = difficultyLevel;
   }
 
-  void _dishRegionsDropdownCallback(DishRegion dishRegion) {
+  void _dishRegionsDropdownCallback(Region dishRegion) {
     _dishRegion = dishRegion;
   }
 

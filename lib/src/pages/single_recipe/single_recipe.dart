@@ -171,7 +171,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
   Iterable<String> _extractIngredients(
       AsyncSnapshot<List<DocumentSnapshot>> snapshots) sync* {
     for (var snapshot in snapshots.data) {
-      yield Ingredient.fromFirestore(snapshot).ingredientName;
+      yield Ingredient.fromFirestore(snapshot).name;
     }
   }
 
