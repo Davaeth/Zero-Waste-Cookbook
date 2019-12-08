@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zero_waste_cookbook/src/models/administration/user.dart';
+import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 
 class DatabaseService {
   final _db = Firestore.instance;
@@ -59,8 +60,8 @@ class DatabaseService {
     });
   }
 
-  Stream<QuerySnapshot> getAllData(String collection) =>
-      _db.collection(collection).getDocuments().asStream();
+  Future<QuerySnapshot> getAllData(String collection) async =>
+      await _db.collection(collection).getDocuments();
 
   getDataByField(String collection, String field, String expectedField) async {
     List<DocumentSnapshot> value;
@@ -135,6 +136,33 @@ class DatabaseService {
         .asStream();
   }
 
+  Stream<Recipe> getRecipesByIngredients(List<String> ingredientsIds) async* {
+    print('elkoo');
+    var ingredientsRefs = getDocumentsReferences('Ingredients', ingredientsIds);
+
+    var recipes = await getAllData('Recipes');
+
+    for (var recipeSnapshot in recipes.documents) {
+      var recipe = Recipe.fromFirestore(recipeSnapshot);
+
+      if (recipe.ingredients == ingredientsRefs) {
+        yield recipe;
+      }
+
+      for (var recipeIngredient in recipe.ingredients) {
+        if (recipe.ingredients.length > ingredientsRefs.length) {
+          continue;
+        }
+
+        if (!ingredientsRefs.contains(recipeIngredient)) {
+          continue;
+        }
+
+        yield recipe;
+      }
+    }
+  }
+
   Future<QuerySnapshot> getRecipeTags(String recipeId) {
     DocumentReference ref = _db.collection('Recipes').document(recipeId);
 
@@ -165,59 +193,6 @@ class DatabaseService {
         .where('user', isEqualTo: userRef)
         .getDocuments();
   }
-
-  // Future<List<Recipe>> getRecipesByIngredients(
-  //     List<String> ingredientsId) async {
-  //   List<DocumentReference> ingredients = List<DocumentReference>();
-  //   List<Recipe> recipes = List<Recipe>();
-
-  //   List<Recipe> result = List<Recipe>();
-
-  //   ingredients = getDocumentsReferences('Ingredients', ingredientsId).toList();
-
-  //   var recipesSnapshots = await _db
-  //       .collection('Recipes')
-  //       .getDocuments()
-  //       .then((value) => value.documents);
-
-  //   for (var snapshot in recipesSnapshots) {
-  //     recipes.add(Recipe.fromFirestore(snapshot));
-  //   }
-
-  //   for (var recipe in recipes) {
-  //     if (recipe.ingredients == ingredients) {
-  //       result.add(recipe);
-  //     } else {
-  //       for (var ingredient in ingredients) {
-  //         if (recipe.ingredients. && recipe) {
-
-  //         }
-  //       }
-  //     }
-  //   }
-
-  //   // _db
-  // }
-
-  // Stream<QuerySnapshot> getSearchedRecipes(List<String> ingredientsId) {
-  //   List<DocumentReference> ingredientsReferences =
-  //       getDocumentsReferences('Ingredients', ingredientsId);
-
-  //   var list;
-
-  //   _db
-  //       .collection('RecipeMeasures')
-  //       .where('idIngredients', arrayContains: ingredientsReferences)
-  //       .getDocuments()
-  //       .then((values) {
-  //     print(values.documents);
-  //     list = values.documents;
-  //   });
-
-  //   print(list);
-
-  //   return null;
-  // }
 
   Future<void> removeRecipeFromFavourites(
       String recipeId, String userId) async {

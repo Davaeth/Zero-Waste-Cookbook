@@ -13,8 +13,6 @@ class AdministratorPanel extends StatelessWidget {
               Icons.supervised_user_circle, Routes.AdministratorUsers, context),
           buildAdministratorCardButton("Manage recipes", Icons.receipt,
               Routes.AdministratorRecipes, context),
-          buildAdministratorCardButton("Manage applications", Icons.description,
-              Routes.AdministratorApplications, context),
         ],
       );
 }

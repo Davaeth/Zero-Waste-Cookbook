@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
@@ -12,14 +13,22 @@ import 'ui/recipes/recipes_manager.dart';
 import 'ui/shared/behaviours/custom_scroll_behavior.dart';
 import 'ui/shared/page_resolvers/positioning.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  FirebaseUser user = await FirebaseAuth.instance.currentUser();
+
+  return runApp(MyApp(user != null));
+}
 
 class MyApp extends StatelessWidget {
+  final bool _isLogged;
+
+  MyApp(this._isLogged);
+
   @override
   Widget build(BuildContext context) => MaterialApp(
       title: 'Zero Waste Cookbook',
       builder: (context, child) => configureScrollBehavior(child),
-      home: AuthenticationCheck(),
+      home: AuthenticationCheck(_isLogged),
       routes: {
         Routes.AdministratorUsers: (context) => UsersActions(),
         Routes.AdministratorRecipes: (context) => RecipesActions(),

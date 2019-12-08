@@ -26,8 +26,8 @@ class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
   Widget build(BuildContext context) => DropdownButtonHideUnderline(
         child: Theme(
           data: ThemeData(canvasColor: DefaultColors.backgroundColor),
-          child: StreamBuilder(
-            stream: _databaseService.getAllData('Regions'),
+          child: FutureBuilder(
+            future: _databaseService.getAllData('Regions'),
             builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
                 _createDropdownData(context, snapshot);
