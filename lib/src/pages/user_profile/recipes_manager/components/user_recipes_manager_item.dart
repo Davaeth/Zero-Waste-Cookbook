@@ -16,12 +16,7 @@ class UserRecipesManagerItem extends StatefulWidget {
 
 class _UserRecipesManagerItemState extends State<UserRecipesManagerItem>
     with TickerProviderStateMixin {
-  AnimationController _iconAnimationController;
-
   Recipe _recipe;
-
-  bool _isSelected;
-
   Function _callback;
 
   @override
@@ -39,14 +34,7 @@ class _UserRecipesManagerItemState extends State<UserRecipesManagerItem>
       );
 
   @override
-  void dispose() {
-    _iconAnimationController.dispose();
-    super.dispose();
-  }
-
-  @override
   void initState() {
-    _isSelected = false;
     _callback = widget.callback;
 
     super.initState();
@@ -70,9 +58,6 @@ class _UserRecipesManagerItemState extends State<UserRecipesManagerItem>
       );
 
   ListTile _buildUserRecipesTile() {
-    _iconAnimationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 500));
-
     _recipe = widget.recipe;
 
     return ListTile(
@@ -111,10 +96,3 @@ class _UserRecipesManagerItemState extends State<UserRecipesManagerItem>
     });
   }
 }
-
-// Container(
-//           width: (MediaQuery.of(context).size.width / 100) * 90,
-//           height: (MediaQuery.of(context).size.height / 100) * 15,
-//           decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(10.0), color: Colors.red),
-//         ),

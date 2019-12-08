@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
+import 'package:zero_waste_cookbook/src/utils/routes_arguments.dart';
 
 void navigateToPageByRoute(String route, BuildContext context,
-    {String recipeID}) {
-  Navigator.pushNamed(context, route, arguments: recipeID);
+    {String recipeId, List<Recipe> recipes}) {
+  Navigator.pushNamed(context, route,
+      arguments: RoutesArguments(recipeId, recipes));
 }
 
 void stepPageBack(BuildContext context) {
@@ -10,11 +13,12 @@ void stepPageBack(BuildContext context) {
 }
 
 GestureDetector switchPage(BuildContext context, Widget child, String route,
-        {String recipeID, bool isTappable = true}) =>
+        {String recipeId, List<Recipe> recipes, bool isTappable = true}) =>
     GestureDetector(
       onTap: isTappable
           ? () {
-              navigateToPageByRoute(route, context, recipeID: recipeID);
+              navigateToPageByRoute(route, context,
+                  recipeId: recipeId, recipes: recipes);
             }
           : () {},
       child: child,

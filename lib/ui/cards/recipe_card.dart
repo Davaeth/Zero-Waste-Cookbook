@@ -196,7 +196,7 @@ class RecipeCard extends StatefulWidget {
 
 class _RecipeCardState extends State<RecipeCard> {
   List<Widget> _interior;
-  String _recipeID;
+  String _recipeId;
   bool _isTappable;
 
   @override
@@ -211,13 +211,13 @@ class _RecipeCardState extends State<RecipeCard> {
         ),
       ),
       Routes.Recipe,
-      recipeID: _recipeID,
+      recipeId: _recipeId,
       isTappable: _isTappable);
 
   @override
   void initState() {
     _interior = widget.interior;
-    _recipeID = widget.recipeID;
+    _recipeId = widget.recipeID;
     _isTappable = widget.isTappable;
 
     super.initState();
