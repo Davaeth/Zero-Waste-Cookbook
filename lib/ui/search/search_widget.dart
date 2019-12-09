@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:zero_waste_cookbook/src/database/database_service.dart';
+import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
+import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
-Padding nameSearchWidget(TextEditingController nameSearchController) =>
-    addPadding(
+Padding nameSearchWidget(BuildContext context) => addPadding(
       Container(
         padding: const EdgeInsets.all(8.0),
         child: TextField(
-          controller: nameSearchController,
+          onSubmitted: (String text) => _searchForRecipeByName(text, context),
           cursorColor: DefaultColors.iconColor,
           style: TextStyle(color: DefaultColors.textColor, height: 0.8),
           decoration: InputDecoration(
@@ -22,9 +25,35 @@ Padding nameSearchWidget(TextEditingController nameSearchController) =>
       ),
     );
 
-OutlineInputBorder _buildOutlineInputBorder(Color borderColor) {
-  return OutlineInputBorder(
-    borderRadius: BorderRadius.all(Radius.circular(25.0)),
-    borderSide: BorderSide(color: borderColor),
+Future<void> _searchForRecipeByName(String text, BuildContext context) async {
+  var _dbService = DatabaseService();
+
+  var recipesSnapshots = await _dbService.getDataByField(
+    'Recipes',
+    'recipeTitle',
+    text.toLowerCase(),
   );
+
+  if (recipesSnapshots.length == 1) {
+    navigateToPageByRoute(Routes.Recipe, context,
+        recipeId: recipesSnapshots.single.documentID);
+  } else {
+    var recipes = List<Recipe>();
+
+    recipesSnapshots.forEach((snapshot) {
+      recipes.add(Recipe.fromFirestore(snapshot));
+    });
+
+    navigateToPageByRoute(
+      Routes.SearchingResultPage,
+      context,
+      recipes: recipes,
+    );
+  }
 }
+
+OutlineInputBorder _buildOutlineInputBorder(Color borderColor) =>
+    OutlineInputBorder(
+      borderRadius: BorderRadius.all(Radius.circular(25.0)),
+      borderSide: BorderSide(color: borderColor),
+    );

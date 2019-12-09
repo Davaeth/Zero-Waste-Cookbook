@@ -1,4 +1,3 @@
-import 'package:after_layout/after_layout.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
@@ -25,7 +24,6 @@ class SingleRecipe extends StatefulWidget {
 
 class _SingleRecipeState extends State<SingleRecipe> {
   int _reviewsCountToShow = 0;
-  bool _isPageBuilt = false;
   bool _areReviewsExpanded;
   bool _isFav;
 

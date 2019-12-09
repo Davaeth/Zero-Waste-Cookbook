@@ -63,33 +63,21 @@ class DatabaseService {
   Future<QuerySnapshot> getAllData(String collection) async =>
       await _db.collection(collection).getDocuments();
 
-  getDataByField(String collection, String field, String expectedField) async {
-    List<DocumentSnapshot> value;
+  Future<List<DocumentSnapshot>> getDataByField(
+          String collection, String field, String expectedField) async =>
+      await _db
+          .collection(collection)
+          .where(field, isEqualTo: expectedField)
+          .getDocuments()
+          .then((snaphshot) => snaphshot.documents);
 
-    await _db
-        .collection(collection)
-        .where(field, isEqualTo: expectedField)
-        .getDocuments()
-        .then((snaphshot) {
-      value = snaphshot.documents;
-    });
-
-    return value;
-  }
-
-  getDatumByField(String collection, String field, String expectedField) async {
-    DocumentSnapshot value;
-
-    await _db
-        .collection(collection)
-        .where(field, isEqualTo: expectedField)
-        .getDocuments()
-        .then((snaphshot) {
-      value = snaphshot.documents[0];
-    });
-
-    return value;
-  }
+  Future<DocumentSnapshot> getDatumByField(
+          String collection, String field, String expectedField) async =>
+      await _db
+          .collection(collection)
+          .where(field, isEqualTo: expectedField)
+          .getDocuments()
+          .then((snaphshot) => snaphshot.documents.single);
 
   Future<DocumentSnapshot> getDatumByID(String collection, String id) async =>
       await _db
@@ -141,8 +129,6 @@ class DatabaseService {
     var ingredientsRefs =
         getDocumentsReferences('Ingredients', ingredientsIds).toList();
 
-    print('Skłądniki :: ${ingredientsRefs}');
-
     var recipesSnapshots = await getAllData('Recipes');
 
     List<Recipe> recipes = List<Recipe>();
@@ -162,6 +148,24 @@ class DatabaseService {
 
       if (hasMoreThanGivenIngredients && hasRefsMoreThanRecipeIngredients) {
         recipes.add(recipe);
+      }
+    }
+
+    return recipes;
+  }
+
+  Future<List<Recipe>> getRecipesByRegions(List<String> regionsIds) async {
+    var recipesSnapshots = await getAllData('Recipes');
+
+    List<Recipe> recipes = List<Recipe>();
+
+    for (var recipeSnapshot in recipesSnapshots.documents) {
+      var recipe = Recipe.fromFirestore(recipeSnapshot);
+
+      for (var regionId in regionsIds) {
+        if (recipe.dishRegions.documentID == regionId) {
+          recipes.add(recipe);
+        }
       }
     }
 
