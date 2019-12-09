@@ -50,7 +50,6 @@ class _FavRecipesManager extends State<FavRecipesManager> {
       yield RecipeCard(
         interior: RecipeCard.createInteriorForListOfCards(
           recipe: Recipe.fromFirestore(snapshot),
-          imagePath: 'assets/images/small-food.png',
           userId: 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43',
           isFav: _isFav,
           callback: (bool isFav) => _callback(isFav),

@@ -57,7 +57,6 @@ class _SingleRecipeState extends State<SingleRecipe> {
                   children: <Widget>[
                     RecipeCard(
                       interior: RecipeCard.createInteriorForCardWithRating(
-                        imagePath: 'assets/images/small-food.png',
                         recipe: _this,
                         userId: 'MtcBAWcygoW6ERK83agC',
                         context: context,

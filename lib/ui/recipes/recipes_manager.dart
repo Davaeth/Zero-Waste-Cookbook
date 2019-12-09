@@ -66,7 +66,6 @@ class _RecipesManager extends State<RecipesManager> {
           child: RecipeCard(
             interior: RecipeCard.createInteriorForListOfCards(
               recipe: recipe,
-              imagePath: 'assets/images/small-food.png',
               userId: 'MtcBAWcygoW6ERK83agC',
               isFav: _isFav,
               callback: (bool isFav) => _callback(isFav),

@@ -9,6 +9,8 @@ import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
+import 'package:global_configuration/global_configuration.dart';
+
 import '../ratings.dart';
 import '../stack_builder.dart';
 
@@ -27,8 +29,7 @@ class RecipeCard extends StatefulWidget {
   _RecipeCardState createState() => _RecipeCardState();
 
   static List<Widget> createInteriorForCardWithRating(
-      {@required String imagePath,
-      @required Recipe recipe,
+      {@required Recipe recipe,
       @required BuildContext context,
       @required String userId,
       @required bool isFav,
@@ -37,7 +38,7 @@ class RecipeCard extends StatefulWidget {
 
     return <Widget>[
       StackBuilder.createImageWithIconButtons(
-          imagePath: imagePath,
+          imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           isFav: isFav,
           recipeId: recipe.id,
           userId: userId,
@@ -84,7 +85,6 @@ class RecipeCard extends StatefulWidget {
 
   static List<Widget> createInteriorForListOfCards(
       {@required Recipe recipe,
-      @required String imagePath,
       @required bool isFav,
       @required String userId,
       Function(bool) callback}) {
@@ -92,7 +92,7 @@ class RecipeCard extends StatefulWidget {
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
-          imagePath: imagePath,
+          imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           isFav: isFav,
           recipeId: recipe.id,
           userId: userId,
@@ -129,7 +129,6 @@ class RecipeCard extends StatefulWidget {
 
   static List<Widget> createInteriorForSingleCard(
       {@required Recipe recipe,
-      @required String imagePath,
       @required String userId,
       @required bool isFav,
       Function(bool) callback}) {
@@ -137,7 +136,7 @@ class RecipeCard extends StatefulWidget {
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
-          imagePath: imagePath,
+          imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           isFav: isFav,
           recipeId: recipe.id,
           userId: userId,
