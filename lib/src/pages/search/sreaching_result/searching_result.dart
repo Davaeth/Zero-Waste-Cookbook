@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
-import 'package:zero_waste_cookbook/ui/recipes/recipes_manager.dart';
+import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
@@ -23,6 +23,7 @@ class SearchingResult extends StatelessWidget {
             children: [
               _buildCloseButton(context),
               ListView.builder(
+                controller: ScrollController(),
                 shrinkWrap: true,
                 itemCount: _recipes.length,
                 itemBuilder: (context, index) =>
@@ -35,18 +36,22 @@ class SearchingResult extends StatelessWidget {
 
   Padding _buildSingleListElement(BuildContext context, int index) =>
       addPadding(
-        Center(
-          child: Container(
-            alignment: Alignment.center,
-            width: (MediaQuery.of(context).size.width / 100) * 90,
-            height: (MediaQuery.of(context).size.height / 100) * 15,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: DefaultColors.secondaryColor,
+        switchPage(
+            context,
+            Center(
+              child: Container(
+                alignment: Alignment.center,
+                width: (MediaQuery.of(context).size.width / 100) * 90,
+                height: (MediaQuery.of(context).size.height / 100) * 15,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  color: DefaultColors.secondaryColor,
+                ),
+                child: _buildRecipeTile(_recipes[index]),
+              ),
             ),
-            child: _buildRecipeTile(_recipes[index]),
-          ),
-        ),
+            Routes.Recipe,
+            recipeId: _recipes[index].id),
         bottom: 16.0,
       );
 

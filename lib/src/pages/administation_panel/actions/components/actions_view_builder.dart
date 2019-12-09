@@ -69,8 +69,6 @@ class _ActionsViewBuilderState extends State<ActionsViewBuilder> {
       } else {
         indexes.add(index);
       }
-
-      print('Selected: ' + indexes.toString());
     });
   }
 }

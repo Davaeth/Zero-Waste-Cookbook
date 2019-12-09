@@ -77,11 +77,8 @@ class _VotingState extends State<Voting> {
         _cardColors.forEach((color) {
           color = Colors.green;
         });
-        print(_cardColors[0]);
       });
-    } else if (orientation == CardSwipeOrientation.RIGHT) {
-      print('Odrzucam');
-    }
+    } else if (orientation == CardSwipeOrientation.RIGHT) {}
   }
 
   _handleSwapUpdate(DragUpdateDetails details, Alignment align) {

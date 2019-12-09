@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
-import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/region.dart';
-import 'package:zero_waste_cookbook/src/pages/search/sreaching_result/searching_result.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
@@ -132,8 +130,12 @@ class _FiltersListState extends State<FiltersList> {
       bottom: 8.0);
 
   Future<void> _showSearchingResult() async {
-    print('testttttt');
     if (_collection == 'Regions') {
+      navigateToPageByRoute(
+        Routes.SearchingResultPage,
+        context,
+        recipes: await _dbService.getRecipesByRegions(_docReferences),
+      );
     } else if (_collection == 'Ingredients') {
       navigateToPageByRoute(
         Routes.SearchingResultPage,
