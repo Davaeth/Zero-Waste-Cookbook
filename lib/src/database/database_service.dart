@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:zero_waste_cookbook/src/models/administration/review.dart';
 import 'package:zero_waste_cookbook/src/models/administration/user.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 
@@ -64,7 +65,7 @@ class DatabaseService {
       await _db.collection(collection).getDocuments();
 
   Future<List<DocumentSnapshot>> getDataByField(
-          String collection, String field, String expectedField) async =>
+          String collection, String field, dynamic expectedField) async =>
       await _db
           .collection(collection)
           .where(field, isEqualTo: expectedField)
@@ -72,7 +73,7 @@ class DatabaseService {
           .then((snaphshot) => snaphshot.documents);
 
   Future<DocumentSnapshot> getDatumByField(
-          String collection, String field, String expectedField) async =>
+          String collection, String field, dynamic expectedField) async =>
       await _db
           .collection(collection)
           .where(field, isEqualTo: expectedField)
@@ -94,6 +95,23 @@ class DatabaseService {
     for (var reference in references) {
       yield getDocumentReference(collection, reference);
     }
+  }
+
+  Future<void> updateRecipeRank(String recipeId) async {
+    var recipeRef = getDocumentReference('Recipes', recipeId);
+    var reviews = (await getDataByField('Reviews', 'recipe', recipeRef));
+
+    double newRank = 0.0;
+
+    for (var review in reviews) {
+      newRank += review.data['rate'];
+    }
+
+    _db.collection('Recipes').document(recipeId).updateData(
+      {
+        'rank': double.parse((newRank / reviews.length).toStringAsFixed(2)),
+      },
+    );
   }
 
   Future<QuerySnapshot> getNewestRecipes({int limit = 5}) => _db
