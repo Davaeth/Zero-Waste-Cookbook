@@ -109,7 +109,8 @@ class _DialogBuilderState extends State<DialogBuilder> {
             rate: _rateValue,
             description: _descriptionController.text,
             reviewType: 'Cool',
-            user: _db.getDocumentReference('Users', 'MtcBAWcygoW6ERK83agC'),
+            user: _db.getDocumentReference(
+                'Users', 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43'),
             recipe: _db.getDocumentReference('Recipes', _recipeId),
           ).toJson(),
         );

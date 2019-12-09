@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:zero_waste_cookbook/src/models/administration/review.dart';
 import 'package:zero_waste_cookbook/src/models/administration/user.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 
@@ -59,6 +58,17 @@ class DatabaseService {
     await _db.collection(collection).document(id).updateData({
       fieldToModify: FieldValue.arrayRemove([reference])
     });
+  }
+
+  Future<bool> checkIfUserIsAReviewCreator(
+      String userId, String reviewId) async {
+    var userRef = getDocumentReference('Users', userId);
+
+    return await _db
+        .collection('Reviews')
+        .document(reviewId)
+        .get()
+        .then((value) => value.data['user'] == userRef);
   }
 
   Future<QuerySnapshot> getAllData(String collection) async =>
@@ -158,13 +168,14 @@ class DatabaseService {
         continue;
       }
 
-      bool hasMoreThanGivenIngredients = recipe.ingredients
+      bool hasRecipeMoreThanGivenIngredients = recipe.ingredients
           .every((ingredient) => ingredientsRefs.contains(ingredient));
 
       bool hasRefsMoreThanRecipeIngredients = ingredientsRefs
           .any((ingredient) => recipe.ingredients.contains(ingredient));
 
-      if (hasMoreThanGivenIngredients && hasRefsMoreThanRecipeIngredients) {
+      if (hasRecipeMoreThanGivenIngredients &&
+          hasRefsMoreThanRecipeIngredients) {
         recipes.add(recipe);
       }
     }

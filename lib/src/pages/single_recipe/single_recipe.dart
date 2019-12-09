@@ -5,7 +5,9 @@ import 'package:zero_waste_cookbook/src/models/administration/review.dart';
 import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/pages/single_recipe/components/review_creator.dart';
+import 'package:zero_waste_cookbook/src/utils/routes_arguments.dart';
 import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
+import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/expansion_tiles/expansion_tile_builder.dart';
 import 'package:zero_waste_cookbook/ui/expansion_tiles/section.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
@@ -103,6 +105,8 @@ class _SingleRecipeState extends State<SingleRecipe> {
                             reviews: _reviews,
                             reviewsCountToShow: _reviewsCountToShow,
                             key: _reviewsStateKey,
+                            singleRecipeCallback: _addReviewCallback,
+                            recipeId: _recipeID,
                           );
                         } else {
                           return ListView();
@@ -184,25 +188,25 @@ class _SingleRecipeState extends State<SingleRecipe> {
   }
 
   void _refreshReviewsCountToShow() {
-    _reviewsCountToShow = _areReviewsExpanded ? _reviews.length : 3;
-
     if (_areReviewsExpanded) {
       _reviewsCountToShow = _reviews.length;
-      return;
-    }
-
-    if (_reviews.length > 3) {
-      _reviewsCountToShow = 3;
     } else {
-      _reviewsCountToShow = _reviews.length;
+      if (_reviews.length <= 3) {
+        _reviewsCountToShow = _reviews.length;
+      } else {
+        _reviewsCountToShow = 3;
+      }
     }
   }
 
   void _reviewsCallback() {
-    setState(() {
-      _refreshReviewsCountToShow();
-      _setReviewsState();
-    });
+    _setReviewsState();
+    _refreshReviewsCountToShow();
+  }
+
+  void _addReviewCallback() {
+    Navigator.pushReplacementNamed(context, Routes.Recipe,
+        arguments: RoutesArguments(_recipeID, null));
   }
 
   void _setReviewsState() {
