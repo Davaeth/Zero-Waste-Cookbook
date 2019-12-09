@@ -5,7 +5,6 @@ class Review {
   final String description;
   final String reviewType;
   final int rate;
-  final int rank;
   final DocumentReference recipe;
   final DocumentReference user;
 
@@ -14,7 +13,6 @@ class Review {
       this.description,
       this.reviewType,
       this.rate,
-      this.rank,
       this.recipe,
       this.user});
 
@@ -26,7 +24,6 @@ class Review {
         description: data['description'] ?? 'Empty',
         reviewType: data['reviewType'],
         rate: data['rate'] ?? 1,
-        rank: data['rank'] ?? 1,
         recipe: data['recipe'],
         user: data['user']);
   }
@@ -35,7 +32,6 @@ class Review {
         'description': description,
         'reviewType': reviewType,
         'rate': rate,
-        'rank': rank,
         'recipe': recipe,
         'user': user
       };

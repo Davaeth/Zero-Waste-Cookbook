@@ -74,7 +74,7 @@ class RecipeCard extends StatefulWidget {
           Row(
             mainAxisSize: MainAxisSize.max,
             mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[Ratings(recipe.rank)],
+            children: <Widget>[Ratings(recipe.rank.floor())],
           ),
           top: 8.0,
           left: 16.0,

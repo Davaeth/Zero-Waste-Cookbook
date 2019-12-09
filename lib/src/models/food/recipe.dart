@@ -6,7 +6,7 @@ class Recipe {
   final int prepTime;
   final String description;
   final String photoPath;
-  final int rank;
+  final double rank;
   final Timestamp creationTime;
   final bool deleted;
   final DocumentReference user;
@@ -37,7 +37,7 @@ class Recipe {
       prepTime: data['prepTime'],
       description: data['description'],
       photoPath: data['photoPath'],
-      rank: data['rank'],
+      rank: double.parse(data['rank'].toString()) ?? 0.0,
       creationTime: data['creationTime'],
       deleted: data['deleted'],
       user: data['user'],

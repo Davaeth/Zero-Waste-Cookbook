@@ -60,11 +60,22 @@ class DatabaseService {
     });
   }
 
+  Future<bool> checkIfUserIsAReviewCreator(
+      String userId, String reviewId) async {
+    var userRef = getDocumentReference('Users', userId);
+
+    return await _db
+        .collection('Reviews')
+        .document(reviewId)
+        .get()
+        .then((value) => value.data['user'] == userRef);
+  }
+
   Future<QuerySnapshot> getAllData(String collection) async =>
       await _db.collection(collection).getDocuments();
 
   Future<List<DocumentSnapshot>> getDataByField(
-          String collection, String field, String expectedField) async =>
+          String collection, String field, dynamic expectedField) async =>
       await _db
           .collection(collection)
           .where(field, isEqualTo: expectedField)
@@ -72,7 +83,7 @@ class DatabaseService {
           .then((snaphshot) => snaphshot.documents);
 
   Future<DocumentSnapshot> getDatumByField(
-          String collection, String field, String expectedField) async =>
+          String collection, String field, dynamic expectedField) async =>
       await _db
           .collection(collection)
           .where(field, isEqualTo: expectedField)
@@ -94,6 +105,23 @@ class DatabaseService {
     for (var reference in references) {
       yield getDocumentReference(collection, reference);
     }
+  }
+
+  Future<void> updateRecipeRank(String recipeId) async {
+    var recipeRef = getDocumentReference('Recipes', recipeId);
+    var reviews = (await getDataByField('Reviews', 'recipe', recipeRef));
+
+    double newRank = 0.0;
+
+    for (var review in reviews) {
+      newRank += review.data['rate'];
+    }
+
+    _db.collection('Recipes').document(recipeId).updateData(
+      {
+        'rank': double.parse((newRank / reviews.length).toStringAsFixed(2)),
+      },
+    );
   }
 
   Future<QuerySnapshot> getNewestRecipes({int limit = 5}) => _db
@@ -140,13 +168,14 @@ class DatabaseService {
         continue;
       }
 
-      bool hasMoreThanGivenIngredients = recipe.ingredients
+      bool hasRecipeMoreThanGivenIngredients = recipe.ingredients
           .every((ingredient) => ingredientsRefs.contains(ingredient));
 
       bool hasRefsMoreThanRecipeIngredients = ingredientsRefs
           .any((ingredient) => recipe.ingredients.contains(ingredient));
 
-      if (hasMoreThanGivenIngredients && hasRefsMoreThanRecipeIngredients) {
+      if (hasRecipeMoreThanGivenIngredients &&
+          hasRefsMoreThanRecipeIngredients) {
         recipes.add(recipe);
       }
     }
