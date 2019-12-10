@@ -36,7 +36,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
   List<Review> _reviews;
   String _recipeID;
 
-  Recipe _this;
+  Recipe _recipe;
 
   @override
   Widget build(BuildContext context) => SafeArea(
@@ -46,82 +46,94 @@ class _SingleRecipeState extends State<SingleRecipe> {
         right: true,
         child: Scaffold(
           backgroundColor: DefaultColors.backgroundColor,
-          body: FutureBuilder(
-            future: _databaseService.getDatumByID('Recipes', _recipeID),
-            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-              if (snapshot.hasData) {
-                _getRecipeData(snapshot);
-
-                return ListView(
-                  shrinkWrap: true,
-                  children: <Widget>[
-                    RecipeCard(
-                      interior: RecipeCard.createInteriorForCardWithRating(
-                        imagePath: 'assets/images/small-food.png',
-                        recipe: _this,
-                        userId: 'MtcBAWcygoW6ERK83agC',
-                        context: context,
-                        isFav: _isFav,
-                        callback: (bool isFav) =>
-                            _recipeStackCardCallback(isFav),
-                      ),
-                      isTappable: false,
-                    ),
-                    FutureBuilder(
-                      future: _databaseService
-                          .getRecipeIngredients(_this.ingredients),
-                      builder: (context,
-                          AsyncSnapshot<List<DocumentSnapshot>> snapshots) {
-                        var ingredientsNames = _extractIngredients(snapshots);
-
-                        return addPadding(
-                            ExpansionTileBuilder(
-                              Section(
-                                'INGREDIENTS',
-                                entries: ingredientsNames.toList(),
-                              ),
-                            ),
-                            top: 4.0,
-                            bottom: 8.0);
-                      },
-                    ),
-                    addPadding(
-                        ExpansionTileBuilder(
-                          Section(
-                            'DESCRIPTION',
-                            entries: [_this.description],
-                          ),
-                        ),
-                        bottom: 8.0),
-                    ReviewCreator(_reviewsCallback, _recipeID),
-                    StreamBuilder(
-                      stream: _databaseService.getRecipeReviews(_recipeID),
-                      builder:
-                          (context, AsyncSnapshot<QuerySnapshot> snapshots) {
-                        if (snapshot.hasData) {
-                          _buildReviewsList(snapshots);
-
-                          return Reviews(
-                            reviews: _reviews,
-                            reviewsCountToShow: _reviewsCountToShow,
-                            key: _reviewsStateKey,
-                            singleRecipeCallback: _addReviewCallback,
-                            recipeId: _recipeID,
-                          );
-                        } else {
-                          return ListView();
-                        }
-                      },
-                    ),
-                    _createReviewExpandText()
-                  ],
-                );
-              } else {
-                return ListView();
-              }
-            },
-          ),
+          body: _buildSingleRecipe(),
         ),
+      );
+
+  FutureBuilder<DocumentSnapshot> _buildSingleRecipe() => FutureBuilder(
+        future: _databaseService.getDatumByID('Recipes', _recipeID),
+        builder: (context, AsyncSnapshot<DocumentSnapshot> recipeSnapshot) {
+          if (recipeSnapshot.hasData) {
+            _getRecipeData(recipeSnapshot);
+
+            return ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                RecipeCard(
+                  interior: RecipeCard.createInteriorForCardWithRating(
+                    imagePath: 'assets/images/small-food.png',
+                    recipe: _recipe,
+                    userId: 'MtcBAWcygoW6ERK83agC',
+                    context: context,
+                    isFav: _isFav,
+                    callback: (bool isFav) => _recipeStackCardCallback(isFav),
+                  ),
+                  isTappable: false,
+                  recipeID: _recipe.id,
+                ),
+                _buildIngredients(),
+                addPadding(
+                  ExpansionTileBuilder(
+                    Section(
+                      'DESCRIPTION',
+                      entries: [_recipe.description],
+                    ),
+                  ),
+                  bottom: 8.0,
+                ),
+                ReviewCreator(_reviewsCallback, _recipeID),
+                _buildReviews(),
+                _createReviewExpandText()
+              ],
+            );
+          } else {
+            return ListView();
+          }
+        },
+      );
+
+  FutureBuilder<List<DocumentSnapshot>> _buildIngredients() => FutureBuilder(
+        future: _databaseService.getRecipeIngredients(_recipe.ingredients),
+        builder: (
+          context,
+          AsyncSnapshot<List<DocumentSnapshot>> ingredientsSnapshots,
+        ) {
+          if (ingredientsSnapshots.hasData) {
+            var ingredientsNames = _extractIngredients(ingredientsSnapshots);
+
+            return addPadding(
+              ExpansionTileBuilder(
+                Section(
+                  'INGREDIENTS',
+                  entries: ingredientsNames.toList(),
+                ),
+              ),
+              top: 4.0,
+              bottom: 8.0,
+            );
+          } else {
+            return Text('Błąd');
+          }
+        },
+      );
+
+  StreamBuilder<QuerySnapshot> _buildReviews() => StreamBuilder(
+        stream: _databaseService.getRecipeReviews(_recipeID),
+        builder: (context, AsyncSnapshot<QuerySnapshot> reviewsSnapshots) {
+          if (reviewsSnapshots.hasData) {
+            _buildReviewsList(reviewsSnapshots);
+
+            return Reviews(
+              reviews: _reviews,
+              reviewsCountToShow: _reviewsCountToShow,
+              key: _reviewsStateKey,
+              singleRecipeCallback: _addReviewCallback,
+              recipeId: _recipeID,
+            );
+          } else {
+            return ListView();
+          }
+        },
       );
 
   @override
@@ -178,7 +190,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
   }
 
   void _getRecipeData(AsyncSnapshot<DocumentSnapshot> snapshot) {
-    _this = Recipe.fromFirestore(snapshot.data);
+    _recipe = Recipe.fromFirestore(snapshot.data);
   }
 
   _recipeStackCardCallback(bool isFav) {

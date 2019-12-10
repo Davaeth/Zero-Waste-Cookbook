@@ -5,21 +5,23 @@ import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'shared/colors/default_colors.dart';
 
 class StackBuilder {
-  static Stack createImageWithFavButton(
-          {@required String imagePath,
-          @required bool isFav,
-          @required String recipeId,
-          @required String userId,
-          Function(bool) callback}) =>
+  static Stack createImageWithFavButton({
+    @required String imagePath,
+    @required bool isFav,
+    @required String recipeId,
+    @required String userId,
+    Function(bool) callback,
+  }) =>
       Stack(
         alignment: Alignment.topRight,
         children: <Widget>[
           Image.asset(imagePath),
           _createFavIconButton(
-              isFav: isFav,
-              recipeId: recipeId,
-              userId: userId,
-              callback: callback)
+            isFav: isFav,
+            recipeId: recipeId,
+            userId: userId,
+            callback: callback,
+          )
         ],
       );
 
@@ -55,11 +57,12 @@ class StackBuilder {
         ],
       );
 
-  static IconButton _createFavIconButton(
-          {@required bool isFav,
-          @required String recipeId,
-          @required String userId,
-          Function(bool) callback}) =>
+  static IconButton _createFavIconButton({
+    @required bool isFav,
+    @required String recipeId,
+    @required String userId,
+    Function(bool) callback,
+  }) =>
       IconButton(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,

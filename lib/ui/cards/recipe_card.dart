@@ -21,28 +21,33 @@ class RecipeCard extends StatefulWidget {
 
   final bool isTappable;
 
-  RecipeCard({@required this.interior, this.recipeID, this.isTappable = true});
+  RecipeCard(
+      {@required this.interior,
+      @required this.recipeID,
+      this.isTappable = true});
 
   @override
   _RecipeCardState createState() => _RecipeCardState();
 
-  static List<Widget> createInteriorForCardWithRating(
-      {@required String imagePath,
-      @required Recipe recipe,
-      @required BuildContext context,
-      @required String userId,
-      @required bool isFav,
-      Function(bool) callback}) {
+  static List<Widget> createInteriorForCardWithRating({
+    @required String imagePath,
+    @required Recipe recipe,
+    @required BuildContext context,
+    @required String userId,
+    @required bool isFav,
+    Function(bool) callback,
+  }) {
     DatabaseService _dbService = DatabaseService();
 
     return <Widget>[
       StackBuilder.createImageWithIconButtons(
-          imagePath: imagePath,
-          isFav: isFav,
-          recipeId: recipe.id,
-          userId: userId,
-          context: context,
-          callback: callback),
+        imagePath: imagePath,
+        isFav: isFav,
+        recipeId: recipe.id,
+        userId: userId,
+        context: context,
+        callback: callback,
+      ),
       addPadding(
           Text(
             recipe.recipeTitle,
@@ -71,32 +76,35 @@ class RecipeCard extends StatefulWidget {
         },
       ),
       addPadding(
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[Ratings(recipe.rank.floor())],
-          ),
-          top: 8.0,
-          left: 16.0,
-          bottom: 16.0),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[Ratings(recipe.rank.floor())],
+        ),
+        top: 8.0,
+        left: 16.0,
+        bottom: 16.0,
+      ),
     ];
   }
 
-  static List<Widget> createInteriorForListOfCards(
-      {@required Recipe recipe,
-      @required String imagePath,
-      @required bool isFav,
-      @required String userId,
-      Function(bool) callback}) {
+  static List<Widget> createInteriorForListOfCards({
+    @required Recipe recipe,
+    @required String imagePath,
+    @required bool isFav,
+    @required String userId,
+    Function(bool) callback,
+  }) {
     DatabaseService _dbService = DatabaseService();
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
-          imagePath: imagePath,
-          isFav: isFav,
-          recipeId: recipe.id,
-          userId: userId,
-          callback: callback),
+        imagePath: imagePath,
+        isFav: isFav,
+        recipeId: recipe.id,
+        userId: userId,
+        callback: callback,
+      ),
       addPadding(
           Text(
             recipe.recipeTitle,
@@ -111,14 +119,15 @@ class RecipeCard extends StatefulWidget {
             _getTags(snapshots);
 
             return addPadding(
-                MultipleTags(
-                  _createTags().toList(),
-                  cookingTimeTag: MultipleTags.createTag(
-                      recipe.prepTime.toString(),
-                      icon: Icons.access_time),
-                ),
-                left: 8.0,
-                top: 8.0);
+              MultipleTags(
+                _createTags().toList(),
+                cookingTimeTag: MultipleTags.createTag(
+                    recipe.prepTime.toString(),
+                    icon: Icons.access_time),
+              ),
+              left: 8.0,
+              top: 8.0,
+            );
           } else {
             return Card();
           }
@@ -127,21 +136,23 @@ class RecipeCard extends StatefulWidget {
     ];
   }
 
-  static List<Widget> createInteriorForSingleCard(
-      {@required Recipe recipe,
-      @required String imagePath,
-      @required String userId,
-      @required bool isFav,
-      Function(bool) callback}) {
+  static List<Widget> createInteriorForSingleCard({
+    @required Recipe recipe,
+    @required String imagePath,
+    @required String userId,
+    @required bool isFav,
+    Function(bool) callback,
+  }) {
     DatabaseService _dbService = DatabaseService();
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
-          imagePath: imagePath,
-          isFav: isFav,
-          recipeId: recipe.id,
-          userId: userId,
-          callback: callback),
+        imagePath: imagePath,
+        isFav: isFav,
+        recipeId: recipe.id,
+        userId: userId,
+        callback: callback,
+      ),
       addPadding(
           Text(
             'Przepis dnia',
@@ -163,14 +174,16 @@ class RecipeCard extends StatefulWidget {
             _getTags(snapshots);
 
             return addPadding(
-                MultipleTags(
-                  _createTags().toList(),
-                  cookingTimeTag: MultipleTags.createTag(
-                      recipe.prepTime.toString(),
-                      icon: Icons.access_time),
+              MultipleTags(
+                _createTags().toList(),
+                cookingTimeTag: MultipleTags.createTag(
+                  recipe.prepTime.toString(),
+                  icon: Icons.access_time,
                 ),
-                left: 8.0,
-                top: 8.0);
+              ),
+              left: 8.0,
+              top: 8.0,
+            );
           } else {
             return Card();
           }
@@ -201,18 +214,19 @@ class _RecipeCardState extends State<RecipeCard> {
 
   @override
   Widget build(BuildContext context) => switchPage(
-      context,
-      Card(
-        color: DefaultColors.secondaryColor,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: _interior,
+        context,
+        Card(
+          color: DefaultColors.secondaryColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: _interior,
+          ),
         ),
-      ),
-      Routes.Recipe,
-      recipeId: _recipeId,
-      isTappable: _isTappable);
+        Routes.Recipe,
+        recipeId: _recipeId,
+        isTappable: _isTappable,
+      );
 
   @override
   void initState() {

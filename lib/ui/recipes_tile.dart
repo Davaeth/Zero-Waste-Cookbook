@@ -13,27 +13,26 @@ class RecipeTile extends StatelessWidget {
   final Function(int, Function) onLongPressCallback;
   final int index;
 
-  RecipeTile(this._recipe, this._setStateCallback,
-      {this.onLongPressCallback, this.index});
+  RecipeTile(
+    this._recipe,
+    this._setStateCallback, {
+    this.onLongPressCallback,
+    this.index,
+  });
 
   @override
   Widget build(BuildContext context) => addPadding(
-        switchPage(
-          context,
-          Center(
-            child: Container(
-              alignment: Alignment.center,
-              width: (MediaQuery.of(context).size.width / 100) * 90,
-              height: (MediaQuery.of(context).size.height / 100) * 15,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: DefaultColors.secondaryColor,
-              ),
-              child: _buildUserRecipesTile(),
+        Center(
+          child: Container(
+            alignment: Alignment.center,
+            width: (MediaQuery.of(context).size.width / 100) * 90,
+            height: (MediaQuery.of(context).size.height / 100) * 15,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              color: DefaultColors.secondaryColor,
             ),
+            child: _buildUserRecipesTile(context),
           ),
-          Routes.Recipe,
-          recipeId: _recipe.id,
         ),
         top: 16.0,
       );
@@ -55,7 +54,12 @@ class RecipeTile extends StatelessWidget {
         ],
       );
 
-  ListTile _buildUserRecipesTile() => ListTile(
+  ListTile _buildUserRecipesTile(BuildContext context) => ListTile(
+        onTap: () => navigateToPageByRoute(
+          Routes.Recipe,
+          context,
+          recipeId: _recipe.id,
+        ),
         onLongPress: () => onLongPressCallback(index, _setStateCallback),
         leading: Icon(
           Icons.text_fields,

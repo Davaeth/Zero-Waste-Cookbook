@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
     DatabaseService _db = DatabaseService();
 
     return FutureBuilder<DocumentSnapshot>(
-      future: _db.getDatumByID('Recipes', 'qyD2YoqQU8F2X7LAC09B'),
+      future: _db.getDatumByID('Recipes', 'HX0dEwMcGXLNr3AFrSLe'),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
           Recipe recipe = Recipe.fromFirestore(snapshot?.data);
@@ -90,6 +90,7 @@ class _MyHomePageState extends State<MyHomePage> {
               isFav: _isFav,
               callback: (bool isFav) => _callback(isFav),
             ),
+            recipeID: recipe.id,
           );
         } else {
           return Card();
