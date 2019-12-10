@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
+import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/components/users_view_builder.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/recipes_actions.dart';
-import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/users_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/login/authentication.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       builder: (context, child) => configureScrollBehavior(child),
       home: AuthenticationCheck(_isLogged),
       routes: {
-        Routes.AdministratorUsers: (context) => UsersActions(),
+        Routes.AdministratorUsers: (context) => UsersViewBuilder(),
         Routes.AdministratorRecipes: (context) => RecipesActions(),
       },
       onGenerateRoute: Routes.handleGeneratingRoutes());

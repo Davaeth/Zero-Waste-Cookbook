@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'components/actions_view_builder.dart';
+import 'components/recipes_view_builder.dart';
 import 'models/administrator_action.dart';
 
 class RecipesActions extends StatefulWidget {
@@ -15,5 +15,5 @@ class _RecipesActionsState extends State<RecipesActions> {
   ];
 
   @override
-  Widget build(BuildContext context) => ActionsViewBuilder(_users);
+  Widget build(BuildContext context) => RecipesViewBuilder(_users);
 }

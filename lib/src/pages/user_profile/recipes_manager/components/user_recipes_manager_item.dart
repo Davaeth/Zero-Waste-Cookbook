@@ -73,7 +73,7 @@ class _UserRecipesManagerItemState extends State<UserRecipesManagerItem>
       ),
       subtitle: _buildSubtitle(),
       trailing: IconButton(
-        onPressed: () => _handleIconButton(),
+        onPressed: () => _handleDeleteButton(),
         icon: Icon(
           Icons.delete,
           size: 35.0,
@@ -83,12 +83,13 @@ class _UserRecipesManagerItemState extends State<UserRecipesManagerItem>
     );
   }
 
-  _handleIconButton() {
+  _handleDeleteButton() {
     setState(() {
       DatabaseService _db = DatabaseService();
 
       _db.deleteDatum('Recipes', _recipe.id);
       _db.deleteDataByRelation('Tags', 'recipe', 'Recipes', _recipe.id);
+      _db.deleteDataByRelation('Reviews', 'recipe', 'Recipes', _recipe.id);
       _db.deleteRelatedData(
           'Users', 'userId', 'recipes', 'Recipes', _recipe.id);
 

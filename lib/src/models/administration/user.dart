@@ -2,16 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class User {
   final String id;
-  final String username;
   final Timestamp createTime;
   final bool deleted;
+  final Map<String, String> account;
   final DocumentReference role;
   final List<DocumentReference> favouriteRecipes;
   final List<DocumentReference> recipes;
 
   User(
       {this.id,
-      this.username,
+      this.account,
       this.createTime,
       this.deleted,
       this.role,
@@ -23,7 +23,8 @@ class User {
 
     return User(
       id: doc.documentID,
-      username: data['username'] ?? 'Guest',
+      account:
+          Map<String, String>.from(data['account']) ?? Map<String, String>(),
       createTime: data['createTime'] ?? Timestamp.fromDate(DateTime.now()),
       deleted: data['deleted'] ?? false,
       role: data['role'],
@@ -36,7 +37,7 @@ class User {
   }
 
   toJson() => {
-        'username': username,
+        'account': account,
         'createTime': createTime,
         'deleted': deleted,
         'role': role,

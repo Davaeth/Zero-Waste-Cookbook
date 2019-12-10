@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/components/users_view_builder.dart';
 import 'package:zero_waste_cookbook/src/pages/search/sreaching_result/searching_result.dart';
 import 'package:zero_waste_cookbook/src/pages/user_profile/user_profile.dart';
 import 'package:zero_waste_cookbook/main.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/recipes_actions.dart';
-import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/users_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/login/login_page.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/new_recipe.dart';
 import 'package:zero_waste_cookbook/src/pages/search/search_filters.dart';
@@ -37,7 +37,7 @@ class Routes {
 
         switch (routes.name) {
           case Routes.AdministratorUsers:
-            return MaterialPageRoute(builder: (context) => UsersActions());
+            return MaterialPageRoute(builder: (context) => UsersViewBuilder());
             break;
           case Routes.AdministratorRecipes:
             return MaterialPageRoute(builder: (context) => RecipesActions());
