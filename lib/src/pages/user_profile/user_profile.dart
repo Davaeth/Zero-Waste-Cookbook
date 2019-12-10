@@ -14,17 +14,17 @@ class UserProfile extends StatelessWidget {
           children: <Widget>[
             settingsButton(context, 4),
             buildUserInfo(
-                ['100k', '2'], [Icons.star, Icons.comment], name, imageUrl),
+               ['100k', '2'], [Icons.star, Icons.comment], name, imageUrl),
             buildUserButtonsRow(
                 context,
                 ['Add new recipe', 'Manage my recipes'],
                 [Routes.NewRecipePage, Routes.UserRecipesManager]),
             addPadding(
                 Text(
-                  'Favourite recipes',
-                  style: TextStyle(fontSize: 20.0, color: Colors.white),
+                  'Ulubione przepisy',
+                  style: TextStyle(fontSize: 18.0, color: Colors.white),
                 ),
-                left: 16.0,
+                left: 10.0,
                 top: 8.0,
                 bottom: 8.0),
             Expanded(

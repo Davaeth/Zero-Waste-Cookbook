@@ -19,7 +19,7 @@ class RecipeIngredients extends RecipePartBase<Ingredient> {
 
   @override
   NewRecipeSection createDataList() => NewRecipeSection(
-        'Ingredients',
+        'Składniki',
         ingredientsListView,
         key: newRecipeSectionKey,
       );
@@ -27,7 +27,7 @@ class RecipeIngredients extends RecipePartBase<Ingredient> {
   @override
   Padding createShowAddDataDialog(BuildContext context) => addPadding(
       FlatButton(
-        child: Text('Add an ingredient'),
+        child: Text('Dodaj składnik'),
         onPressed: () {
           showDialog(
             context: context,

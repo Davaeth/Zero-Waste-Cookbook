@@ -47,9 +47,10 @@ class RecipeCard extends StatefulWidget {
       addPadding(
           Text(
             recipe.recipeTitle,
-            style: TextStyle(color: Colors.white, fontSize: 30.0),
+            style: TextStyle(color: Colors.white, fontSize: 28.0),
           ),
-          left: 16.0,
+          left: 10.0,
+          right: 10.0,
           top: 8.0),
       FutureBuilder(
         future: _dbService.getRecipeTags(recipe.id),
@@ -84,7 +85,8 @@ class RecipeCard extends StatefulWidget {
   }
 
   static List<Widget> createInteriorForListOfCards(
-      {@required Recipe recipe,
+      {@required BuildContext context,
+      @required Recipe recipe,
       @required bool isFav,
       @required String userId,
       Function(bool) callback}) {
@@ -92,6 +94,8 @@ class RecipeCard extends StatefulWidget {
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
+          context: context,
+          isSingle: false,
           imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           isFav: isFav,
           recipeId: recipe.id,
@@ -100,9 +104,10 @@ class RecipeCard extends StatefulWidget {
       addPadding(
           Text(
             recipe.recipeTitle,
-            style: TextStyle(color: Colors.white, fontSize: 30.0),
+            style: TextStyle(color: Colors.white, fontSize: 22.0),
           ),
-          left: 16.0,
+          left: 10.0,
+          right: 10.0,
           top: 8.0),
       FutureBuilder(
         future: _dbService.getRecipeTags(recipe.id),
@@ -128,7 +133,8 @@ class RecipeCard extends StatefulWidget {
   }
 
   static List<Widget> createInteriorForSingleCard(
-      {@required Recipe recipe,
+      {@required BuildContext context,
+      @required Recipe recipe,
       @required String userId,
       @required bool isFav,
       Function(bool) callback}) {
@@ -136,6 +142,8 @@ class RecipeCard extends StatefulWidget {
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
+          context: context,
+          isSingle: true,
           imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           isFav: isFav,
           recipeId: recipe.id,
@@ -146,14 +154,15 @@ class RecipeCard extends StatefulWidget {
             'Przepis dnia',
             style: TextStyle(color: Colors.white, fontSize: 16.0),
           ),
-          left: 16.0,
+          left: 10.0,
           top: 8.0),
       addPadding(
           Text(
             recipe.recipeTitle,
-            style: TextStyle(color: Colors.white, fontSize: 30.0),
+            style: TextStyle(color: Colors.white, fontSize: 28.0),
           ),
-          left: 16.0,
+          left: 10.0,
+          right: 10.0,
           top: 8.0),
       FutureBuilder(
         future: _dbService.getRecipeTags(recipe.id),
@@ -169,7 +178,8 @@ class RecipeCard extends StatefulWidget {
                       icon: Icons.access_time),
                 ),
                 left: 8.0,
-                top: 8.0);
+                top: 8.0,
+                bottom: 8.0);
           } else {
             return Card();
           }

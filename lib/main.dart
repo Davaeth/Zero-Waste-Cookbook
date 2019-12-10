@@ -9,6 +9,7 @@ import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/recipe
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/users_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/login/authentication.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 
 import 'ui/cards/recipe_card.dart';
 import 'ui/recipes/recipes_manager.dart';
@@ -24,14 +25,15 @@ final FirebaseStorage storage = FirebaseStorage(
 void main() async {
   FirebaseUser user = await FirebaseAuth.instance.currentUser();
   await GlobalConfiguration().loadFromAsset("appconfig");
-  return runApp(MyApp(user != null));
+  return runApp(MyApp(false));
 }
 
 class MyApp extends StatelessWidget {
   final bool _isLogged;
 
+  
   MyApp(this._isLogged);
-
+  
   @override
   Widget build(BuildContext context) => MaterialApp(
       title: 'Zero Waste Cookbook',
@@ -57,11 +59,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) => ListView(
         shrinkWrap: true,
         children: <Widget>[
-          _buildRecipeOfTheDay(),
+          _buildRecipeOfTheDay(context),
           addPadding(
               Text(
                 'Nowe przepisy',
-                style: TextStyle(fontSize: 20.0, color: Colors.white),
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
               ),
               left: 16.0,
               top: 16.0,
@@ -82,19 +84,20 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  FutureBuilder _buildRecipeOfTheDay() {
+  FutureBuilder _buildRecipeOfTheDay(BuildContext context) {
     DatabaseService _db = DatabaseService();
 
     return FutureBuilder<DocumentSnapshot>(
-      future: _db.getDatumByID('Recipes', '9dINDS1sKiIJglqtmAXE'),
+      future: _db.getDatumByID('Recipes', 'HX0dEwMcGXLNr3AFrSLe'),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
           Recipe recipe = Recipe.fromFirestore(snapshot?.data);
 
           return RecipeCard(
             interior: RecipeCard.createInteriorForSingleCard(
+              context: context,
               recipe: recipe,
-              userId: 'MtcBAWcygoW6ERK83agC',
+              userId: fUserId,
               isFav: _isFav,
               callback: (bool isFav) => _callback(isFav),
             ),

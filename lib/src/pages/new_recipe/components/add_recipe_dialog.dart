@@ -56,8 +56,8 @@ class _AddRecipeDialogState extends State<AddRecipeDialog> {
           ),
           Center(
               child: Text(
-            'Choose an ingredient',
-            style: TextStyle(color: Colors.white, fontSize: 20.0),
+            'Wybierz składnik',
+            style: TextStyle(color: Colors.white, fontSize: 18.0),
           )),
           _createIngredientDropdown(),
           _createAddIngredientButton()
@@ -75,7 +75,7 @@ class _AddRecipeDialogState extends State<AddRecipeDialog> {
       MaterialButton(
         onPressed: () => _addAnIngredient(),
         color: DefaultColors.iconColor,
-        child: Text('ADD'),
+        child: Text('Dodaj'),
         textColor: Colors.black,
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,

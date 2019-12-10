@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/administration/review.dart';
 import 'package:zero_waste_cookbook/src/pages/single_recipe/components/review_rater.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 
 import 'shared/colors/default_colors.dart';
@@ -55,7 +56,7 @@ class _DialogBuilderState extends State<DialogBuilder> {
           ),
           Center(
               child: Text(
-            'Rate the recipe',
+            'Oceń',
             style: TextStyle(color: Colors.white, fontSize: 20.0),
           )),
           ReviewRater(_rateReview),
@@ -110,7 +111,7 @@ class _DialogBuilderState extends State<DialogBuilder> {
             description: _descriptionController.text,
             reviewType: 'Cool',
             user: _db.getDocumentReference(
-                'Users', 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43'),
+                'Users', fUserId),
             recipe: _db.getDocumentReference('Recipes', _recipeId),
           ).toJson(),
         );

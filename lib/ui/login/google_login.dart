@@ -5,6 +5,9 @@ String email;
 final GoogleSignIn googleSignIn = GoogleSignIn();
 String imageUrl;
 String name;
+
+String fUserId;
+
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
 Future<String> get signInWithGoogle async {
@@ -33,6 +36,7 @@ Future<String> get signInWithGoogle async {
   name = user.displayName;
   email = user.email;
   imageUrl = user.photoUrl;
+  fUserId = user.uid;
 
   return 'signInWithGoogle succeeded: $user';
 }

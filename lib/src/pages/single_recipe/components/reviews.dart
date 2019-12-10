@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/administration/review.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/ratings.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/recipe_colors.dart';
@@ -66,8 +67,8 @@ class ReviewsState extends State<Reviews> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            'User',
-            style: TextStyle(color: RecipeColors.usernameColor, fontSize: 20.0),
+            'Zweryfikowany użytkownik',
+            style: TextStyle(color: RecipeColors.usernameColor, fontSize: 18.0),
           ),
           Align(
             alignment: Alignment.topCenter,
@@ -89,7 +90,7 @@ class ReviewsState extends State<Reviews> {
         ),
         FutureBuilder<bool>(
           future: _dbService.checkIfUserIsAReviewCreator(
-              'E5ewEF8YxDO0rl8Zue2zMrU7Yd43', review.id),
+              fUserId, review.id),
           builder: (context, AsyncSnapshot<bool> snapshot) {
             if (snapshot.hasData) {
               return snapshot.data
