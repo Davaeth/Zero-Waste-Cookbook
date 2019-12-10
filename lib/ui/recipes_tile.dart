@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
+
+import 'constants/routes.dart';
 
 class RecipeTile extends StatelessWidget {
   final Recipe _recipe;
@@ -15,17 +18,22 @@ class RecipeTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => addPadding(
-        Center(
-          child: Container(
-            alignment: Alignment.center,
-            width: (MediaQuery.of(context).size.width / 100) * 90,
-            height: (MediaQuery.of(context).size.height / 100) * 15,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              color: DefaultColors.secondaryColor,
+        switchPage(
+          context,
+          Center(
+            child: Container(
+              alignment: Alignment.center,
+              width: (MediaQuery.of(context).size.width / 100) * 90,
+              height: (MediaQuery.of(context).size.height / 100) * 15,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: DefaultColors.secondaryColor,
+              ),
+              child: _buildUserRecipesTile(),
             ),
-            child: _buildUserRecipesTile(),
           ),
+          Routes.Recipe,
+          recipeId: _recipe.id,
         ),
         top: 16.0,
       );

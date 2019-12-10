@@ -5,7 +5,6 @@ import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/ui/recipes_tile.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
-import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 class UserRecipesManager extends StatefulWidget {
   @override
