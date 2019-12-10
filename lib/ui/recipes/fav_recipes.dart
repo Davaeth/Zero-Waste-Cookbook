@@ -47,14 +47,17 @@ class _FavRecipesManager extends State<FavRecipesManager> {
   Iterable<RecipeCard> _extractFavRecipes(
       AsyncSnapshot<List<DocumentSnapshot>> snapshots) sync* {
     for (var snapshot in snapshots.data) {
+      var recipe = Recipe.fromFirestore(snapshot);
+
       yield RecipeCard(
         interior: RecipeCard.createInteriorForListOfCards(
-          recipe: Recipe.fromFirestore(snapshot),
+          recipe: recipe,
           imagePath: 'assets/images/small-food.png',
           userId: 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43',
           isFav: _isFav,
           callback: (bool isFav) => _callback(isFav),
         ),
+        recipeID: recipe.id,
       );
     }
   }

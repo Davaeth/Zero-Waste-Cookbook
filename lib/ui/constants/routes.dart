@@ -45,8 +45,9 @@ class Routes {
             break;
           case Routes.Recipe:
             return MaterialPageRoute(
-                builder: (context) =>
-                    SingleRecipe(recipeID: routesArguments.recipeId));
+              builder: (context) =>
+                  SingleRecipe(recipeID: routesArguments.recipeId),
+            );
             break;
           case Routes.FakeRecipePage:
             return MaterialPageRoute(builder: (context) => FakeRecipe());
@@ -62,7 +63,8 @@ class Routes {
             break;
           case Routes.SearchingResultPage:
             return MaterialPageRoute(
-                builder: (context) => SearchingResult(routesArguments.recipes));
+              builder: (context) => SearchingResult(routesArguments.recipes),
+            );
             break;
           case Routes.LoginPage:
             return MaterialPageRoute(builder: (context) => Login());

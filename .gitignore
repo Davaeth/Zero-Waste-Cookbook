@@ -73,3 +73,5 @@ ios/Flutter/flutter_export_environment.sh
 ios/Flutter/Generated.xcconfig
 
 workspace.xml
+android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+ios/Runner/GeneratedPluginRegistrant.m
