@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
+import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/components/recipes_view_builder.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/components/users_view_builder.dart';
-import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/recipes_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/login/authentication.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       home: AuthenticationCheck(_isLogged),
       routes: {
         Routes.AdministratorUsers: (context) => UsersViewBuilder(),
-        Routes.AdministratorRecipes: (context) => RecipesActions(),
+        Routes.AdministratorRecipes: (context) => RecipesViewBuilder(),
       },
       onGenerateRoute: Routes.handleGeneratingRoutes());
 }
@@ -77,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
     DatabaseService _db = DatabaseService();
 
     return FutureBuilder<DocumentSnapshot>(
-      future: _db.getDatumByID('Recipes', '9dINDS1sKiIJglqtmAXE'),
+      future: _db.getDatumByID('Recipes', 'qyD2YoqQU8F2X7LAC09B'),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
           Recipe recipe = Recipe.fromFirestore(snapshot?.data);

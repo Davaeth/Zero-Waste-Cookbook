@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/administration/user.dart';
+import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/components/models/administrator_action.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
@@ -14,9 +15,8 @@ class UsersViewBuilder extends StatefulWidget {
 
 class _UsersViewBuilderState extends State<UsersViewBuilder> {
   List<User> _users;
-  List<int> _indexes;
 
-  bool _areReadyToDelete;
+  AdministratorAction _administratorAction;
 
   @override
   Widget build(BuildContext context) {
@@ -47,9 +47,7 @@ class _UsersViewBuilderState extends State<UsersViewBuilder> {
   @override
   void initState() {
     _users = List<User>();
-    _indexes = List<int>();
-
-    _areReadyToDelete = false;
+    _administratorAction = AdministratorAction();
 
     super.initState();
   }
@@ -83,7 +81,7 @@ class _UsersViewBuilderState extends State<UsersViewBuilder> {
   Row _buildMainRow(DatabaseService dbService, BuildContext context) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          _areReadyToDelete
+          _administratorAction.areReadyToDelete
               ? IconButton(
                   icon: Icon(Icons.delete),
                   color: Colors.red,
@@ -99,7 +97,8 @@ class _UsersViewBuilderState extends State<UsersViewBuilder> {
 
   Padding _buildSingleCard(int index) => addPadding(
         GestureDetector(
-          onLongPress: () => _multipleSelect(index),
+          onLongPress: () =>
+              _administratorAction.multipleSelect(index, _callback),
           child: Card(
             color: DefaultColors.backgroundColor,
             child: _buildAnInterior(index),
@@ -131,50 +130,41 @@ class _UsersViewBuilderState extends State<UsersViewBuilder> {
         },
       );
 
+  void _callback() {
+    setState(() {});
+  }
+
   Future<void> _deleteUsers(DatabaseService dbService) async {
-    for (var index in _indexes) {
-      dbService.deleteDatum('Users', _users[index].id);
+    setState(() async {
+      for (var index in _administratorAction.getIndexes) {
+        dbService.deleteDatum('Users', _users[index].id);
 
-      var _user = await FirebaseAuth.instance.currentUser();
+        var _user = await FirebaseAuth.instance.currentUser();
 
-      _user.delete();
+        _user.delete();
 
-      var recipesSnapshots =
-          await dbService.getDataByField('Recipes', 'user', _users[index].id);
+        var recipesSnapshots =
+            await dbService.getDataByField('Recipes', 'user', _users[index].id);
 
-      for (var recipeSnapshot in recipesSnapshots) {
-        dbService.deleteDatum('Recipes', recipeSnapshot.documentID);
-        dbService.deleteDataByRelation(
-            'Tags', 'recipe', 'Recipes', recipeSnapshot.documentID);
-        dbService.deleteDataByRelation(
-            'Reviews', 'recipe', 'Recipes', recipeSnapshot.documentID);
+        for (var recipeSnapshot in recipesSnapshots) {
+          dbService.deleteDatum('Recipes', recipeSnapshot.documentID);
+          dbService.deleteDataByRelation(
+              'Tags', 'recipe', 'Recipes', recipeSnapshot.documentID);
+          dbService.deleteDataByRelation(
+              'Reviews', 'recipe', 'Recipes', recipeSnapshot.documentID);
+        }
       }
-    }
+
+      _administratorAction.setIndexes = List<int>();
+      _administratorAction.setReadyToDelete = false;
+    });
   }
 
   Future<void> _getUsers(AsyncSnapshot<QuerySnapshot> userSnapshots) async {
     _users = List<User>();
 
     userSnapshots.data.documents.forEach(
-      (userSnapshot) => _users.add(
-        User.fromFirestore(userSnapshot),
-      ),
+      (userSnapshot) => _users.add(User.fromFirestore(userSnapshot)),
     );
-  }
-
-  _multipleSelect(int index) {
-    setState(() {
-      if (_indexes.contains(index)) {
-        _indexes.remove(index);
-      } else {
-        _indexes.add(index);
-      }
-
-      if (_indexes.length >= 1) {
-        _areReadyToDelete = true;
-      } else {
-        _areReadyToDelete = false;
-      }
-    });
   }
 }
