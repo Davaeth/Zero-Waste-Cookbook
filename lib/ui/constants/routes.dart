@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/pages/search/sreaching_result/searching_result.dart';
 import 'package:zero_waste_cookbook/src/pages/user_profile/user_profile.dart';
 import 'package:zero_waste_cookbook/main.dart';
-import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/applications_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/recipes_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/users_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/login/login_page.dart';
@@ -21,7 +20,6 @@ class Routes {
   static const Home = '/';
   static const AdministratorUsers = '/administration/users';
   static const AdministratorRecipes = '/administration/recipes';
-  static const AdministratorApplications = '/administration/applications';
   static const Recipe = '/recipe';
   static const FakeRecipePage = '/voting/fakeRecipe';
   static const VotingPage = '/voting';
@@ -42,10 +40,6 @@ class Routes {
             return MaterialPageRoute(builder: (context) => UsersActions());
             break;
           case Routes.AdministratorRecipes:
-            return MaterialPageRoute(
-                builder: (context) => ApplicationsActions());
-            break;
-          case Routes.AdministratorApplications:
             return MaterialPageRoute(builder: (context) => RecipesActions());
             break;
           case Routes.Recipe:

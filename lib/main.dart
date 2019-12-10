@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
-import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/applications_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/recipes_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/users_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/login/authentication.dart';
@@ -33,7 +32,6 @@ class MyApp extends StatelessWidget {
       routes: {
         Routes.AdministratorUsers: (context) => UsersActions(),
         Routes.AdministratorRecipes: (context) => RecipesActions(),
-        Routes.AdministratorApplications: (context) => ApplicationsActions()
       },
       onGenerateRoute: Routes.handleGeneratingRoutes());
 }

@@ -24,43 +24,49 @@ class _ActionsViewBuilderState extends State<ActionsViewBuilder> {
         backgroundColor: DefaultColors.backgroundColor,
         body: SafeArea(
           child: GridView.builder(
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
-              itemCount: _administratorActions.length,
-              itemBuilder: (BuildContext context, int index) => addPadding(
-                  GestureDetector(
-                    onLongPress: () {
-                      _multipleSelect(index);
-                    },
-                    child: Card(
-                      color: DefaultColors.backgroundColor,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          buildCircleAvatar(Icons.receipt),
-                          Text(
-                            'Test',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 30.0),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  bottom: 8.0)),
+            gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2),
+            itemCount: _administratorActions.length,
+            itemBuilder: (BuildContext context, int index) =>
+                _buildSingleCard(index),
+          ),
           top: true,
+          bottom: true,
         ),
       );
 
-  CircleAvatar buildCircleAvatar(IconData iconData) {
-    return CircleAvatar(
-      child: Icon(
-        iconData,
-        size: 80.0,
-      ),
-      radius: 40.0,
-    );
-  }
+  Padding _buildSingleCard(int index) => addPadding(
+        GestureDetector(
+          onLongPress: () {
+            _multipleSelect(index);
+          },
+          child: Card(
+            color: DefaultColors.backgroundColor,
+            child: _buildAnInterior(index),
+          ),
+        ),
+        bottom: 8.0,
+      );
+
+  Column _buildAnInterior(int index) => Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          buildCircleAvatar(Icons.receipt),
+          Text(
+            _administratorActions[index].name,
+            style: TextStyle(color: Colors.white, fontSize: 30.0),
+          )
+        ],
+      );
+
+  CircleAvatar buildCircleAvatar(IconData iconData) => CircleAvatar(
+        child: Icon(
+          iconData,
+          size: 80.0,
+        ),
+        radius: 40.0,
+      );
 
   _multipleSelect(int index) {
     setState(() {
