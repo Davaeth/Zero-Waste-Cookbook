@@ -37,21 +37,22 @@ class SearchingResult extends StatelessWidget {
   Padding _buildSingleListElement(BuildContext context, int index) =>
       addPadding(
         switchPage(
-            context,
-            Center(
-              child: Container(
-                alignment: Alignment.center,
-                width: (MediaQuery.of(context).size.width / 100) * 90,
-                height: (MediaQuery.of(context).size.height / 100) * 15,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  color: DefaultColors.secondaryColor,
-                ),
-                child: _buildRecipeTile(_recipes[index]),
+          context,
+          Center(
+            child: Container(
+              alignment: Alignment.center,
+              width: (MediaQuery.of(context).size.width / 100) * 90,
+              height: (MediaQuery.of(context).size.height / 100) * 15,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: DefaultColors.secondaryColor,
               ),
+              child: _buildRecipeTile(_recipes[index]),
             ),
-            Routes.Recipe,
-            recipeId: _recipes[index].id),
+          ),
+          Routes.Recipe,
+          recipeId: _recipes[index].id,
+        ),
         bottom: 16.0,
       );
 
