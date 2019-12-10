@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
+import 'package:zero_waste_cookbook/ui/recipes_tile.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
-
-import 'components/user_recipes_manager_item.dart';
 
 class UserRecipesManager extends StatefulWidget {
   @override
@@ -42,11 +41,8 @@ class _UserRecipesManagerState extends State<UserRecipesManager> {
                   return ListView.builder(
                     shrinkWrap: true,
                     itemCount: recipes.length,
-                    itemBuilder: (context, index) => addPadding(
-                      UserRecipesManagerItem(
-                          recipe: recipes[index], callback: _managerCallback),
-                      top: 16.0,
-                    ),
+                    itemBuilder: (context, index) =>
+                        RecipeTile(recipes[index], _managerCallback),
                   );
                 } else {
                   return ListView();

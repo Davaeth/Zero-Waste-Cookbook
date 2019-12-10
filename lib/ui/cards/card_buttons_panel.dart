@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
@@ -7,24 +8,31 @@ GestureDetector buildAdministratorCardButton(
     switchPage(
         context,
         addPadding(
-            Card(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Icon(
-                    iconData,
-                    size: 120.0,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      text,
-                      style: TextStyle(fontSize: 18.0),
+          Card(
+            color: DefaultColors.secondaryColor,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                Icon(
+                  iconData,
+                  size: 160.0,
+                  color: Colors.white,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    text,
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      color: DefaultColors.iconColor,
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
-            bottom: 4.0,
-            right: 4.0),
+          ),
+          right: 2.0,
+          left: 2.0,
+        ),
         route);

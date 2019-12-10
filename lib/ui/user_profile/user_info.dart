@@ -32,10 +32,11 @@ Column buildUserInfo(List<String> amounts, List<IconData> iconsData,
             children: <Widget>[
               addPadding(
                   CircleAvatar(
-                      radius: 50.0,
-                      backgroundImage: NetworkImage(
-                        imageUrl,
-                      )),
+                    radius: 50.0,
+                    backgroundImage: NetworkImage(
+                      imageUrl,
+                    ),
+                  ),
                   top: 16.0,
                   bottom: 16.0),
             ]),
