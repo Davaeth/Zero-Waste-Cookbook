@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/ui/cards/card_buttons_panel.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class AdministratorPanel extends StatelessWidget {
   @override
@@ -11,10 +12,13 @@ class AdministratorPanel extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
-            _buildElement("Manage users", Icons.supervised_user_circle,
-                Routes.AdministratorUsers, context),
-            _buildElement("Manage recipes", Icons.receipt,
-                Routes.AdministratorRecipes, context),
+            _buildElement(
+                Translator.instance.translations['manage_users'],
+                Icons.supervised_user_circle,
+                Routes.AdministratorUsers,
+                context),
+            _buildElement(Translator.instance.translations['manage_recipes'],
+                Icons.receipt, Routes.AdministratorRecipes, context),
           ],
         ),
       );

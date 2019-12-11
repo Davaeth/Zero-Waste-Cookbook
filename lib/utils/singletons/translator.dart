@@ -7,9 +7,9 @@ class Translator {
   static const String _languageKey = 'language';
 
   static Translator _instance = Translator._internal();
-  static Map<String, String> _translatedData;
-
   static Translator get instance => _instance;
+
+  Map<String, String> _translations;
 
   factory Translator() {
     if (_instance == null) {
@@ -21,11 +21,13 @@ class Translator {
     return _instance;
   }
 
-  Translator._internal() {
-    _translate();
-  }
+  Translator._internal();
 
-  String getTranslation(String key) => _translatedData[key];
+  Map<String, String> get translations => _translations;
+
+  Future<void> getTranslations() async {
+    _translations = await _translate();
+  }
 
   Future<void> setLanguageType(String languageType) async {
     var _sharedPreferences = await SharedPreferences.getInstance();
@@ -33,7 +35,7 @@ class Translator {
     await _sharedPreferences.setString(_languageKey, languageType);
   }
 
-  Future<void> _translate() async {
+  Future<Map<String, String>> _translate() async {
     var _sharedPreferences = await SharedPreferences.getInstance();
 
     if (!_sharedPreferences.containsKey(_languageKey)) {
@@ -49,8 +51,10 @@ class Translator {
 
     Map<String, dynamic> _jsonTranslation = json.decode(_translation);
 
-    _translatedData = _jsonTranslation.map(
+    var _translatedData = _jsonTranslation.map(
       (key, value) => MapEntry(key, value.toString()),
     );
+
+    return _translatedData;
   }
 }

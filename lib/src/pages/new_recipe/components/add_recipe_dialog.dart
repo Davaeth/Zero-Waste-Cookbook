@@ -3,6 +3,7 @@ import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 import 'dropdowns/ingredients_dropdown.dart';
 
@@ -56,7 +57,7 @@ class _AddRecipeDialogState extends State<AddRecipeDialog> {
           ),
           Center(
               child: Text(
-            'Wybierz składnik',
+            Translator.instance.translations['choose_an_ingredient'],
             style: TextStyle(color: Colors.white, fontSize: 18.0),
           )),
           _createIngredientDropdown(),
@@ -72,16 +73,17 @@ class _AddRecipeDialogState extends State<AddRecipeDialog> {
   }
 
   Padding _createAddIngredientButton() => addPadding(
-      MaterialButton(
-        onPressed: () => _addAnIngredient(),
-        color: DefaultColors.iconColor,
-        child: Text('Dodaj'),
-        textColor: Colors.black,
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-      ),
-      left: 16.0,
-      right: 16.0);
+        MaterialButton(
+          onPressed: () => _addAnIngredient(),
+          color: DefaultColors.iconColor,
+          child: Text(Translator.instance.translations['add']),
+          textColor: Colors.black,
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+        ),
+        left: 16.0,
+        right: 16.0,
+      );
 
   Padding _createIngredientDropdown() => addPadding(
         Container(

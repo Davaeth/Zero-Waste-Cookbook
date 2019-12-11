@@ -16,6 +16,7 @@ import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/add_photo.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class NewRecipe extends StatefulWidget {
   @override
@@ -144,7 +145,7 @@ class _NewRecipeState extends State<NewRecipe>
     }
 
     Fluttertoast.showToast(
-      msg: 'Dodano przepis!',
+      msg: Translator.instance.translations['recipe_added'],
       backgroundColor: DefaultColors.secondaryColor,
       textColor: Colors.greenAccent,
       gravity: ToastGravity.BOTTOM,
@@ -153,7 +154,7 @@ class _NewRecipeState extends State<NewRecipe>
   }
 
   NewRecipeSection _createAddPhotoButton() => NewRecipeSection(
-        'Zdjęcie',
+        Translator.instance.translations['picture'],
         AddPhoto(photoPath: _recipePhoto),
       );
 
@@ -184,7 +185,7 @@ class _NewRecipeState extends State<NewRecipe>
 
   NewRecipeSection _buildPerpTimeField(BuildContext context) =>
       NewRecipeSection(
-        'Czas przygotowania (min)',
+        Translator.instance.translations['prep_time'],
         _buildTextField(TextInputType.number, _prepTimeController, context),
       );
 
@@ -208,7 +209,7 @@ class _NewRecipeState extends State<NewRecipe>
                 onPressed: () {
                   setState(() => _addNewTag());
                 },
-                child: Text('Dodaj nowy tag'),
+                child: Text(Translator.instance.translations['add_new_tag']),
               ),
               top: 8.0),
         ],
@@ -241,31 +242,37 @@ class _NewRecipeState extends State<NewRecipe>
           cursorColor: Colors.white,
           textAlign: TextAlign.center,
           controller: controller,
-          decoration:
-              InputDecoration(border: InputBorder.none, counterText: ''),
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            counterText: '',
+          ),
         ),
       );
 
   Future<void> _checkRecipeData() async {
     if (!checkTextField(_titleController.text)) {
-      return showWarningToast('Dodaj nazwę przepisu!');
+      return showWarningToast(
+          Translator.instance.translations['provide_recipe_title']);
     }
 
     if (_ingredients.length <= 0) {
-      return showWarningToast('Dodaj składniki!');
+      return showWarningToast(
+          Translator.instance.translations['provide_ingredients']);
     }
 
     if (!checkTextField(_descriptionController.text)) {
-      return showWarningToast('Dodaj opis!');
+      return showWarningToast(
+          Translator.instance.translations['provide_directions']);
     }
 
     if (!checkTextField(_prepTimeController.text)) {
-      return showWarningToast('Dodaj czas!');
+      return showWarningToast(
+          Translator.instance.translations['provide_prep_time']);
     }
 
     var firstTagText = tagsControllers.first.text;
     if (!checkTextField(firstTagText)) {
-      return showWarningToast('Dodaj tagi!');
+      return showWarningToast(Translator.instance.translations['provide_tags']);
     }
 
     await _addRecipeAndTags();
@@ -273,7 +280,7 @@ class _NewRecipeState extends State<NewRecipe>
 
   Padding _createAddRecipeButton(BuildContext context) => addPadding(
         FlatButton(
-          child: Text('Add recipe'),
+          child: Text(Translator.instance.translations['add_recipe']),
           onPressed: () => _checkRecipeData(),
           color: DefaultColors.iconColor,
           splashColor: Colors.transparent,
@@ -297,7 +304,7 @@ class _NewRecipeState extends State<NewRecipe>
 
   NewRecipeSection _createDescriptionsTextField(BuildContext context) =>
       NewRecipeSection(
-        'Sposób przygotowania',
+        Translator.instance.translations['directions'],
         _buildTextField(
             TextInputType.multiline, _descriptionController, context,
             maxLines: null, length: null),
@@ -305,7 +312,7 @@ class _NewRecipeState extends State<NewRecipe>
 
   NewRecipeSection _createTitleTextField(BuildContext context) =>
       NewRecipeSection(
-        'Tytuł',
+        Translator.instance.translations['title'],
         _buildTextField(TextInputType.text, _titleController, context),
       );
 

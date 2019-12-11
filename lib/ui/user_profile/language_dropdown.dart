@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class LanguageDropdown extends StatefulWidget {
   @override
@@ -9,7 +10,7 @@ class LanguageDropdown extends StatefulWidget {
 }
 
 class _LanguageDropdownState extends State<LanguageDropdown> {
-  String _value = 'PL';
+  String _value = 'pl';
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,10 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
-        Text('Language', style: TextStyle(color: DefaultColors.textColor)),
+        Text(
+          Translator.instance.translations['language'],
+          style: TextStyle(color: DefaultColors.textColor),
+        ),
         DropdownButtonHideUnderline(
           child: Theme(
             data: ThemeData(
@@ -25,12 +29,17 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
             ),
             child: DropdownButton<String>(
               items: [
-                _buildDropdownItem('Polish', 'PL'),
-                _buildDropdownItem('English', 'EN'),
+                _buildDropdownItem(
+                    Translator.instance.translations['polish'], 'pl'),
+                _buildDropdownItem(
+                    Translator.instance.translations['english'], 'en'),
               ],
               onChanged: (String value) {
-                setState(() {
+                setState(() async {
                   _value = value;
+
+                  await Translator.instance.setLanguageType(_value);
+                  await Translator.instance.getTranslations();
                 });
               },
               value: _value,

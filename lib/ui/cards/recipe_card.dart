@@ -10,6 +10,7 @@ import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
 import 'package:global_configuration/global_configuration.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 import '../ratings.dart';
 import '../stack_builder.dart';
@@ -31,24 +32,23 @@ class RecipeCard extends StatefulWidget {
   @override
   _RecipeCardState createState() => _RecipeCardState();
 
-  static List<Widget> createInteriorForCardWithRating({
-      @required Recipe recipe,
+  static List<Widget> createInteriorForCardWithRating(
+      {@required Recipe recipe,
       @required BuildContext context,
       @required String userId,
       @required bool isFav,
       Function(bool) callback}) {
-
     DatabaseService _dbService = DatabaseService();
 
     return <Widget>[
       StackBuilder.createImageWithIconButtons(
-          imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
+          imagePath:
+              GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           isFav: isFav,
           recipeId: recipe.id,
           userId: userId,
           context: context,
           callback: callback),
-
       addPadding(
           Text(
             recipe.recipeTitle,
@@ -90,27 +90,24 @@ class RecipeCard extends StatefulWidget {
     ];
   }
 
-
   static List<Widget> createInteriorForListOfCards(
       {@required BuildContext context,
       @required Recipe recipe,
       @required bool isFav,
       @required String userId,
       Function(bool) callback}) {
-
     DatabaseService _dbService = DatabaseService();
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
-
           context: context,
           isSingle: false,
-          imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
+          imagePath:
+              GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           isFav: isFav,
           recipeId: recipe.id,
           userId: userId,
           callback: callback),
-
       addPadding(
           Text(
             recipe.recipeTitle,
@@ -149,23 +146,21 @@ class RecipeCard extends StatefulWidget {
       @required String userId,
       @required bool isFav,
       Function(bool) callback}) {
-
     DatabaseService _dbService = DatabaseService();
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
-
           context: context,
           isSingle: true,
-          imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
+          imagePath:
+              GlobalConfiguration().getString("imagePath") + recipe.photoPath,
           isFav: isFav,
           recipeId: recipe.id,
           userId: userId,
           callback: callback),
-
       addPadding(
           Text(
-            'Przepis dnia',
+            Translator.instance.translations['recipe_of_the_day'],
             style: TextStyle(color: Colors.white, fontSize: 16.0),
           ),
           left: 10.0,
@@ -185,12 +180,13 @@ class RecipeCard extends StatefulWidget {
             _getTags(snapshots);
 
             return addPadding(
-              MultipleTags(
-                _createTags().toList(),
-                cookingTimeTag: MultipleTags.createTag(
-                  recipe.prepTime.toString(),
-                  icon: Icons.access_time,
-                ),),
+                MultipleTags(
+                  _createTags().toList(),
+                  cookingTimeTag: MultipleTags.createTag(
+                    recipe.prepTime.toString(),
+                    icon: Icons.access_time,
+                  ),
+                ),
                 left: 8.0,
                 top: 8.0,
                 bottom: 8.0);

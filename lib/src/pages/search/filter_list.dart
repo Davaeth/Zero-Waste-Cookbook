@@ -7,11 +7,13 @@ import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class FiltersList extends StatefulWidget {
   final String collection;
+  final String sectionTitle;
 
-  FiltersList({@required this.collection});
+  FiltersList({@required this.collection, @required this.sectionTitle});
 
   @override
   _FiltersListState createState() => _FiltersListState();
@@ -19,6 +21,7 @@ class FiltersList extends StatefulWidget {
 
 class _FiltersListState extends State<FiltersList> {
   String _collection;
+  String _sectiontitle;
 
   List<String> _docReferences;
 
@@ -33,7 +36,7 @@ class _FiltersListState extends State<FiltersList> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              _collection,
+              _sectiontitle,
               style: TextStyle(
                   decoration: TextDecoration.none,
                   fontSize: 18.0,
@@ -48,6 +51,7 @@ class _FiltersListState extends State<FiltersList> {
   @override
   void initState() {
     _collection = widget.collection;
+    _sectiontitle = widget.sectionTitle;
 
     _docReferences = List<String>();
 
@@ -112,22 +116,23 @@ class _FiltersListState extends State<FiltersList> {
   }
 
   Padding _buildSearchSubmitButton(BuildContext context) => addPadding(
-      Container(
-        width: (MediaQuery.of(context).size.width / 100) * 50,
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.grey, width: 2.0),
-            borderRadius: BorderRadius.circular(15.0)),
-        child: FlatButton(
-          onPressed: () {
-            _showSearchingResult();
-          },
-          child: Text(
-            'Search',
-            style: TextStyle(color: DefaultColors.textColor, fontSize: 20.0),
+        Container(
+          width: (MediaQuery.of(context).size.width / 100) * 50,
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey, width: 2.0),
+              borderRadius: BorderRadius.circular(15.0)),
+          child: FlatButton(
+            onPressed: () {
+              _showSearchingResult();
+            },
+            child: Text(
+              Translator.instance.translations['search'],
+              style: TextStyle(color: DefaultColors.textColor, fontSize: 20.0),
+            ),
           ),
         ),
-      ),
-      bottom: 8.0);
+        bottom: 8.0,
+      );
 
   Future<void> _showSearchingResult() async {
     if (_collection == 'Regions') {
