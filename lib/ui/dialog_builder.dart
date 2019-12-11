@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/administration/review.dart';
 import 'package:zero_waste_cookbook/src/pages/single_recipe/components/review_rater.dart';
-import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 
 import 'shared/colors/default_colors.dart';
@@ -26,6 +26,60 @@ class _DialogBuilderState extends State<DialogBuilder> {
   int _rateValue;
   String _recipeId;
 
+  void _checkReviewData() {
+    setState(() {
+      if (_rateValue != null) {
+        if (_descriptionController.text != null &&
+            _descriptionController.text != '' &&
+            _descriptionController.text.trim() != '') {
+          _addReview();
+        } else {
+          Fluttertoast.showToast(
+            msg: 'Podaj treść komentarza!',
+            backgroundColor: DefaultColors.secondaryColor,
+            textColor: DefaultColors.iconColor,
+            gravity: ToastGravity.BOTTOM,
+            toastLength: Toast.LENGTH_SHORT,
+          );
+        }
+      } else {
+        Fluttertoast.showToast(
+          msg: 'Podaj ocenę!',
+          backgroundColor: DefaultColors.secondaryColor,
+          textColor: DefaultColors.iconColor,
+          gravity: ToastGravity.BOTTOM,
+          toastLength: Toast.LENGTH_SHORT,
+        );
+      }
+    });
+  }
+
+  void _addReview() {
+    DatabaseService _db = DatabaseService();
+
+    _db.createDatum(
+      'Reviews',
+      Review(
+        rate: _rateValue,
+        description: _descriptionController.text,
+        reviewType: 'Cool',
+        user: _db.getDocumentReference('Users', 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43'),
+        recipe: _db.getDocumentReference('Recipes', _recipeId),
+      ).toJson(),
+    );
+
+    _db.updateRecipeRank(_recipeId);
+
+    setState(() {
+      _singleRecipeCallback();
+    });
+
+    stepPageBack(context);
+  }
+
+  @override
+  Widget build(BuildContext context) => _buildRateReviewDialog();
+
   @override
   void initState() {
     _descriptionController = TextEditingController();
@@ -34,9 +88,6 @@ class _DialogBuilderState extends State<DialogBuilder> {
 
     super.initState();
   }
-
-  @override
-  Widget build(BuildContext context) => _buildRateReviewDialog();
 
   SimpleDialog _buildRateReviewDialog() => SimpleDialog(
         contentPadding: EdgeInsets.only(top: 0, bottom: 16.0),
@@ -55,10 +106,11 @@ class _DialogBuilderState extends State<DialogBuilder> {
             alignment: Alignment.topRight,
           ),
           Center(
-              child: Text(
-            'Oceń',
-            style: TextStyle(color: Colors.white, fontSize: 20.0),
-          )),
+            child: Text(
+              'Rate the recipe',
+              style: TextStyle(color: Colors.white, fontSize: 20.0),
+            ),
+          ),
           ReviewRater(_rateReview),
           _craeteReviewDesctiptionField(),
           _createSubmitButotn(),
@@ -67,71 +119,37 @@ class _DialogBuilderState extends State<DialogBuilder> {
       );
 
   Padding _craeteReviewDesctiptionField() => addPadding(
-      Container(
-        color: DefaultColors.backgroundColor,
-        child: TextFormField(
-            keyboardType: TextInputType.multiline,
-            maxLines: null,
-            style: TextStyle(color: Colors.white),
-            cursorColor: Colors.white,
-            textAlign: TextAlign.center,
-            controller: _descriptionController,
-            decoration: InputDecoration(border: InputBorder.none)),
-      ),
-      left: 16.0,
-      right: 16.0);
+        Container(
+          color: DefaultColors.backgroundColor,
+          child: TextFormField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              style: TextStyle(color: Colors.white),
+              cursorColor: Colors.white,
+              textAlign: TextAlign.center,
+              controller: _descriptionController,
+              decoration: InputDecoration(border: InputBorder.none)),
+        ),
+        left: 16.0,
+        right: 16.0,
+      );
 
   Padding _createSubmitButotn() => addPadding(
-      MaterialButton(
-        onPressed: addReview,
-        color: DefaultColors.iconColor,
-        child: Text('SUBMIT'),
-        textColor: Colors.black,
-        highlightColor: Colors.transparent,
-        splashColor: Colors.transparent,
-      ),
-      bottom: 0,
-      top: 8.0,
-      left: 16.0,
-      right: 16.0);
+        MaterialButton(
+          onPressed: _checkReviewData,
+          color: DefaultColors.iconColor,
+          child: Text('SUBMIT'),
+          textColor: Colors.black,
+          highlightColor: Colors.transparent,
+          splashColor: Colors.transparent,
+        ),
+        bottom: 0,
+        top: 8.0,
+        left: 16.0,
+        right: 16.0,
+      );
 
   void _rateReview(int rateValue) {
     _rateValue = rateValue;
-  }
-
-  void addReview() {
-    setState(() {
-      if (_rateValue != null) {
-        DatabaseService _db = DatabaseService();
-
-        _db.createDatum(
-          'Reviews',
-          Review(
-            rate: _rateValue,
-            description: _descriptionController.text,
-            reviewType: 'Cool',
-            user: _db.getDocumentReference(
-                'Users', fUserId),
-            recipe: _db.getDocumentReference('Recipes', _recipeId),
-          ).toJson(),
-        );
-
-        _db.updateRecipeRank(_recipeId);
-
-        setState(() {
-          _singleRecipeCallback();
-        });
-
-        stepPageBack(context);
-      } else {
-        // Builder(
-        //   builder: (BuildContext context) {
-        //     return Scaffold.of(context).showSnackBar(SnackBar(
-        //       content: Text('Przepis musi być oceniony!'),
-        //     ));
-        //   },
-        // );
-      }
-    });
   }
 }

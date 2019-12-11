@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
-import 'package:zero_waste_cookbook/src/utils/routes_arguments.dart';
+import 'package:zero_waste_cookbook/utils/routes_arguments.dart';
 
 void navigateToPageByRoute(String route, BuildContext context,
     {String recipeId, List<Recipe> recipes}) {

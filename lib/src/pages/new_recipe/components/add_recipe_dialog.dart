@@ -84,11 +84,12 @@ class _AddRecipeDialogState extends State<AddRecipeDialog> {
       right: 16.0);
 
   Padding _createIngredientDropdown() => addPadding(
-      Container(
-        color: DefaultColors.backgroundColor,
-        child: IngredientsDropdown(callback: _chooseAnIngredient),
-      ),
-      left: 16.0,
-      right: 16.0,
-      top: 16.0);
+        Container(
+          color: DefaultColors.backgroundColor,
+          child: IngredientsDropdown(callback: _chooseAnIngredient),
+        ),
+        left: 16.0,
+        right: 16.0,
+        top: 16.0,
+      );
 }

@@ -6,6 +6,33 @@ import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 class DatabaseService {
   final _db = Firestore.instance;
 
+  Future<bool> addNewUserToDatabase() async {
+    final exists = await checkIfExists('Users', currentUserId);
+
+    if (!exists) {
+      var account = Map<String, String>();
+
+      account.addEntries(
+        [
+          MapEntry('username', currentUserName),
+          MapEntry('avaterUrl', currentUserIamgeUrl)
+        ],
+      );
+
+      _db.collection('Users').document(currentUserId).setData(
+            User(
+              id: currentUserId,
+              account: account,
+              createTime: Timestamp.fromDate(DateTime.now()),
+              deleted: false,
+              role: null,
+            ).toJson(),
+          );
+    }
+
+    return true;
+  }
+
   Future<void> addRecipeToFavourites(String recipeId, String userId) async {
     var recipeRef = getDocumentReference('Recipes', recipeId);
 
@@ -27,6 +54,17 @@ class DatabaseService {
     var recipesRef = getDocumentReference('Recipes', recipeId);
 
     return user.favouriteRecipes.contains(recipesRef);
+  }
+
+  Future<bool> checkIfUserIsAReviewCreator(
+      String userId, String reviewId) async {
+    var userRef = getDocumentReference('Users', userId);
+
+    return await _db
+        .collection('Reviews')
+        .document(reviewId)
+        .get()
+        .then((value) => value.data['user'] == userRef);
   }
 
   Future<void> createDatum(String collection, Map data) async {
@@ -59,17 +97,6 @@ class DatabaseService {
     await _db.collection(collection).document(id).updateData({
       fieldToModify: FieldValue.arrayRemove([reference])
     });
-  }
- 
-   Future<bool> checkIfUserIsAReviewCreator(
-      String userId, String reviewId) async {
-    var userRef = getDocumentReference('Users', userId);
-
-    return await _db
-        .collection('Reviews')
-        .document(reviewId)
-        .get()
-        .then((value) => value.data['user'] == userRef);
   }
 
   Future<QuerySnapshot> getAllData(String collection) async =>
@@ -106,23 +133,6 @@ class DatabaseService {
     for (var reference in references) {
       yield getDocumentReference(collection, reference);
     }
-  }
-
-  Future<void> updateRecipeRank(String recipeId) async {
-    var recipeRef = getDocumentReference('Recipes', recipeId);
-    var reviews = (await getDataByField('Reviews', 'recipe', recipeRef));
-
-    double newRank = 0.0;
-
-    for (var review in reviews) {
-      newRank += review.data['rate'];
-    }
-
-    _db.collection('Recipes').document(recipeId).updateData(
-      {
-        'rank': double.parse((newRank / reviews.length).toStringAsFixed(2)),
-      },
-    );
   }
 
   Future<QuerySnapshot> getNewestRecipes({int limit = 5}) => _db
@@ -269,19 +279,20 @@ class DatabaseService {
         .getDocuments();
   }
 
-// added 20191210
-  Future<bool> addNewUserToDatabase() async {
-    final snapshot = await _db.collection('Users').document(fUserId).get().then((value) => value.exists);
-    if(snapshot == false){
-       _db.collection('Users').document(fUserId).setData(
-        User(
-          id: fUserId,
-          username: name,
-          createTime: Timestamp.fromDate(DateTime.now()),
-          deleted: false,
-          role: null,
-        ).toJson());
+  Future<void> updateRecipeRank(String recipeId) async {
+    var recipeRef = getDocumentReference('Recipes', recipeId);
+    var reviews = (await getDataByField('Reviews', 'recipe', recipeRef));
+
+    double newRank = 0.0;
+
+    for (var review in reviews) {
+      newRank += review.data['rate'];
     }
-    return true;
+
+    _db.collection('Recipes').document(recipeId).updateData(
+      {
+        'rank': double.parse((newRank / reviews.length).toStringAsFixed(2)),
+      },
+    );
   }
 }

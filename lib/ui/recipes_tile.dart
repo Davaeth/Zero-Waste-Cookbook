@@ -34,7 +34,7 @@ class RecipeTile extends StatelessWidget {
             child: _buildUserRecipesTile(context),
           ),
         ),
-        top: 16.0,
+        bottom: 16.0,
       );
 
   Row _buildSubtitle() => Row(
