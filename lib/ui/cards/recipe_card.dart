@@ -23,7 +23,10 @@ class RecipeCard extends StatefulWidget {
 
   final bool isTappable;
 
-  RecipeCard({@required this.interior, this.recipeID, this.isTappable = true});
+  RecipeCard(
+      {@required this.interior,
+      @required this.recipeID,
+      this.isTappable = true});
 
   @override
   _RecipeCardState createState() => _RecipeCardState();
@@ -73,14 +76,15 @@ class RecipeCard extends StatefulWidget {
         },
       ),
       addPadding(
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[Ratings(recipe.rank.floor())],
-          ),
-          top: 8.0,
-          left: 16.0,
-          bottom: 16.0),
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[Ratings(recipe.rank.floor())],
+        ),
+        top: 8.0,
+        left: 16.0,
+        bottom: 16.0,
+      ),
     ];
   }
 
@@ -116,14 +120,15 @@ class RecipeCard extends StatefulWidget {
             _getTags(snapshots);
 
             return addPadding(
-                MultipleTags(
-                  _createTags().toList(),
-                  cookingTimeTag: MultipleTags.createTag(
-                      recipe.prepTime.toString(),
-                      icon: Icons.access_time),
-                ),
-                left: 8.0,
-                top: 8.0);
+              MultipleTags(
+                _createTags().toList(),
+                cookingTimeTag: MultipleTags.createTag(
+                    recipe.prepTime.toString(),
+                    icon: Icons.access_time),
+              ),
+              left: 8.0,
+              top: 8.0,
+            );
           } else {
             return Card();
           }
@@ -171,12 +176,12 @@ class RecipeCard extends StatefulWidget {
             _getTags(snapshots);
 
             return addPadding(
-                MultipleTags(
-                  _createTags().toList(),
-                  cookingTimeTag: MultipleTags.createTag(
-                      recipe.prepTime.toString(),
-                      icon: Icons.access_time),
-                ),
+              MultipleTags(
+                _createTags().toList(),
+                cookingTimeTag: MultipleTags.createTag(
+                  recipe.prepTime.toString(),
+                  icon: Icons.access_time,
+                ),),
                 left: 8.0,
                 top: 8.0,
                 bottom: 8.0);
@@ -210,18 +215,19 @@ class _RecipeCardState extends State<RecipeCard> {
 
   @override
   Widget build(BuildContext context) => switchPage(
-      context,
-      Card(
-        color: DefaultColors.secondaryColor,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: _interior,
+        context,
+        Card(
+          color: DefaultColors.secondaryColor,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: _interior,
+          ),
         ),
-      ),
-      Routes.Recipe,
-      recipeId: _recipeId,
-      isTappable: _isTappable);
+        Routes.Recipe,
+        recipeId: _recipeId,
+        isTappable: _isTappable,
+      );
 
   @override
   void initState() {

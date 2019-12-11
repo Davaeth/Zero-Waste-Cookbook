@@ -24,7 +24,7 @@ class StackBuilder {
 //                  shape: BoxShape.rectangle,
                   image: new DecorationImage(
                       fit: BoxFit.fill,
-                      image: FirebaseStorageImage(imagePath)
+                      image: (FirebaseStorageImage(imagePath) == null) ? AssetImage('assets/images/ic_launcher.png') : FirebaseStorageImage(imagePath),
                   )
               )),
 
@@ -54,7 +54,7 @@ class StackBuilder {
 //                  shape: BoxShape.rectangle,
                   image: new DecorationImage(
                       fit: BoxFit.fill,
-                      image: FirebaseStorageImage(imagePath)
+                      image: (FirebaseStorageImage(imagePath) == null) ? AssetImage('assets/images/ic_launcher.png') : FirebaseStorageImage(imagePath),
                   )
               )),
 

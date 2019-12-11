@@ -10,6 +10,7 @@ import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/expansion_tiles/expansion_tile_builder.dart';
 import 'package:zero_waste_cookbook/ui/expansion_tiles/section.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
@@ -58,7 +59,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                     RecipeCard(
                       interior: RecipeCard.createInteriorForCardWithRating(
                         recipe: _this,
-                        userId: 'MtcBAWcygoW6ERK83agC',
+                        userId: fUserId,
                         context: context,
                         isFav: _isFav,
                         callback: (bool isFav) =>
@@ -76,7 +77,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                         return addPadding(
                             ExpansionTileBuilder(
                               Section(
-                                'INGREDIENTS',
+                                'SKŁADNIKI',
                                 entries: ingredientsNames.toList(),
                               ),
                             ),
@@ -87,7 +88,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                     addPadding(
                         ExpansionTileBuilder(
                           Section(
-                            'DESCRIPTION',
+                            'SPOSÓB PRZYGOTOWANIA',
                             entries: [_this.description],
                           ),
                         ),
@@ -151,7 +152,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
           onTap: () => _expandReviews(),
           child: addPadding(
               Text(
-                _areReviewsExpanded ? 'Show less...' : 'Show more...',
+                _areReviewsExpanded ? 'Pokaż więcej...' : 'Pokaż mniej',
                 style: TextStyle(fontSize: 15.0, color: Colors.white),
               ),
               top: 8.0,

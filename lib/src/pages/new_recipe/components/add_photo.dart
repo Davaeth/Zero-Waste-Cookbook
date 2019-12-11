@@ -28,10 +28,14 @@ class _AddPhotoState extends State<AddPhoto> {
   }
 
   Future<void> _pickImage(ImageSource source) async {
-    File selected = await ImagePicker.pickImage(source: source);
+    File selected = await ImagePicker.pickImage(source: source, maxWidth: 800, maxHeight: 450);
     setState(() {
       _imageFile = selected;
     });
+    if (selected != null) {
+      uploadFile();
+    }
+
   }
 
   /// Remove image
@@ -82,11 +86,7 @@ class _AddPhotoState extends State<AddPhoto> {
                 FlatButton(
                   child: Icon(Icons.clear, color:Colors.red),
                   onPressed: _clear,
-                ),
-                FlatButton(
-                  child: Icon(Icons.done, color:Colors.green),
-                  onPressed: () { uploadFile();}
-                ),
+                )
               ],
             ),
 

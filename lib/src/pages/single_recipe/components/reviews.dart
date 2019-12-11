@@ -67,7 +67,7 @@ class ReviewsState extends State<Reviews> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            'Zweryfikowany użytkownik',
+            'Użytkownik',
             style: TextStyle(color: RecipeColors.usernameColor, fontSize: 18.0),
           ),
           Align(
