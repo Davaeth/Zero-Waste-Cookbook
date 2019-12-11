@@ -77,7 +77,7 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
         value: ingredient.name,
         child: Text(
           ingredient.name,
-          style: TextStyle(color: Colors.white, fontSize: 20.0),
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
       );

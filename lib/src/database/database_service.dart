@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:zero_waste_cookbook/src/models/administration/user.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 
 class DatabaseService {
   final _db = Firestore.instance;
@@ -59,8 +60,8 @@ class DatabaseService {
       fieldToModify: FieldValue.arrayRemove([reference])
     });
   }
-
-  Future<bool> checkIfUserIsAReviewCreator(
+ 
+   Future<bool> checkIfUserIsAReviewCreator(
       String userId, String reviewId) async {
     var userRef = getDocumentReference('Users', userId);
 
@@ -266,5 +267,21 @@ class DatabaseService {
         .orderBy('creationTime', descending: true)
         .limit(limit)
         .getDocuments();
+  }
+
+// added 20191210
+  Future<bool> addNewUserToDatabase() async {
+    final snapshot = await _db.collection('Users').document(fUserId).get().then((value) => value.exists);
+    if(snapshot == false){
+       _db.collection('Users').document(fUserId).setData(
+        User(
+          id: fUserId,
+          username: name,
+          createTime: Timestamp.fromDate(DateTime.now()),
+          deleted: false,
+          role: null,
+        ).toJson());
+    }
+    return true;
   }
 }

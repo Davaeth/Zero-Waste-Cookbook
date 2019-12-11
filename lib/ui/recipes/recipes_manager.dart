@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 
 class RecipesManager extends StatefulWidget {
   final Axis scrollDirection;
@@ -29,7 +30,7 @@ class _RecipesManager extends State<RecipesManager> {
             padding: EdgeInsets.fromLTRB(5.0, 0, 5.0, 5.0),
             shrinkWrap: true,
             scrollDirection: _scrollDirection,
-            children: _createRecipeDetectors(snapshots),
+            children: _createRecipeDetectors(context, snapshots),
           );
         } else {
           return ListView();
@@ -52,6 +53,7 @@ class _RecipesManager extends State<RecipesManager> {
   }
 
   List<Container> _createRecipeDetectors(
+      BuildContext context,
       AsyncSnapshot<QuerySnapshot> snapshots) {
     List<Container> gestures = List<Container>();
 
@@ -65,9 +67,9 @@ class _RecipesManager extends State<RecipesManager> {
           height: (MediaQuery.of(context).size.height / 100) * 50,
           child: RecipeCard(
             interior: RecipeCard.createInteriorForListOfCards(
+              context: context,
               recipe: recipe,
-              imagePath: 'assets/images/small-food.png',
-              userId: 'MtcBAWcygoW6ERK83agC',
+              userId: fUserId,
               isFav: _isFav,
               callback: (bool isFav) => _callback(isFav),
             ),

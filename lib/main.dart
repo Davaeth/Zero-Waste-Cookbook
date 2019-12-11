@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
@@ -7,23 +8,31 @@ import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/compon
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/components/users_view_builder.dart';
 import 'package:zero_waste_cookbook/src/pages/login/authentication.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 
 import 'ui/cards/recipe_card.dart';
 import 'ui/recipes/recipes_manager.dart';
 import 'ui/shared/behaviours/custom_scroll_behavior.dart';
 import 'ui/shared/page_resolvers/positioning.dart';
 
+import 'package:global_configuration/global_configuration.dart';
+
+final FirebaseStorage storage = FirebaseStorage(
+      app: Firestore.instance.app,
+      storageBucket: 'gs://zero-waste-cookbook.appspot.com/');
+
 void main() async {
   FirebaseUser user = await FirebaseAuth.instance.currentUser();
-
-  return runApp(MyApp(user != null));
+  await GlobalConfiguration().loadFromAsset("appconfig");
+  return runApp(MyApp(false));
 }
 
 class MyApp extends StatelessWidget {
   final bool _isLogged;
 
+  
   MyApp(this._isLogged);
-
+  
   @override
   Widget build(BuildContext context) => MaterialApp(
       title: 'Zero Waste Cookbook',
@@ -48,11 +57,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) => ListView(
         shrinkWrap: true,
         children: <Widget>[
-          _buildRecipeOfTheDay(),
+          _buildRecipeOfTheDay(context),
           addPadding(
               Text(
                 'Nowe przepisy',
-                style: TextStyle(fontSize: 20.0, color: Colors.white),
+                style: TextStyle(fontSize: 18.0, color: Colors.white),
               ),
               left: 16.0,
               top: 16.0,
@@ -73,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.initState();
   }
 
-  FutureBuilder _buildRecipeOfTheDay() {
+  FutureBuilder _buildRecipeOfTheDay(BuildContext context) {
     DatabaseService _db = DatabaseService();
 
     return FutureBuilder<DocumentSnapshot>(
@@ -84,9 +93,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
           return RecipeCard(
             interior: RecipeCard.createInteriorForSingleCard(
+              context: context,
               recipe: recipe,
-              imagePath: 'assets/images/small-food.png',
-              userId: 'MtcBAWcygoW6ERK83agC',
+              userId: fUserId,
               isFav: _isFav,
               callback: (bool isFav) => _callback(isFav),
             ),

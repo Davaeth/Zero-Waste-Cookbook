@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/page_resolver.dart';
@@ -9,6 +10,7 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Container(
@@ -66,6 +68,10 @@ class _LoginState extends State<Login> {
 
   void _signWithGoogle() {
     signInWithGoogle.whenComplete(() {
+
+      DatabaseService _databaseService = DatabaseService();
+      _databaseService.addNewUserToDatabase();
+
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => buildPage(context)),

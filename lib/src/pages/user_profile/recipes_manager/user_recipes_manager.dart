@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/recipes_tile.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
@@ -32,7 +33,7 @@ class _UserRecipesManagerState extends State<UserRecipesManager> {
             ),
             FutureBuilder(
               future: _databaseService
-                  .getUserRecipes('E5ewEF8YxDO0rl8Zue2zMrU7Yd43'),
+                  .getUserRecipes(fUserId),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
                 if (snapshots.hasData) {
                   var recipes = _getRecipesInfo(snapshots);

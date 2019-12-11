@@ -79,7 +79,7 @@ class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
         value: dishRegion.name,
         child: Text(
           dishRegion.name,
-          style: TextStyle(color: Colors.white, fontSize: 20.0),
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
       );

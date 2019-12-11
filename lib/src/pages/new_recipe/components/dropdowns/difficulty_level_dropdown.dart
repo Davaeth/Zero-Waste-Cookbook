@@ -80,7 +80,7 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
         value: difficultyLevel.difficultyLevelName,
         child: Text(
           difficultyLevel.difficultyLevelName,
-          style: TextStyle(color: Colors.white, fontSize: 20.0),
+          style: TextStyle(color: Colors.white, fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
       );

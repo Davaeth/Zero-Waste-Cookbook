@@ -23,7 +23,7 @@ Padding buildUserInfoIcon(String amount, IconData iconData) => addPadding(
     );
 
 Column buildUserInfo(List<String> amounts, List<IconData> iconsData,
-        String username, String imageUrl) =>
+        String username, String newimageUrl) =>
     Column(
       children: <Widget>[
         Column(
@@ -32,11 +32,10 @@ Column buildUserInfo(List<String> amounts, List<IconData> iconsData,
             children: <Widget>[
               addPadding(
                   CircleAvatar(
-                    radius: 50.0,
-                    backgroundImage: NetworkImage(
-                      imageUrl,
-                    ),
-                  ),
+                      radius: 50.0,
+                      backgroundImage: NetworkImage(
+                        newimageUrl,
+                      )),
                   top: 16.0,
                   bottom: 16.0),
             ]),

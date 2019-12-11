@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 
 class FavRecipesManager extends StatefulWidget {
   @override
@@ -16,14 +17,14 @@ class _FavRecipesManager extends State<FavRecipesManager> {
 
   @override
   Widget build(BuildContext context) => StreamBuilder(
-        stream: _db.getUserFavouriteRecipes('E5ewEF8YxDO0rl8Zue2zMrU7Yd43'),
+        stream: _db.getUserFavouriteRecipes(fUserId),
         builder: (context, AsyncSnapshot<List<DocumentSnapshot>> snapshots) {
           if (snapshots.hasData) {
             return ListView(
               padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              children: _extractFavRecipes(snapshots).toList(),
+              children: _extractFavRecipes(context ,snapshots).toList(),
             );
           } else {
             return ListView();
@@ -45,15 +46,16 @@ class _FavRecipesManager extends State<FavRecipesManager> {
   }
 
   Iterable<RecipeCard> _extractFavRecipes(
+      BuildContext context,
       AsyncSnapshot<List<DocumentSnapshot>> snapshots) sync* {
     for (var snapshot in snapshots.data) {
       var recipe = Recipe.fromFirestore(snapshot);
 
       yield RecipeCard(
         interior: RecipeCard.createInteriorForListOfCards(
+          context: context,
           recipe: recipe,
-          imagePath: 'assets/images/small-food.png',
-          userId: 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43',
+          userId: fUserId,
           isFav: _isFav,
           callback: (bool isFav) => _callback(isFav),
         ),
