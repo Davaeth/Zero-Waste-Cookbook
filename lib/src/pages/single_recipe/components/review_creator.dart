@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/ui/dialog_builder.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class ReviewCreator extends StatelessWidget {
   final Function _singleRecipeCallback;
@@ -29,7 +30,7 @@ class ReviewCreator extends StatelessWidget {
             children: <Widget>[
               addPadding(
                   Text(
-                    'Dodaj komentarz',
+                    Translator.instance.translations['add_review'],
                     style: TextStyle(color: Colors.white, fontSize: 15.0),
                   ),
                   left: 16.0,

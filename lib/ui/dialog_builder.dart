@@ -3,7 +3,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/administration/review.dart';
 import 'package:zero_waste_cookbook/src/pages/single_recipe/components/review_rater.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 import 'shared/colors/default_colors.dart';
 import 'shared/page_resolvers/positioning.dart';
@@ -63,7 +65,7 @@ class _DialogBuilderState extends State<DialogBuilder> {
         rate: _rateValue,
         description: _descriptionController.text,
         reviewType: 'Cool',
-        user: _db.getDocumentReference('Users', 'E5ewEF8YxDO0rl8Zue2zMrU7Yd43'),
+        user: _db.getDocumentReference('Users', currentUserId),
         recipe: _db.getDocumentReference('Recipes', _recipeId),
       ).toJson(),
     );
@@ -107,7 +109,7 @@ class _DialogBuilderState extends State<DialogBuilder> {
           ),
           Center(
             child: Text(
-              'Rate the recipe',
+              Translator.instance.translations['rate_the_recipe'],
               style: TextStyle(color: Colors.white, fontSize: 20.0),
             ),
           ),
@@ -138,7 +140,7 @@ class _DialogBuilderState extends State<DialogBuilder> {
         MaterialButton(
           onPressed: _checkReviewData,
           color: DefaultColors.iconColor,
-          child: Text('SUBMIT'),
+          child: Text(Translator.instance.translations['submit'].toUpperCase()),
           textColor: Colors.black,
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,

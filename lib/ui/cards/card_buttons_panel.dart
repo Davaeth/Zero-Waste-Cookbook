@@ -23,6 +23,7 @@ GestureDetector buildAdministratorCardButton(
                   alignment: Alignment.center,
                   child: Text(
                     text,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 24.0,
                       color: DefaultColors.iconColor,

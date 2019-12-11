@@ -13,6 +13,7 @@ import 'package:zero_waste_cookbook/ui/expansion_tiles/section.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 import 'components/reviews.dart';
 
@@ -75,7 +76,8 @@ class _SingleRecipeState extends State<SingleRecipe> {
                 addPadding(
                   ExpansionTileBuilder(
                     Section(
-                      'DESCRIPTION',
+                      Translator.instance.translations['description']
+                          .toUpperCase(),
                       entries: [_recipe.description],
                     ),
                   ),
@@ -104,7 +106,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
             return addPadding(
               ExpansionTileBuilder(
                 Section(
-                  'INGREDIENTS',
+                  Translator.instance.translations['ingredients'].toUpperCase(),
                   entries: ingredientsNames.toList(),
                 ),
               ),
@@ -164,7 +166,9 @@ class _SingleRecipeState extends State<SingleRecipe> {
           onTap: () => _expandReviews(),
           child: addPadding(
               Text(
-                _areReviewsExpanded ? 'Pokaż więcej...' : 'Pokaż mniej',
+                _areReviewsExpanded
+                    ? Translator.instance.translations['show_more']
+                    : Translator.instance.translations['show_less'],
                 style: TextStyle(fontSize: 15.0, color: Colors.white),
               ),
               top: 8.0,

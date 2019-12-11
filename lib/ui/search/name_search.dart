@@ -6,6 +6,7 @@ import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 mixin NameSearch on State<Search> {
   Padding nameSearchWidget(BuildContext context) => addPadding(
@@ -17,7 +18,7 @@ mixin NameSearch on State<Search> {
             style: TextStyle(color: DefaultColors.textColor, height: 0.8),
             decoration: InputDecoration(
               hintStyle: TextStyle(color: DefaultColors.disabledIconColor),
-              hintText: 'Search by name',
+              hintText: Translator.instance.translations['search_by_name'],
               prefixIcon: Icon(Icons.search, color: DefaultColors.iconColor),
               enabledBorder:
                   _buildOutlineInputBorder(DefaultColors.disabledIconColor),

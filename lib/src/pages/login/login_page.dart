@@ -3,6 +3,7 @@ import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/page_resolver.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -10,7 +11,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  
   @override
   Widget build(BuildContext context) => Scaffold(
         body: Container(
@@ -40,7 +40,7 @@ class _LoginState extends State<Login> {
           Padding(
             padding: const EdgeInsets.only(left: 10),
             child: Text(
-              'Zaloguj za pomocą konta Google',
+              Translator.instance.translations['login_with_google'],
               style: TextStyle(
                 fontSize: 20,
                 color: Colors.grey,
@@ -68,9 +68,8 @@ class _LoginState extends State<Login> {
 
   void _signWithGoogle() {
     signInWithGoogle.whenComplete(() {
-
       DatabaseService _databaseService = DatabaseService();
-      
+
       _databaseService.addNewUserToDatabase();
 
       Navigator.push(

@@ -5,12 +5,13 @@ import 'package:zero_waste_cookbook/src/pages/new_recipe/components/dropdowns/di
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/dropdowns/dish_regions_dropdown.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/new_recipe_section.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/new_recipe.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 mixin RecipeDropdowns on State<NewRecipe> {
   NewRecipeSection buildDifficultyLevelDropdown(
           Function(DifficultyLevel) difficultyLevelDropdownCallback) =>
       NewRecipeSection(
-        'Difficulty level',
+        Translator.instance.translations['difficulty_level'],
         DifficultyLevelDropdown(
           callback: difficultyLevelDropdownCallback,
         ),
@@ -19,7 +20,7 @@ mixin RecipeDropdowns on State<NewRecipe> {
   NewRecipeSection buildDishRegionsDropdown(
           Function(Region) dishRegionsDropdownCallback) =>
       NewRecipeSection(
-        'Regions',
+        Translator.instance.translations['regions'],
         DishRegionsDropdown(
           callback: dishRegionsDropdownCallback,
         ),

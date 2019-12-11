@@ -19,7 +19,7 @@
     "title": "Tytuł",
     "add_an_ingredients": "Dodaj składnik",
     "difficulty_level": "Poziom zaawansowania",
-    "prep_time": "Czas przygotowania",
+    "prep_time": "Czas przygotowania (min)",
     "tags": "Tagi",
     "add_new_tag": "Dodaj tag",
     "add_recipe": "Dodaj przepis",
@@ -30,5 +30,16 @@
     "delete_account": "Usuń konto",
     "logout": "Wyloguj",
     "polish": "Polski",
-    "english": "Angielski"
+    "english": "Angielski",
+    "directions": "Sposób przygotowania",
+    "picture": "Zdjęcie",
+    "recipe_added": "Dodano przepis!",
+    "provide_recipe_title": "Podaj nazwę przepisu!",
+    "provideingredients": "Podaj składniki!",
+    "provide_directions": "Podaj sposób przygotowania!",
+    "provide_prep_time": "Podaj czas!",
+    "provide_tags": "Podaj tagi!",
+    "login_with_google": "Zaloguj za pomocą konta Google",
+    "from_camera": "Użyj aparatu",
+    "from_gallery": "Użyj galerii"
 }

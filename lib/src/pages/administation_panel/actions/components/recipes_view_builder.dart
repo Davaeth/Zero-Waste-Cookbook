@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/components/models/administrator_action.dart';
+import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/recipes_tile.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
@@ -123,7 +124,7 @@ class _RecipesViewBuilderState extends State<RecipesViewBuilder> {
         );
         _dbService.deleteRelatedData(
           'Users',
-          'userId',
+          currentUserId,
           'recipes',
           'Recipes',
           _recipes[index].id,

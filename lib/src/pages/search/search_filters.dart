@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/pages/search/filter_list.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class Filters extends StatelessWidget {
   @override
@@ -12,8 +13,14 @@ class Filters extends StatelessWidget {
           controller: ScrollController(),
           shrinkWrap: true,
           children: <Widget>[
-            FiltersList(collection: 'Regions'),
-            FiltersList(collection: 'Ingredients'),
+            FiltersList(
+              collection: 'Regions',
+              sectionTitle: Translator.instance.translations['regions'],
+            ),
+            FiltersList(
+              collection: 'Ingredients',
+              sectionTitle: Translator.instance.translations['ingredients'],
+            ),
           ],
         ),
       );

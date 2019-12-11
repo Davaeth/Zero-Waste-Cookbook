@@ -8,6 +8,7 @@ import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/compon
 import 'package:zero_waste_cookbook/src/pages/login/authentication.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 import 'ui/cards/recipe_card.dart';
 import 'ui/recipes/recipes_manager.dart';
@@ -22,6 +23,8 @@ final FirebaseStorage storage = FirebaseStorage(
 
 void main() async {
   await GlobalConfiguration().loadFromAsset("appconfig");
+
+  await Translator.instance.getTranslations();
 
   return runApp(MyApp(false));
 }
@@ -58,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
           _buildRecipeOfTheDay(context),
           addPadding(
               Text(
-                'Nowe przepisy',
+                Translator.instance.translations['newest_recipes'],
                 style: TextStyle(fontSize: 18.0, color: Colors.white),
               ),
               left: 16.0,

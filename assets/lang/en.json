@@ -30,5 +30,16 @@
     "delete_account": "Delete account",
     "logout": "Logout",
     "polish": "Polish",
-    "english": "English"
+    "english": "English",
+    "directions": "Directions",
+    "picture": "Picture",
+    "recipe_added": "Recipe has been created!",
+    "provide_recipe_title": "Provide reciple title!",
+    "provideingredients": "Provide ingredients",
+    "provide_directions": "Provide directions!",
+    "provide_prep_time": "Provide prep time!",
+    "provide_tags": "Provide tags!",
+    "login_with_google": "Login with Google's account",
+    "from_camera": "From camera",
+    "from_gallery": "From gallery"
 }
