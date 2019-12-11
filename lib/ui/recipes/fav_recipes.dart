@@ -49,14 +49,17 @@ class _FavRecipesManager extends State<FavRecipesManager> {
       BuildContext context,
       AsyncSnapshot<List<DocumentSnapshot>> snapshots) sync* {
     for (var snapshot in snapshots.data) {
+      var recipe = Recipe.fromFirestore(snapshot);
+
       yield RecipeCard(
         interior: RecipeCard.createInteriorForListOfCards(
           context: context,
-          recipe: Recipe.fromFirestore(snapshot),
+          recipe: recipe,
           userId: fUserId,
           isFav: _isFav,
           callback: (bool isFav) => _callback(isFav),
         ),
+        recipeID: recipe.id,
       );
     }
   }

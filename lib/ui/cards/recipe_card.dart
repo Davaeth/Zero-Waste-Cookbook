@@ -31,12 +31,13 @@ class RecipeCard extends StatefulWidget {
   @override
   _RecipeCardState createState() => _RecipeCardState();
 
-  static List<Widget> createInteriorForCardWithRating(
-      {@required Recipe recipe,
+  static List<Widget> createInteriorForCardWithRating({
+      @required Recipe recipe,
       @required BuildContext context,
       @required String userId,
       @required bool isFav,
       Function(bool) callback}) {
+
     DatabaseService _dbService = DatabaseService();
 
     return <Widget>[
@@ -47,6 +48,7 @@ class RecipeCard extends StatefulWidget {
           userId: userId,
           context: context,
           callback: callback),
+
       addPadding(
           Text(
             recipe.recipeTitle,
@@ -88,16 +90,19 @@ class RecipeCard extends StatefulWidget {
     ];
   }
 
+
   static List<Widget> createInteriorForListOfCards(
       {@required BuildContext context,
       @required Recipe recipe,
       @required bool isFav,
       @required String userId,
       Function(bool) callback}) {
+
     DatabaseService _dbService = DatabaseService();
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
+
           context: context,
           isSingle: false,
           imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
@@ -105,6 +110,7 @@ class RecipeCard extends StatefulWidget {
           recipeId: recipe.id,
           userId: userId,
           callback: callback),
+
       addPadding(
           Text(
             recipe.recipeTitle,
@@ -143,10 +149,12 @@ class RecipeCard extends StatefulWidget {
       @required String userId,
       @required bool isFav,
       Function(bool) callback}) {
+
     DatabaseService _dbService = DatabaseService();
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
+
           context: context,
           isSingle: true,
           imagePath: GlobalConfiguration().getString("imagePath") + recipe.photoPath,
@@ -154,6 +162,7 @@ class RecipeCard extends StatefulWidget {
           recipeId: recipe.id,
           userId: userId,
           callback: callback),
+
       addPadding(
           Text(
             'Przepis dnia',

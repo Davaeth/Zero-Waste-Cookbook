@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/components/recipes_view_builder.dart';
+import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/components/users_view_builder.dart';
 import 'package:zero_waste_cookbook/src/pages/search/sreaching_result/searching_result.dart';
 import 'package:zero_waste_cookbook/src/pages/user_profile/user_profile.dart';
 import 'package:zero_waste_cookbook/main.dart';
-import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/applications_actions.dart';
-import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/recipes_actions.dart';
-import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/users_actions.dart';
 import 'package:zero_waste_cookbook/src/pages/login/login_page.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/new_recipe.dart';
 import 'package:zero_waste_cookbook/src/pages/search/search_filters.dart';
@@ -21,7 +20,6 @@ class Routes {
   static const Home = '/';
   static const AdministratorUsers = '/administration/users';
   static const AdministratorRecipes = '/administration/recipes';
-  static const AdministratorApplications = '/administration/applications';
   static const Recipe = '/recipe';
   static const FakeRecipePage = '/voting/fakeRecipe';
   static const VotingPage = '/voting';
@@ -39,19 +37,17 @@ class Routes {
 
         switch (routes.name) {
           case Routes.AdministratorUsers:
-            return MaterialPageRoute(builder: (context) => UsersActions());
+            return MaterialPageRoute(builder: (context) => UsersViewBuilder());
             break;
           case Routes.AdministratorRecipes:
             return MaterialPageRoute(
-                builder: (context) => ApplicationsActions());
-            break;
-          case Routes.AdministratorApplications:
-            return MaterialPageRoute(builder: (context) => RecipesActions());
+                builder: (context) => RecipesViewBuilder());
             break;
           case Routes.Recipe:
             return MaterialPageRoute(
-                builder: (context) =>
-                    SingleRecipe(recipeID: routesArguments.recipeId));
+              builder: (context) =>
+                  SingleRecipe(recipeID: routesArguments.recipeId),
+            );
             break;
           case Routes.FakeRecipePage:
             return MaterialPageRoute(builder: (context) => FakeRecipe());
@@ -67,7 +63,8 @@ class Routes {
             break;
           case Routes.SearchingResultPage:
             return MaterialPageRoute(
-                builder: (context) => SearchingResult(routesArguments.recipes));
+              builder: (context) => SearchingResult(routesArguments.recipes),
+            );
             break;
           case Routes.LoginPage:
             return MaterialPageRoute(builder: (context) => Login());

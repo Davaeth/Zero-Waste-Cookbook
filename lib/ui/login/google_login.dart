@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:zero_waste_cookbook/src/database/database_service.dart';
+import 'package:zero_waste_cookbook/src/models/administration/user.dart';
 
 String email;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -21,7 +23,7 @@ Future<String> get signInWithGoogle async {
   );
 
   final AuthResult authResult = await _auth.signInWithCredential(credential);
-  final FirebaseUser user = (await _auth.signInWithCredential(credential)).user;
+  final FirebaseUser user = authResult.user;
 
   assert(!user.isAnonymous);
   assert(await user.getIdToken() != null);
@@ -37,6 +39,15 @@ Future<String> get signInWithGoogle async {
   email = user.email;
   imageUrl = user.photoUrl;
   fUserId = user.uid;
+
+  if (user != null) {
+    var _dbService = DatabaseService();
+
+    _dbService.createDatum(
+      'Users',
+      User().toJson(),
+    );
+  }
 
   return 'signInWithGoogle succeeded: $user';
 }

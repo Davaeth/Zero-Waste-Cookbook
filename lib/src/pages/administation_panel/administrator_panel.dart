@@ -4,15 +4,26 @@ import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 
 class AdministratorPanel extends StatelessWidget {
   @override
-  Widget build(BuildContext context) => GridView.count(
-        crossAxisCount: 2,
-        childAspectRatio: 1,
-        padding: EdgeInsets.only(left: 8.0, right: 4.0, top: 8.0, bottom: 4.0),
-        children: <Widget>[
-          buildAdministratorCardButton("Manage users",
-              Icons.supervised_user_circle, Routes.AdministratorUsers, context),
-          buildAdministratorCardButton("Manage recipes", Icons.receipt,
-              Routes.AdministratorRecipes, context),
-        ],
+  Widget build(BuildContext context) => SafeArea(
+        left: true,
+        right: true,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            _buildElement("Manage users", Icons.supervised_user_circle,
+                Routes.AdministratorUsers, context),
+            _buildElement("Manage recipes", Icons.receipt,
+                Routes.AdministratorRecipes, context),
+          ],
+        ),
+      );
+
+  Container _buildElement(
+          String text, IconData icon, String route, BuildContext context) =>
+      Container(
+        height: (MediaQuery.of(context).size.height / 100) * 35,
+        width: (MediaQuery.of(context).size.width / 100) * 50,
+        child: buildAdministratorCardButton(text, icon, route, context),
       );
 }
