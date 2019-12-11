@@ -15,9 +15,12 @@ class DatabaseService {
       account.addEntries(
         [
           MapEntry('username', currentUserName),
-          MapEntry('avaterUrl', currentUserIamgeUrl)
+          MapEntry('avatarUrl', currentUserIamgeUrl)
         ],
       );
+
+      var role = getDocumentReference('Roles',
+          (await getDatumByField('Roles', 'roleName', 'User')).documentID);
 
       _db.collection('Users').document(currentUserId).setData(
             User(
@@ -25,7 +28,7 @@ class DatabaseService {
               account: account,
               createTime: Timestamp.fromDate(DateTime.now()),
               deleted: false,
-              role: null,
+              role: role,
             ).toJson(),
           );
     }
