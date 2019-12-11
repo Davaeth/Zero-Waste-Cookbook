@@ -5,10 +5,10 @@ import 'package:zero_waste_cookbook/src/models/administration/user.dart';
 
 String email;
 final GoogleSignIn googleSignIn = GoogleSignIn();
-String imageUrl;
-String name;
 
-String fUserId;
+String currentUserName;
+String currentUserId;
+String currentUserIamgeUrl;
 
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -35,10 +35,10 @@ Future<String> get signInWithGoogle async {
   assert(user.displayName != null);
   assert(user.photoUrl != null);
 
-  name = user.displayName;
+  currentUserName = user.displayName;
   email = user.email;
-  imageUrl = user.photoUrl;
-  fUserId = user.uid;
+  currentUserIamgeUrl = user.photoUrl;
+  currentUserId = user.uid;
 
   if (user != null) {
     var _dbService = DatabaseService();

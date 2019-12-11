@@ -32,8 +32,7 @@ class _UserRecipesManagerState extends State<UserRecipesManager> {
               },
             ),
             FutureBuilder(
-              future: _databaseService
-                  .getUserRecipes(fUserId),
+              future: _databaseService.getUserRecipes(currentUserId),
               builder: (context, AsyncSnapshot<QuerySnapshot> snapshots) {
                 if (snapshots.hasData) {
                   var recipes = _getRecipesInfo(snapshots);

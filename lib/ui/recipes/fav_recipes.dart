@@ -17,14 +17,14 @@ class _FavRecipesManager extends State<FavRecipesManager> {
 
   @override
   Widget build(BuildContext context) => StreamBuilder(
-        stream: _db.getUserFavouriteRecipes(fUserId),
+        stream: _db.getUserFavouriteRecipes(currentUserId),
         builder: (context, AsyncSnapshot<List<DocumentSnapshot>> snapshots) {
           if (snapshots.hasData) {
             return ListView(
               padding: EdgeInsets.fromLTRB(5.0, 5.0, 5.0, 5.0),
               shrinkWrap: true,
               scrollDirection: Axis.vertical,
-              children: _extractFavRecipes(context ,snapshots).toList(),
+              children: _extractFavRecipes(context, snapshots).toList(),
             );
           } else {
             return ListView();
@@ -45,8 +45,7 @@ class _FavRecipesManager extends State<FavRecipesManager> {
     });
   }
 
-  Iterable<RecipeCard> _extractFavRecipes(
-      BuildContext context,
+  Iterable<RecipeCard> _extractFavRecipes(BuildContext context,
       AsyncSnapshot<List<DocumentSnapshot>> snapshots) sync* {
     for (var snapshot in snapshots.data) {
       var recipe = Recipe.fromFirestore(snapshot);
@@ -55,7 +54,7 @@ class _FavRecipesManager extends State<FavRecipesManager> {
         interior: RecipeCard.createInteriorForListOfCards(
           context: context,
           recipe: recipe,
-          userId: fUserId,
+          userId: currentUserId,
           isFav: _isFav,
           callback: (bool isFav) => _callback(isFav),
         ),

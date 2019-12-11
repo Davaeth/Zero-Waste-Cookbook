@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
@@ -18,21 +17,20 @@ import 'ui/shared/page_resolvers/positioning.dart';
 import 'package:global_configuration/global_configuration.dart';
 
 final FirebaseStorage storage = FirebaseStorage(
-      app: Firestore.instance.app,
-      storageBucket: 'gs://zero-waste-cookbook.appspot.com/');
+    app: Firestore.instance.app,
+    storageBucket: 'gs://zero-waste-cookbook.appspot.com/');
 
 void main() async {
-  FirebaseUser user = await FirebaseAuth.instance.currentUser();
   await GlobalConfiguration().loadFromAsset("appconfig");
+
   return runApp(MyApp(false));
 }
 
 class MyApp extends StatelessWidget {
   final bool _isLogged;
 
-  
   MyApp(this._isLogged);
-  
+
   @override
   Widget build(BuildContext context) => MaterialApp(
       title: 'Zero Waste Cookbook',
@@ -95,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
             interior: RecipeCard.createInteriorForSingleCard(
               context: context,
               recipe: recipe,
-              userId: fUserId,
+              userId: currentUserId,
               isFav: _isFav,
               callback: (bool isFav) => _callback(isFav),
             ),

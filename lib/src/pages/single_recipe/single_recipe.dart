@@ -47,9 +47,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
         right: true,
         child: Scaffold(
           backgroundColor: DefaultColors.backgroundColor,
-
           body: _buildSingleRecipe(),
-
         ),
       );
 
@@ -65,7 +63,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                 RecipeCard(
                   interior: RecipeCard.createInteriorForCardWithRating(
                     recipe: _recipe,
-                    userId: fUserId,
+                    userId: currentUserId,
                     context: context,
                     isFav: _isFav,
                     callback: (bool isFav) => _recipeStackCardCallback(isFav),

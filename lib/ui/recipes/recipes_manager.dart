@@ -53,8 +53,7 @@ class _RecipesManager extends State<RecipesManager> {
   }
 
   List<Container> _createRecipeDetectors(
-      BuildContext context,
-      AsyncSnapshot<QuerySnapshot> snapshots) {
+      BuildContext context, AsyncSnapshot<QuerySnapshot> snapshots) {
     List<Container> gestures = List<Container>();
 
     var docs = snapshots?.data?.documents;
@@ -69,7 +68,7 @@ class _RecipesManager extends State<RecipesManager> {
             interior: RecipeCard.createInteriorForListOfCards(
               context: context,
               recipe: recipe,
-              userId: fUserId,
+              userId: currentUserId,
               isFav: _isFav,
               callback: (bool isFav) => _callback(isFav),
             ),

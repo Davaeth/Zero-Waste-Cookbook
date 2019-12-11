@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
@@ -53,7 +52,7 @@ class _NewRecipeState extends State<NewRecipe>
                 children: <Widget>[
                   _createBackButton(context),
                   _createTitleTextField(context),
-                  _createAddPhotoButton(),                  
+                  _createAddPhotoButton(),
                   _buildRecipeIngredients(),
                   _createDescriptionsTextField(context),
                   buildDifficultyLevelDropdown(
@@ -83,7 +82,7 @@ class _NewRecipeState extends State<NewRecipe>
 
     tagsControllers.add(TextEditingController());
 
-    _recipePhoto =  'recipe${new DateTime.now().millisecondsSinceEpoch}';
+    _recipePhoto = 'recipe${new DateTime.now().millisecondsSinceEpoch}';
 
     super.initState();
   }
@@ -125,7 +124,8 @@ class _NewRecipeState extends State<NewRecipe>
                     ingredientsId,
                   )
                   .toList(),
-              user: _databaseService.getDocumentReference('Users',fUserId))
+              user:
+                  _databaseService.getDocumentReference('Users', currentUserId))
           .toJson(),
     );
 
@@ -142,12 +142,6 @@ class _NewRecipeState extends State<NewRecipe>
         );
       }
     }
-  }
-
-  NewRecipeSection _createAddPhotoButton() => NewRecipeSection(
-        'Zdjęcie',
-        AddPhoto(photoPath: _recipePhoto),
-      );  
 
     Fluttertoast.showToast(
       msg: 'Dodano przepis!',
@@ -157,6 +151,11 @@ class _NewRecipeState extends State<NewRecipe>
       toastLength: Toast.LENGTH_SHORT,
     );
   }
+
+  NewRecipeSection _createAddPhotoButton() => NewRecipeSection(
+        'Zdjęcie',
+        AddPhoto(photoPath: _recipePhoto),
+      );
 
   Row _buildIngredient(Ingredient ingredient) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

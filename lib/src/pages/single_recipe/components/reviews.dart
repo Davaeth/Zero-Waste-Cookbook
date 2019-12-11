@@ -89,8 +89,8 @@ class ReviewsState extends State<Reviews> {
           textAlign: TextAlign.justify,
         ),
         FutureBuilder<bool>(
-          future: _dbService.checkIfUserIsAReviewCreator(
-              fUserId, review.id),
+          future:
+              _dbService.checkIfUserIsAReviewCreator(currentUserId, review.id),
           builder: (context, AsyncSnapshot<bool> snapshot) {
             if (snapshot.hasData) {
               return snapshot.data
