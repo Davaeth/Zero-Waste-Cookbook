@@ -14,7 +14,7 @@ class UserProfile extends StatelessWidget {
           children: <Widget>[
             settingsButton(context, 4),
             buildUserInfo(
-               ['100k', '2'], [Icons.star, Icons.comment], name, imageUrl),
+                ['100k', '2'], [Icons.star, Icons.comment], name, imageUrl),
             buildUserButtonsRow(
                 context,
                 ['Add new recipe', 'Manage my recipes'],

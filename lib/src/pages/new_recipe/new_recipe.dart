@@ -1,12 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/difficulty_level.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/region.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/tag.dart';
+import 'package:zero_waste_cookbook/src/pages/new_recipe/components/mixins/recipe_dropdowns.dart';
+import 'package:zero_waste_cookbook/src/pages/new_recipe/components/mixins/recipe_validator.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/new_recipe_section.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/recipe_ingredients.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
@@ -14,17 +17,14 @@ import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/add_photo.dart';
-import 'components/dropdowns/difficulty_level_dropdown.dart';
-import 'components/dropdowns/dish_regions_dropdown.dart';
 
 class NewRecipe extends StatefulWidget {
   @override
   _NewRecipeState createState() => _NewRecipeState();
 }
 
-class RegionsDropdown {}
-
-class _NewRecipeState extends State<NewRecipe> {
+class _NewRecipeState extends State<NewRecipe>
+    with RecipeDropdowns, RecipeValidator {
   TextEditingController _descriptionController;
   TextEditingController _titleController;
   TextEditingController _prepTimeController;
@@ -56,8 +56,9 @@ class _NewRecipeState extends State<NewRecipe> {
                   _createAddPhotoButton(),                  
                   _buildRecipeIngredients(),
                   _createDescriptionsTextField(context),
-                  _buildDifficultyLevelDropdown(),
-                  _buildDishRegionsDropdown(),
+                  buildDifficultyLevelDropdown(
+                      _difficultyLevelDropdownCallback),
+                  buildDishRegionsDropdown(_dishRegionsDropdownCallback),
                   _buildPerpTimeField(context),
                   _buildTagsSection(),
                   _createAddRecipeButton(context),
@@ -95,7 +96,7 @@ class _NewRecipeState extends State<NewRecipe> {
     });
   }
 
-  Future<void> _addRecipe() async {
+  Future<void> _addRecipeAndTags() async {
     DatabaseService _databaseService = DatabaseService();
 
     List<String> ingredientsId = List<String>();
@@ -129,14 +130,17 @@ class _NewRecipeState extends State<NewRecipe> {
     );
 
     for (var tag in tagsControllers) {
-      _databaseService.createDatum(
+      if (checkTextField(tag.text)) {
+        _databaseService.createDatum(
           'Tags',
           Tag(
             tagName: tag.text,
             recipe: await _databaseService
                 .getNewestRecipes(limit: 1)
                 .then((value) => value.documents.single.reference),
-          ).toJson());
+          ).toJson(),
+        );
+      }
     }
   }
 
@@ -145,19 +149,14 @@ class _NewRecipeState extends State<NewRecipe> {
         AddPhoto(photoPath: _recipePhoto),
       );  
 
-  NewRecipeSection _buildDifficultyLevelDropdown() => NewRecipeSection(
-        'Poziom trudności',
-        DifficultyLevelDropdown(
-          callback: _difficultyLevelDropdownCallback,
-        ),
-      );
-
-  NewRecipeSection _buildDishRegionsDropdown() => NewRecipeSection(
-        'Region',
-        DishRegionsDropdown(
-          callback: _dishRegionsDropdownCallback,
-        ),
-      );
+    Fluttertoast.showToast(
+      msg: 'Dodano przepis!',
+      backgroundColor: DefaultColors.secondaryColor,
+      textColor: Colors.greenAccent,
+      gravity: ToastGravity.BOTTOM,
+      toastLength: Toast.LENGTH_SHORT,
+    );
+  }
 
   Row _buildIngredient(Ingredient ingredient) => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -248,10 +247,35 @@ class _NewRecipeState extends State<NewRecipe> {
         ),
       );
 
+  Future<void> _checkRecipeData() async {
+    if (!checkTextField(_titleController.text)) {
+      return showWarningToast('Dodaj nazwę przepisu!');
+    }
+
+    if (_ingredients.length <= 0) {
+      return showWarningToast('Dodaj składniki!');
+    }
+
+    if (!checkTextField(_descriptionController.text)) {
+      return showWarningToast('Dodaj opis!');
+    }
+
+    if (!checkTextField(_prepTimeController.text)) {
+      return showWarningToast('Dodaj czas!');
+    }
+
+    var firstTagText = tagsControllers.first.text;
+    if (!checkTextField(firstTagText)) {
+      return showWarningToast('Dodaj tagi!');
+    }
+
+    await _addRecipeAndTags();
+  }
+
   Padding _createAddRecipeButton(BuildContext context) => addPadding(
         FlatButton(
-          child: Text('Zapisz przepis'),
-          onPressed: () => _addRecipe(),
+          child: Text('Add recipe'),
+          onPressed: () => _checkRecipeData(),
           color: DefaultColors.iconColor,
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
