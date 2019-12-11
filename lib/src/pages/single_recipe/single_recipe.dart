@@ -5,7 +5,7 @@ import 'package:zero_waste_cookbook/src/models/administration/review.dart';
 import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/pages/single_recipe/components/review_creator.dart';
-import 'package:zero_waste_cookbook/src/utils/routes_arguments.dart';
+import 'package:zero_waste_cookbook/utils/routes_arguments.dart';
 import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/expansion_tiles/expansion_tile_builder.dart';

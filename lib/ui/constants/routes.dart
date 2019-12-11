@@ -14,7 +14,7 @@ import 'package:zero_waste_cookbook/src/pages/user_profile/recipes_manager/user_
 import 'package:zero_waste_cookbook/src/pages/user_profile/user_profile_settings.dart';
 import 'package:zero_waste_cookbook/src/pages/voting/fake_recipe/fake_recipe.dart';
 import 'package:zero_waste_cookbook/src/pages/voting/voting.dart';
-import 'package:zero_waste_cookbook/src/utils/routes_arguments.dart';
+import 'package:zero_waste_cookbook/utils/routes_arguments.dart';
 
 class Routes {
   static const Home = '/';
