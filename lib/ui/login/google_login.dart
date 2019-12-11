@@ -39,16 +39,7 @@ Future<String> get signInWithGoogle async {
   email = user.email;
   currentUserIamgeUrl = user.photoUrl;
   currentUserId = user.uid;
-
-  if (user != null) {
-    var _dbService = DatabaseService();
-
-    _dbService.createDatum(
-      'Users',
-      User().toJson(),
-    );
-  }
-
+ 
   return 'signInWithGoogle succeeded: $user';
 }
 

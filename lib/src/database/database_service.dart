@@ -8,31 +8,30 @@ class DatabaseService {
 
   Future<bool> addNewUserToDatabase() async {
     final exists = await checkIfExists('Users', currentUserId);
-
+ 
     if (!exists) {
       var account = Map<String, String>();
-
+ 
       account.addEntries(
         [
           MapEntry('username', currentUserName),
           MapEntry('avatarUrl', currentUserIamgeUrl)
         ],
       );
-
+ 
       var role = getDocumentReference('Roles',
           (await getDatumByField('Roles', 'roleName', 'User')).documentID);
-
-      _db.collection('Users').document(currentUserId).setData(
-            User(
-              id: currentUserId,
-              account: account,
-              createTime: Timestamp.fromDate(DateTime.now()),
-              deleted: false,
-              role: role,
-            ).toJson(),
-          );
+        _db.collection('Users').document(currentUserId).setData(
+        User(
+          id: currentUserId,
+          account: account,
+          createTime: Timestamp.fromDate(DateTime.now()),
+          deleted: false,
+          role: role,
+        ).toJson(),
+      );
     }
-
+ 
     return true;
   }
 

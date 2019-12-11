@@ -70,6 +70,7 @@ class _LoginState extends State<Login> {
     signInWithGoogle.whenComplete(() {
 
       DatabaseService _databaseService = DatabaseService();
+      
       _databaseService.addNewUserToDatabase();
 
       Navigator.push(
