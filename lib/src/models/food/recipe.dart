@@ -8,7 +8,6 @@ class Recipe {
   final String photoPath;
   final double rank;
   final Timestamp creationTime;
-  final bool deleted;
   final DocumentReference user;
   final DocumentReference difficultyLevel;
   final DocumentReference dishRegions;
@@ -22,7 +21,6 @@ class Recipe {
       this.photoPath,
       this.rank,
       this.creationTime,
-      this.deleted,
       this.user,
       this.difficultyLevel,
       this.dishRegions,
@@ -39,7 +37,6 @@ class Recipe {
       photoPath: data['photoPath'],
       rank: double.parse(data['rank'].toString()) ?? 0.0,
       creationTime: data['creationTime'],
-      deleted: data['deleted'],
       user: data['user'],
       difficultyLevel: data['difficultyLevel'],
       dishRegions: data['dishRegions'],
@@ -55,7 +52,6 @@ class Recipe {
         'photoPath': photoPath,
         'rank': rank,
         'creationTime': creationTime,
-        'deleted': deleted,
         'user': user,
         'difficultyLevel': difficultyLevel,
         'dishRegions': dishRegions,

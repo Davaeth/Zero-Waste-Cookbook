@@ -114,7 +114,6 @@ class _NewRecipeState extends State<NewRecipe>
         creationTime: Timestamp.fromDate(DateTime.now()),
         photoPath: _recipePhoto,
         rank: 0,
-        deleted: false,
         difficultyLevel: _databaseService.getDocumentReference(
             'DifficultyLevels', _difficultyLevel.id),
         dishRegions:

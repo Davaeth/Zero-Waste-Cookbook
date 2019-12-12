@@ -27,7 +27,6 @@ class DatabaseService {
                 id: currentUserId,
                 account: account,
                 createTime: Timestamp.fromDate(DateTime.now()),
-                deleted: false,
                 role: role,
                 recipes: List<DocumentReference>(),
                 favouriteRecipes: List<DocumentReference>(),
@@ -71,14 +70,16 @@ class DatabaseService {
         .document(reviewId)
         .get()
         .then((value) => value.data['user'] == userRef);
-    
   }
 
-  Future<DocumentSnapshot> checkIfUserHasRole(String userId, String role) async {
-    DocumentSnapshot adminrole =  await _db.collection('Users').document(userId).get().then((value) => value);
+  Future<DocumentSnapshot> checkIfUserHasRole(
+      String userId, String role) async {
+    DocumentSnapshot adminrole = await _db
+        .collection('Users')
+        .document(userId)
+        .get()
+        .then((value) => value);
     return adminrole;
-    
- 
   }
 
   Future<void> createDatum(String collection, Map data) async {
