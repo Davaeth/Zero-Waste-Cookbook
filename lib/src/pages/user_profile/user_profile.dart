@@ -26,7 +26,10 @@ class UserProfile extends StatelessWidget {
                 Translator.instance.translations['add_new_recipe'],
                 Translator.instance.translations['manage_my_recipes']
               ],
-              [Routes.NewRecipePage, Routes.UserRecipesManager],
+              [
+                Routes.NewRecipePage,
+                Routes.UserRecipesManager,
+              ],
             ),
             addPadding(
               Text(

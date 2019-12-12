@@ -48,24 +48,24 @@ class _NewRecipeState extends State<NewRecipe>
           right: true,
           bottom: true,
           child: addPadding(
-              ListView(
-                shrinkWrap: true,
-                children: <Widget>[
-                  _createBackButton(context),
-                  _createTitleTextField(context),
-                  _createAddPhotoButton(),
-                  _buildRecipeIngredients(),
-                  _createDescriptionsTextField(context),
-                  buildDifficultyLevelDropdown(
-                      _difficultyLevelDropdownCallback),
-                  buildDishRegionsDropdown(_dishRegionsDropdownCallback),
-                  _buildPerpTimeField(context),
-                  _buildTagsSection(),
-                  _createAddRecipeButton(context),
-                ],
-              ),
-              left: 16.0,
-              right: 16.0),
+            ListView(
+              shrinkWrap: true,
+              children: <Widget>[
+                _createBackButton(context),
+                _createTitleTextField(context),
+                _createAddPhotoButton(),
+                _buildRecipeIngredients(),
+                _createDescriptionsTextField(context),
+                buildDifficultyLevelDropdown(_difficultyLevelDropdownCallback),
+                buildDishRegionsDropdown(_dishRegionsDropdownCallback),
+                _buildPerpTimeField(context),
+                _buildTagsSection(),
+                _createAddRecipeButton(context),
+              ],
+            ),
+            left: 16.0,
+            right: 16.0,
+          ),
         ),
       );
 
@@ -108,26 +108,25 @@ class _NewRecipeState extends State<NewRecipe>
     _databaseService.createDatum(
       'Recipes',
       Recipe(
-              recipeTitle: _titleController.text,
-              prepTime: int.parse(_prepTimeController.text),
-              description: _descriptionController.text,
-              creationTime: Timestamp.fromDate(DateTime.now()),
-              photoPath: _recipePhoto,
-              rank: 0,
-              deleted: false,
-              difficultyLevel: _databaseService.getDocumentReference(
-                  'DifficultyLevels', _difficultyLevel.id),
-              dishRegions: _databaseService.getDocumentReference(
-                  'Regions', _dishRegion.id),
-              ingredients: _databaseService
-                  .getDocumentsReferences(
-                    'Ingredients',
-                    ingredientsId,
-                  )
-                  .toList(),
-              user:
-                  _databaseService.getDocumentReference('Users', currentUserId))
-          .toJson(),
+        recipeTitle: _titleController.text,
+        prepTime: int.parse(_prepTimeController.text),
+        description: _descriptionController.text,
+        creationTime: Timestamp.fromDate(DateTime.now()),
+        photoPath: _recipePhoto,
+        rank: 0,
+        deleted: false,
+        difficultyLevel: _databaseService.getDocumentReference(
+            'DifficultyLevels', _difficultyLevel.id),
+        dishRegions:
+            _databaseService.getDocumentReference('Regions', _dishRegion.id),
+        ingredients: _databaseService
+            .getDocumentsReferences(
+              'Ingredients',
+              ingredientsId,
+            )
+            .toList(),
+        user: _databaseService.getDocumentReference('Users', currentUserId),
+      ).toJson(),
     );
 
     for (var tag in tagsControllers) {
@@ -162,11 +161,12 @@ class _NewRecipeState extends State<NewRecipe>
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           addPadding(
-              Text(
-                ingredient.name,
-                style: TextStyle(color: Colors.white, fontSize: 18.0),
-              ),
-              left: 8.0),
+            Text(
+              ingredient.name,
+              style: TextStyle(color: Colors.white, fontSize: 18.0),
+            ),
+            left: 8.0,
+          ),
           IconButton(
             icon: Icon(Icons.close),
             onPressed: () => _removeIngredient(ingredient),

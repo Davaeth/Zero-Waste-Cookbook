@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:zero_waste_cookbook/src/database/database_service.dart';
-import 'package:zero_waste_cookbook/src/models/administration/user.dart';
 
 String email;
 final GoogleSignIn googleSignIn = GoogleSignIn();
@@ -39,7 +37,7 @@ Future<String> get signInWithGoogle async {
   email = user.email;
   currentUserIamgeUrl = user.photoUrl;
   currentUserId = user.uid;
- 
+
   return 'signInWithGoogle succeeded: $user';
 }
 

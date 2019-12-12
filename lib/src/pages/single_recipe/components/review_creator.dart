@@ -17,32 +17,39 @@ class ReviewCreator extends StatelessWidget {
       GestureDetector(
         onTap: () {
           showDialog(
-              context: context,
-              builder: (context) => DialogBuilder(
-                  singleRecipeCallback: _singleRecipeCallback,
-                  recipeId: _recipeId));
+            context: context,
+            builder: (context) => DialogBuilder(
+              singleRecipeCallback: _singleRecipeCallback,
+              recipeId: _recipeId,
+            ),
+          );
         },
         child: Container(
           alignment: Alignment.center,
-          color: DefaultColors.secondaryColor,
+          color: Colors.orange,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               addPadding(
-                  Text(
-                    Translator.instance.translations['add_review'],
-                    style: TextStyle(color: Colors.white, fontSize: 15.0),
+                Text(
+                  Translator.instance.translations['add_review'],
+                  style: TextStyle(
+                    color: DefaultColors.secondaryColor,
+                    fontSize: 15.0,
                   ),
-                  left: 16.0,
-                  top: 8.0,
-                  bottom: 8.0),
+                ),
+                left: 16.0,
+                top: 8.0,
+                bottom: 8.0,
+              ),
               addPadding(
-                  Icon(
-                    Icons.add,
-                    color: Colors.orange,
-                    size: 25.0,
-                  ),
-                  right: 16.0)
+                Icon(
+                  Icons.add,
+                  color: DefaultColors.secondaryColor,
+                  size: 25.0,
+                ),
+                right: 16.0,
+              )
             ],
           ),
         ),
