@@ -11,7 +11,7 @@
     "rate_the_recipe": "Rate the recipe",
     "submit": "Submit",
     "search_by_name": "Search by name",
-    "regions": "Regions",
+    "region": "Region",
     "search": "Search",
     "add_new_recipe": "Add new recipe",
     "manage_my_recipes": "Manage recipes",
@@ -29,8 +29,6 @@
     "language": "Language",
     "delete_account": "Delete account",
     "logout": "Logout",
-    "polish": "Polish",
-    "english": "English",
     "directions": "Directions",
     "picture": "Picture",
     "recipe_added": "Recipe has been created!",
@@ -91,5 +89,15 @@
         "finland": "Finland",
         "france": "France",
         "japan": "Japan"
+    },
+    "difficulty_levels_list": {
+        "easy": "Easy",
+        "intermediate": "Intermediate",
+        "hard": "Hard",
+        "expert": "Expert"
+    },
+    "languages_list": {
+        "polish": "Polish",
+        "english": "English"
     }
 }

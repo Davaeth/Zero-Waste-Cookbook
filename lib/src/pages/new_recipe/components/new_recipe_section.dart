@@ -29,11 +29,12 @@ class NewRecipeSectionState extends State<NewRecipeSection> {
             child: Column(
               children: <Widget>[
                 addPadding(
-                    Text(
-                      _text,
-                      style: TextStyle(color: Colors.white, fontSize: 25.0),
-                    ),
-                    bottom: 8.0),
+                  Text(
+                    _text,
+                    style: TextStyle(color: Colors.white, fontSize: 25.0),
+                  ),
+                  bottom: 8.0,
+                ),
                 child
               ],
             ),

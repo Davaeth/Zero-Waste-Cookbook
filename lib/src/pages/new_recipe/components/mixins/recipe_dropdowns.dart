@@ -20,7 +20,7 @@ mixin RecipeDropdowns on State<NewRecipe> {
   NewRecipeSection buildDishRegionsDropdown(
           Function(Region) dishRegionsDropdownCallback) =>
       NewRecipeSection(
-        Translator.instance.translations['regions'],
+        Translator.instance.translations['region'],
         DishRegionsDropdown(
           callback: dishRegionsDropdownCallback,
         ),

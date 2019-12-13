@@ -30,9 +30,13 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
             child: DropdownButton<String>(
               items: [
                 _buildDropdownItem(
-                    Translator.instance.translations['polish'], 'pl'),
+                    Translator.instance.translations['languages_list']
+                        ['polish'],
+                    'pl'),
                 _buildDropdownItem(
-                    Translator.instance.translations['english'], 'en'),
+                    Translator.instance.translations['languages_list']
+                        ['english'],
+                    'en'),
               ],
               onChanged: (String value) {
                 setState(() async {
