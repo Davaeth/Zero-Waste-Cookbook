@@ -40,11 +40,8 @@ class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
                   items: _createDropdownItems(_dishRegions).toList(),
                   onChanged: (String value) {
                     setState(() {
-                      String _translatedValue = Translator
-                          .instance.translations['regions_list'][value];
-
-                      _value = _translatedValue;
-                      _callback(_getChosenDishRegion(_translatedValue));
+                      _value = value;
+                      _callback(_getChosenDishRegion(value));
                     });
                   },
                   value: _value,

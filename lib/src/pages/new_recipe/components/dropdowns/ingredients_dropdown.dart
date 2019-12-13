@@ -40,11 +40,8 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
                   items: _createDropdownItems(_ingredients).toList(),
                   onChanged: (String value) {
                     setState(() {
-                      String _translatedValue = Translator
-                          .instance.translations['ingredients_list'][value];
-
-                      _value = _translatedValue;
-                      _callback(_getChosenIngredient(_translatedValue));
+                      _value = value;
+                      _callback(_getChosenIngredient(value));
                     });
                   },
                   value: _value,

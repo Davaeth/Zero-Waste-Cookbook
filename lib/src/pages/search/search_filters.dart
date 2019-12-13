@@ -15,7 +15,7 @@ class Filters extends StatelessWidget {
           children: <Widget>[
             FiltersList(
               collection: 'Regions',
-              sectionTitle: Translator.instance.translations['regions'],
+              sectionTitle: Translator.instance.translations['region'],
             ),
             FiltersList(
               collection: 'Ingredients',
