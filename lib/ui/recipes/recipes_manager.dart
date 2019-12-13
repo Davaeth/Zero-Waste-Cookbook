@@ -69,7 +69,7 @@ class _RecipesManager extends State<RecipesManager> {
               context: context,
               recipe: recipe,
               userId: currentUserId,
-              isFav: _isFav,
+              iconData: _isFav ? Icons.favorite : Icons.favorite_border,
               callback: (bool isFav) => _callback(isFav),
             ),
             recipeID: snapshot.documentID,

@@ -66,7 +66,7 @@ class _SingleRecipeState extends State<SingleRecipe> {
                     recipe: _recipe,
                     userId: currentUserId,
                     context: context,
-                    isFav: _isFav,
+                    iconData: _isFav ? Icons.favorite : Icons.favorite_border,
                     callback: (bool isFav) => _recipeStackCardCallback(isFav),
                   ),
                   isTappable: false,
