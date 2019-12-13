@@ -53,8 +53,8 @@ class _CustomNavigationBarStateAdmin extends State<CustomNavigationBarAdmin> {
           tabs: <Widget>[
             _buildAppBarIcon(Icons.home),
             _buildAppBarIcon(Icons.search),
-            _buildAppBarIcon(Icons.vpn_key),
             _buildAppBarIcon(Icons.account_circle),
+            _buildAppBarIcon(Icons.vpn_key),
           ],
         ),
       );
