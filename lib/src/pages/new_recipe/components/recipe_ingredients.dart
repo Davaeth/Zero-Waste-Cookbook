@@ -28,14 +28,16 @@ class RecipeIngredients extends RecipePartBase<Ingredient> {
   @override
   Padding createShowAddDataDialog(BuildContext context) => addPadding(
         FlatButton(
-          child: Text(Translator.instance.translations['add_an_ingredients']),
+          child: Text(Translator.instance.translations['add_an_ingredients'], style: TextStyle(color: Colors.grey)),
           onPressed: () {
             showDialog(
               context: context,
               builder: (context) => AddRecipeDialog(ingredientDialogCallback),
             );
           },
-          color: DefaultColors.iconColor,
+          shape: RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(18.0),side: BorderSide(color: Colors.grey)),
+          color: Colors.transparent,
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
         ),

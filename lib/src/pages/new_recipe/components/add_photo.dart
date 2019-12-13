@@ -44,37 +44,43 @@ class _AddPhotoState extends State<AddPhoto> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.camera,
-                  color: Colors.grey,
-                ),
-                onPressed: () => _pickImage(ImageSource.camera),
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                alignment: Alignment.topRight,
-              ),
-              Text(
+              FlatButton(
+                child: Row(
+                  children: <Widget>[
+                  Icon(Icons.camera,color: Colors.grey,),
+                  SizedBox(width: 4.0),
+                  Text(
                 Translator.instance.translations['from_camera'],
                 style: TextStyle(
                   color: Colors.grey,
                 ),
               ),
-              IconButton(
-                icon: Icon(
-                  Icons.photo_album,
-                  color: Colors.grey,
+                  ],
                 ),
-                onPressed: () => _pickImage(ImageSource.gallery),
+                onPressed: () => _pickImage(ImageSource.camera),
                 splashColor: Colors.transparent,
                 highlightColor: Colors.transparent,
-                alignment: Alignment.topRight,
+                //alignment: Alignment.topRight,
               ),
-              Text(
+              FlatButton(
+                child: Row(
+                  children: <Widget>[
+                  Icon(Icons.photo_album,
+                  color: Colors.grey,
+                ),
+                SizedBox(width: 4.0),
+                Text(
                 Translator.instance.translations['from_gallery'],
                 style: TextStyle(
                   color: Colors.grey,
                 ),
+              ),
+                  ],
+                ),
+                onPressed: () => _pickImage(ImageSource.gallery),
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                //alignment: Alignment.topRight,
               ),
             ],
           ),

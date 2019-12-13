@@ -205,13 +205,16 @@ class _NewRecipeState extends State<NewRecipe>
           ),
           addPadding(
             FlatButton(
-              color: DefaultColors.iconColor,
+              color: Colors.transparent,
               onPressed: () {
                 setState(
                   () => _addNewTag(),
                 );
               },
-              child: Text(Translator.instance.translations['add_new_tag']),
+              child: Text(Translator.instance.translations['add_new_tag'], style: TextStyle(color: Colors.grey)),
+              shape: RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(18.0),
+        side: BorderSide(color: Colors.grey)),
             ),
             top: 8.0,
           ),
@@ -288,6 +291,8 @@ class _NewRecipeState extends State<NewRecipe>
           color: DefaultColors.iconColor,
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,
+          shape: RoundedRectangleBorder(
+        borderRadius: new BorderRadius.circular(18.0),),
         ),
         top: 16.0,
         bottom: 16.0,
