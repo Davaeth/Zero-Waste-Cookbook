@@ -103,6 +103,10 @@ class _SingleRecipeState extends State<SingleRecipe> {
           if (ingredientsSnapshots.hasData) {
             var ingredientsNames = _extractIngredients(ingredientsSnapshots);
 
+            ingredientsNames.forEach((ingredientName) => ingredientName =
+                Translator.instance.translations['ingredients_list']
+                    [ingredientName]);
+
             return addPadding(
               ExpansionTileBuilder(
                 Section(
