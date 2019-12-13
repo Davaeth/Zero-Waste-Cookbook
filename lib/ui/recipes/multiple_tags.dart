@@ -43,6 +43,8 @@ class MultipleTags extends StatelessWidget {
             child: Icon(icon, size: 20.0, color: Colors.white),
           ),
           _createTag(text),
+          Text(' min ', style: TextStyle(color: Colors.white)),
+          
         ],
       );
 

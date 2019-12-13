@@ -39,9 +39,9 @@ class _FavRecipesManager extends State<FavRecipesManager> {
     super.initState();
   }
 
-  _callback(bool ifFav) {
+  _callback(bool isFav) {
     setState(() {
-      _isFav = _isFav;
+      _isFav = isFav;
     });
   }
 

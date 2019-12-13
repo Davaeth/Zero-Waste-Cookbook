@@ -9,8 +9,11 @@ class CustomNavigationBar extends StatefulWidget {
 class _CustomNavigationBarState extends State<CustomNavigationBar> {
   @override
   Widget build(BuildContext context) => buildBottomAppBar();
-
-  BottomAppBar buildBottomAppBar() => BottomAppBar(
+  
+  Container buildBottomAppBar() => Container(
+    decoration: BoxDecoration(
+    boxShadow: [BoxShadow(color: Colors.black, blurRadius: 10)]),
+    child: BottomAppBar(
         color: DefaultColors.secondaryColor,
         child: TabBar(
           indicatorColor: Colors.transparent,
@@ -18,16 +21,17 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
           unselectedLabelColor: Colors.white70,
           tabs: <Widget>[
             _buildAppBarIcon(Icons.home),
-            _buildAppBarIcon(Icons.star),
-            _buildAppBarIcon(Icons.account_balance),
+            _buildAppBarIcon(Icons.search),
+            _buildAppBarIcon(Icons.account_circle),
 //            _buildAppBarIcon(Icons.supervised_user_circle),
           ],
         ),
-      );
+      ),
+  );
 
   Icon _buildAppBarIcon(IconData iconData) => Icon(
         iconData,
-        size: 38.0,
+        size: 42.0,
       );
 }
 
@@ -48,9 +52,9 @@ class _CustomNavigationBarStateAdmin extends State<CustomNavigationBarAdmin> {
           unselectedLabelColor: Colors.white70,
           tabs: <Widget>[
             _buildAppBarIcon(Icons.home),
-            _buildAppBarIcon(Icons.star),
-            _buildAppBarIcon(Icons.account_balance),
-            _buildAppBarIcon(Icons.supervised_user_circle),
+            _buildAppBarIcon(Icons.search),
+            _buildAppBarIcon(Icons.vpn_key),
+            _buildAppBarIcon(Icons.account_circle),
           ],
         ),
       );
