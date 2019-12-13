@@ -44,7 +44,10 @@ class _CustomNavigationBarStateAdmin extends State<CustomNavigationBarAdmin> {
   @override
   Widget build(BuildContext context) => buildBottomAppBar();
 
-  BottomAppBar buildBottomAppBar() => BottomAppBar(
+ Container buildBottomAppBar() => Container(
+    decoration: BoxDecoration(
+    boxShadow: [BoxShadow(color: Colors.black, blurRadius: 10)]),
+    child:  BottomAppBar(
         color: DefaultColors.secondaryColor,
         child: TabBar(
           indicatorColor: Colors.transparent,
@@ -57,7 +60,8 @@ class _CustomNavigationBarStateAdmin extends State<CustomNavigationBarAdmin> {
             _buildAppBarIcon(Icons.vpn_key),
           ],
         ),
-      );
+      ),
+ );
 
   Icon _buildAppBarIcon(IconData iconData) => Icon(
         iconData,
