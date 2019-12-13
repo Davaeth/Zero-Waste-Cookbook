@@ -63,7 +63,8 @@ class _FiltersListState extends State<FiltersList> {
     super.initState();
   }
 
-  Padding _buildFilterButton(String text, String id, int index) => addPadding(
+  Padding _buildFilterButton(String filterName, String id, int index) =>
+      addPadding(
         Container(
           child: RaisedButton(
             color: _tileColors[index],
@@ -71,7 +72,7 @@ class _FiltersListState extends State<FiltersList> {
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             onPressed: () => _updateFilters(id, index),
             child: Text(
-              text,
+              filterName,
               style: TextStyle(color: _tileTextColors[index]),
             ),
           ),
@@ -103,7 +104,9 @@ class _FiltersListState extends State<FiltersList> {
             padding:
                 EdgeInsets.only(left: 8.0, right: 4.0, top: 8.0, bottom: 4.0),
             itemBuilder: (context, index) => _buildFilterButton(
-              filters[index].name,
+              Translator.instance
+                      .translations['${_collection.toLowerCase()}_list']
+                  [filters[index].name],
               filters[index].id,
               index,
             ),
