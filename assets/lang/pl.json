@@ -39,6 +39,8 @@
     "provide_directions": "Podaj sposób przygotowania!",
     "provide_prep_time": "Podaj czas!",
     "provide_tags": "Podaj tagi!",
+    "provide_review_text": "Podaj treść komentarza!",
+    "provide_review_rate": "Podaj ocenę!",
     "login_with_google": "Zaloguj za pomocą konta Google",
     "from_camera": "Użyj aparatu",
     "from_gallery": "Użyj galerii"

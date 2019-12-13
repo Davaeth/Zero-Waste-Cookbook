@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:zero_waste_cookbook/src/models/administration/review.dart';
 import 'package:zero_waste_cookbook/src/models/administration/user.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
@@ -293,6 +294,10 @@ class DatabaseService {
         .limit(limit)
         .getDocuments();
   }
+
+  Future<User> getReviewAtuhor(Review review) async => User.fromFirestore(
+        await getDatumByID('Users', review.user.documentID),
+      );
 
   Future<void> updateRecipeRank(String recipeId) async {
     var recipeRef = getDocumentReference('Recipes', recipeId);
