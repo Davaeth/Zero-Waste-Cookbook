@@ -165,14 +165,15 @@ class _SingleRecipeState extends State<SingleRecipe> {
         child: GestureDetector(
           onTap: () => _expandReviews(),
           child: addPadding(
-              Text(
-                _areReviewsExpanded
-                    ? Translator.instance.translations['show_more']
-                    : Translator.instance.translations['show_less'],
-                style: TextStyle(fontSize: 15.0, color: Colors.white),
-              ),
-              top: 8.0,
-              bottom: 8.0),
+            Text(
+              _areReviewsExpanded
+                  ? Translator.instance.translations['show_less']
+                  : Translator.instance.translations['show_more'],
+              style: TextStyle(fontSize: 15.0, color: Colors.white),
+            ),
+            top: 8.0,
+            bottom: 8.0,
+          ),
         ),
       );
 

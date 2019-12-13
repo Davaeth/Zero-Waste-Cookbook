@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/pages/administation_panel/actions/components/models/administrator_action.dart';
-import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/recipes_tile.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
@@ -106,29 +105,27 @@ class _RecipesViewBuilderState extends State<RecipesViewBuilder> {
   void _closePage() => stepPageBack(context);
 
   Future<void> _deleteRecipes() async {
-    setState(() {
+    setState(() async {
       for (var index in _administratorAction.getIndexes) {
         _dbService.deleteDatum('Recipes', _recipes[index].id);
 
+        var recipeReferecne =
+            _dbService.getDocumentReference('Recipes', _recipes[index].id);
+
+        var userByFavRecipe = await _dbService.getDatumByField(
+            'Users', 'favouriteRecipes', recipeReferecne);
+
+        var userByRecipe = await _dbService.getDatumByField(
+            'Users', 'recipes', recipeReferecne);
+
         _dbService.deleteDataByRelation(
-          'Tags',
-          'recipe',
-          'Recipes',
-          _recipes[index].id,
-        );
+            'Tags', 'recipe', 'Recipes', _recipes[index].id);
         _dbService.deleteDataByRelation(
-          'Reviews',
-          'recipe',
-          'Recipes',
-          _recipes[index].id,
-        );
-        _dbService.deleteRelatedData(
-          'Users',
-          currentUserId,
-          'recipes',
-          'Recipes',
-          _recipes[index].id,
-        );
+            'Reviews', 'recipe', 'Recipes', _recipes[index].id);
+        _dbService.deleteRelatedData('Users', userByRecipe.documentID,
+            'recipes', 'Recipes', _recipes[index].id);
+        _dbService.deleteRelatedData('Users', userByFavRecipe.documentID,
+            'favouriteRecipes', 'Recipes', _recipes[index].id);
       }
 
       _administratorAction.setIndexes = List<int>();

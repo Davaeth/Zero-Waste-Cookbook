@@ -30,30 +30,30 @@ class _DialogBuilderState extends State<DialogBuilder> {
 
   void _checkReviewData() {
     setState(() {
-      if (_rateValue != null) {
-        if (_descriptionController.text != null &&
-            _descriptionController.text != '' &&
-            _descriptionController.text.trim() != '') {
-          _addReview();
-        } else {
-          Fluttertoast.showToast(
-            msg: 'Podaj treść komentarza!',
-            backgroundColor: DefaultColors.secondaryColor,
-            textColor: DefaultColors.iconColor,
-            gravity: ToastGravity.BOTTOM,
-            toastLength: Toast.LENGTH_SHORT,
-          );
-        }
-      } else {
-        Fluttertoast.showToast(
-          msg: 'Podaj ocenę!',
-          backgroundColor: DefaultColors.secondaryColor,
-          textColor: DefaultColors.iconColor,
-          gravity: ToastGravity.BOTTOM,
-          toastLength: Toast.LENGTH_SHORT,
-        );
+      if (_descriptionController.text == null ||
+          _descriptionController.text == '' ||
+          _descriptionController.text.trim() == '') {
+        return _showWarningToast(
+            Translator.instance.translations['provide_review_text']);
       }
+
+      if (_rateValue == null) {
+        return _showWarningToast(
+            Translator.instance.translations['provide_review_rate']);
+      }
+
+      _addReview();
     });
+  }
+
+  void _showWarningToast(String message) {
+    Fluttertoast.showToast(
+      msg: message,
+      backgroundColor: DefaultColors.secondaryColor,
+      textColor: Colors.red,
+      gravity: ToastGravity.BOTTOM,
+      toastLength: Toast.LENGTH_SHORT,
+    );
   }
 
   void _addReview() {

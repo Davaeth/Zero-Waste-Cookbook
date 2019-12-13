@@ -38,6 +38,8 @@
     "provideingredients": "Provide ingredients",
     "provide_directions": "Provide directions!",
     "provide_prep_time": "Provide prep time!",
+    "provide_review_text": "Provide comment!",
+    "provide_review_rate": "Provide rate!",
     "provide_tags": "Provide tags!",
     "login_with_google": "Login with Google's account",
     "from_camera": "From camera",

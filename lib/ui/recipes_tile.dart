@@ -82,13 +82,24 @@ class RecipeTile extends StatelessWidget {
         ),
       );
 
-  _handleDeleteButton() {
+  _handleDeleteButton() async {
     DatabaseService _db = DatabaseService();
+
+    var recipeReferecne = _db.getDocumentReference('Recipes', _recipe.id);
+
+    var userByFavRecipe =
+        await _db.getDatumByField('Users', 'favouriteRecipes', recipeReferecne);
+
+    var userByRecipe =
+        await _db.getDatumByField('Users', 'recipes', recipeReferecne);
 
     _db.deleteDatum('Recipes', _recipe.id);
     _db.deleteDataByRelation('Tags', 'recipe', 'Recipes', _recipe.id);
     _db.deleteDataByRelation('Reviews', 'recipe', 'Recipes', _recipe.id);
-    _db.deleteRelatedData('Users', 'userId', 'recipes', 'Recipes', _recipe.id);
+    _db.deleteRelatedData(
+        'Users', userByRecipe.documentID, 'recipes', 'Recipes', _recipe.id);
+    _db.deleteRelatedData('Users', userByFavRecipe.documentID,
+        'favouriteRecipes', 'Recipes', _recipe.id);
 
     _setStateCallback();
   }
