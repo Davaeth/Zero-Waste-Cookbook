@@ -132,7 +132,6 @@ class _RecipesViewBuilderState extends State<RecipesViewBuilder> {
       _administratorAction.setReadyToDelete = false;
     });
   }
-
   Future<void> _getRecipes(
       AsyncSnapshot<QuerySnapshot> recipesSnapshots) async {
     _recipes = List<Recipe>();

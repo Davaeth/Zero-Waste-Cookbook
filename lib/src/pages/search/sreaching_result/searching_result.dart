@@ -1,4 +1,6 @@
+import 'package:firebase_storage_image/firebase_storage_image.dart';
 import 'package:flutter/material.dart';
+import 'package:global_configuration/global_configuration.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
@@ -47,7 +49,7 @@ class SearchingResult extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
                 color: DefaultColors.secondaryColor,
               ),
-              child: _buildRecipeTile(_recipes[index]),
+              child: _buildRecipeTile(context, _recipes[index]),
             ),
           ),
           Routes.Recipe,
@@ -68,15 +70,20 @@ class SearchingResult extends StatelessWidget {
         ),
       );
 
-  ListTile _buildRecipeTile(Recipe recipe) => ListTile(
-        leading: Icon(
-          Icons.text_fields,
-          size: 55.0,
-          color: DefaultColors.iconColor,
+  ListTile _buildRecipeTile(BuildContext context, Recipe recipe) => ListTile(
+        leading: Container(
+          child:(
+            Image(
+          image: FirebaseStorageImage(
+          GlobalConfiguration().getString("imagePath") + recipe.photoPath,),
+          width: MediaQuery.of(context).size.width* 4 / 16,
+          height: MediaQuery.of(context).size.width,
+          )
+          ),
         ),
         title: Text(
           recipe.recipeTitle,
-          style: TextStyle(fontSize: 30.0, color: DefaultColors.textColor),
+          style: TextStyle(fontSize: 22.0, color: DefaultColors.textColor),
           textAlign: TextAlign.center,
         ),
         subtitle: _buildSubtitle(recipe.rank.toString()),
