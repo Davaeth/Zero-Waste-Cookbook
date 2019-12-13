@@ -54,6 +54,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   bool _isFav;
 
+  Recipe _recipe;
+
   @override
   Widget build(BuildContext context) => ListView(
         shrinkWrap: true,
@@ -79,7 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     _isFav = false;
-
     super.initState();
   }
 
@@ -90,17 +91,17 @@ class _MyHomePageState extends State<MyHomePage> {
       future: _db.getDatumByID('Recipes', 'HX0dEwMcGXLNr3AFrSLe'),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasData) {
-          Recipe recipe = Recipe.fromFirestore(snapshot?.data);
+          _recipe = Recipe.fromFirestore(snapshot?.data);
 
           return RecipeCard(
             interior: RecipeCard.createInteriorForSingleCard(
               context: context,
-              recipe: recipe,
+              recipe: _recipe,
               userId: currentUserId,
-              isFav: _isFav,
+              iconData: _isFav ? Icons.favorite : Icons.favorite_border,
               callback: (bool isFav) => _callback(isFav),
             ),
-            recipeID: recipe.id,
+            recipeID: _recipe.id,
           );
         } else {
           return Card();

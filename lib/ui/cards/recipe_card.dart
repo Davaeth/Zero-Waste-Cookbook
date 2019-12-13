@@ -36,7 +36,7 @@ class RecipeCard extends StatefulWidget {
       {@required Recipe recipe,
       @required BuildContext context,
       @required String userId,
-      @required bool isFav,
+      @required IconData iconData,
       Function(bool) callback}) {
     DatabaseService _dbService = DatabaseService();
 
@@ -44,7 +44,7 @@ class RecipeCard extends StatefulWidget {
       StackBuilder.createImageWithIconButtons(
           imagePath:
               GlobalConfiguration().getString("imagePath") + recipe.photoPath,
-          isFav: isFav,
+          iconData: iconData,
           recipeId: recipe.id,
           userId: userId,
           context: context,
@@ -93,7 +93,7 @@ class RecipeCard extends StatefulWidget {
   static List<Widget> createInteriorForListOfCards(
       {@required BuildContext context,
       @required Recipe recipe,
-      @required bool isFav,
+      @required IconData iconData,
       @required String userId,
       Function(bool) callback}) {
     DatabaseService _dbService = DatabaseService();
@@ -104,7 +104,7 @@ class RecipeCard extends StatefulWidget {
           isSingle: false,
           imagePath:
               GlobalConfiguration().getString("imagePath") + recipe.photoPath,
-          isFav: isFav,
+          iconData: iconData,
           recipeId: recipe.id,
           userId: userId,
           callback: callback),
@@ -144,20 +144,21 @@ class RecipeCard extends StatefulWidget {
       {@required BuildContext context,
       @required Recipe recipe,
       @required String userId,
-      @required bool isFav,
+      @required IconData iconData,
       Function(bool) callback}) {
     DatabaseService _dbService = DatabaseService();
 
     return <Widget>[
       StackBuilder.createImageWithFavButton(
-          context: context,
-          isSingle: true,
-          imagePath:
-              GlobalConfiguration().getString("imagePath") + recipe.photoPath,
-          isFav: isFav,
-          recipeId: recipe.id,
-          userId: userId,
-          callback: callback),
+        context: context,
+        isSingle: true,
+        imagePath:
+            GlobalConfiguration().getString("imagePath") + recipe.photoPath,
+        iconData: iconData,
+        recipeId: recipe.id,
+        userId: userId,
+        callback: callback,
+      ),
       addPadding(
           Text(
             Translator.instance.translations['recipe_of_the_day'],

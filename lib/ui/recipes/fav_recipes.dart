@@ -55,7 +55,7 @@ class _FavRecipesManager extends State<FavRecipesManager> {
           context: context,
           recipe: recipe,
           userId: currentUserId,
-          isFav: _isFav,
+          iconData: _isFav ? Icons.favorite : Icons.favorite_border,
           callback: (bool isFav) => _callback(isFav),
         ),
         recipeID: recipe.id,
