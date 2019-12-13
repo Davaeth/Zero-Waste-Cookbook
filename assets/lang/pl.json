@@ -11,7 +11,7 @@
     "rate_the_recipe": "Oceń przepis",
     "submit": "Potwierdź",
     "search_by_name": "Szukaj po nazwie",
-    "regions": "Regiony",
+    "region": "Region",
     "search": "Szukaj",
     "add_new_recipe": "Dodaj nowy przepis",
     "manage_my_recipes": "Moje przepisy",
@@ -91,5 +91,15 @@
         "finland": "Finlandia",
         "france": "Francja",
         "japan": "Japonia"
+    },
+    "difficulty_levels_list": {
+        "easy": "Łatwy",
+        "intermediate": "Średni",
+        "hard": "Ciężki",
+        "expert": "Mistrzowski"
+    },
+    "languages_list": {
+        "polish": "Polish",
+        "english": "English"
     }
 }

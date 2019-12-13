@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class IngredientsDropdown extends StatefulWidget {
   final Function(Ingredient) callback;
@@ -14,7 +15,7 @@ class IngredientsDropdown extends StatefulWidget {
 }
 
 class _IngredientsDropdownState extends State<IngredientsDropdown> {
-  String _value = 'Cheese';
+  String _value = Translator.instance.translations['ingredients_list']['basil'];
 
   List<Ingredient> _ingredients;
 
@@ -39,8 +40,11 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
                   items: _createDropdownItems(_ingredients).toList(),
                   onChanged: (String value) {
                     setState(() {
-                      _value = value;
-                      _callback(_getChosenIngredient(value));
+                      String _translatedValue = Translator
+                          .instance.translations['ingredients_list'][value];
+
+                      _value = _translatedValue;
+                      _callback(_getChosenIngredient(_translatedValue));
                     });
                   },
                   value: _value,
@@ -73,10 +77,13 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
   Iterable<DropdownMenuItem<String>> _createDropdownItems(
       List<Ingredient> ingredients) sync* {
     for (var ingredient in ingredients) {
+      String _translatedName =
+          Translator.instance.translations['ingredients_list'][ingredient.name];
+
       yield DropdownMenuItem<String>(
-        value: ingredient.name,
+        value: _translatedName,
         child: Text(
-          ingredient.name,
+          _translatedName,
           style: TextStyle(color: Colors.white, fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
@@ -86,7 +93,10 @@ class _IngredientsDropdownState extends State<IngredientsDropdown> {
 
   Ingredient _getChosenIngredient(String name) {
     for (var ingredient in _ingredients) {
-      if (ingredient.name == name) {
+      String _translatedName =
+          Translator.instance.translations['ingredients_list'][ingredient.name];
+
+      if (_translatedName == name) {
         return ingredient;
       }
     }

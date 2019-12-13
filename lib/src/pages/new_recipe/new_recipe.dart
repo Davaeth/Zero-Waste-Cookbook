@@ -161,7 +161,8 @@ class _NewRecipeState extends State<NewRecipe>
         children: <Widget>[
           addPadding(
             Text(
-              ingredient.name,
+              Translator.instance.translations['ingredients_list']
+                  [ingredient.name],
               style: TextStyle(color: Colors.white, fontSize: 18.0),
             ),
             left: 8.0,
@@ -198,19 +199,22 @@ class _NewRecipeState extends State<NewRecipe>
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
           NewRecipeSection(
-            'Tagi',
+            Translator.instance.translations['tags'],
             _buildTagsTextFields(),
             key: _tagsSectionKey,
           ),
           addPadding(
-              FlatButton(
-                color: DefaultColors.iconColor,
-                onPressed: () {
-                  setState(() => _addNewTag());
-                },
-                child: Text(Translator.instance.translations['add_new_tag']),
-              ),
-              top: 8.0),
+            FlatButton(
+              color: DefaultColors.iconColor,
+              onPressed: () {
+                setState(
+                  () => _addNewTag(),
+                );
+              },
+              child: Text(Translator.instance.translations['add_new_tag']),
+            ),
+            top: 8.0,
+          ),
         ],
       );
 
@@ -218,10 +222,10 @@ class _NewRecipeState extends State<NewRecipe>
         shrinkWrap: true,
         itemCount: tagsControllers.length,
         itemBuilder: (context, index) => addPadding(
-            _buildTextField(
-                TextInputType.text, tagsControllers[index], context),
-            top: 8.0,
-            bottom: 8.0),
+          _buildTextField(TextInputType.text, tagsControllers[index], context),
+          top: 8.0,
+          bottom: 8.0,
+        ),
       );
 
   Container _buildTextField(TextInputType inputType,

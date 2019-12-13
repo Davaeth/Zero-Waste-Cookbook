@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/region.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class DishRegionsDropdown extends StatefulWidget {
   final Function(Region) callback;
@@ -14,7 +15,7 @@ class DishRegionsDropdown extends StatefulWidget {
 }
 
 class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
-  String _value = 'Poland';
+  String _value = Translator.instance.translations['regions_list']['poland'];
 
   List<Region> _dishRegions;
 
@@ -39,8 +40,11 @@ class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
                   items: _createDropdownItems(_dishRegions).toList(),
                   onChanged: (String value) {
                     setState(() {
-                      _value = value;
-                      _callback(_getChosenDishRegion(value));
+                      String _translatedValue = Translator
+                          .instance.translations['regions_list'][value];
+
+                      _value = _translatedValue;
+                      _callback(_getChosenDishRegion(_translatedValue));
                     });
                   },
                   value: _value,
@@ -75,10 +79,13 @@ class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
   Iterable<DropdownMenuItem<String>> _createDropdownItems(
       List<Region> _dishRegions) sync* {
     for (var dishRegion in _dishRegions) {
+      String _translatedName =
+          Translator.instance.translations['regions_list'][dishRegion.name];
+
       yield DropdownMenuItem<String>(
-        value: dishRegion.name,
+        value: _translatedName,
         child: Text(
-          dishRegion.name,
+          _translatedName,
           style: TextStyle(color: Colors.white, fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
@@ -88,7 +95,10 @@ class _DishRegionsDropdownState extends State<DishRegionsDropdown> {
 
   Region _getChosenDishRegion(String name) {
     for (var dishRegion in _dishRegions) {
-      if (dishRegion.name == name) {
+      String _translatedName =
+          Translator.instance.translations['regions_list'][dishRegion.name];
+
+      if (_translatedName == name) {
         return dishRegion;
       }
     }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food_addons/difficulty_level.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
+import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class DifficultyLevelDropdown extends StatefulWidget {
   final Function(DifficultyLevel) callback;
@@ -15,7 +16,8 @@ class DifficultyLevelDropdown extends StatefulWidget {
 }
 
 class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
-  String _value = 'Easy';
+  String _value =
+      Translator.instance.translations['difficulty_levels_list']['easy'];
 
   List<DifficultyLevel> _difficultyLevels;
 
@@ -40,8 +42,11 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
                   items: _createDropdownItems(_difficultyLevels).toList(),
                   onChanged: (String value) {
                     setState(() {
-                      _value = value;
-                      _callback(_getChosenDifficultyLevel(value));
+                      String _translatedValue = Translator.instance
+                          .translations['difficulty_levels_list'][value];
+
+                      _value = _translatedValue;
+                      _callback(_getChosenDifficultyLevel(_translatedValue));
                     });
                   },
                   value: _value,
@@ -76,10 +81,14 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
   Iterable<DropdownMenuItem<String>> _createDropdownItems(
       List<DifficultyLevel> _difficultyLevels) sync* {
     for (var difficultyLevel in _difficultyLevels) {
+      String _translatedDifficultyLeveLName =
+          Translator.instance.translations['difficulty_levels_list']
+              [difficultyLevel.difficultyLevelName];
+
       yield DropdownMenuItem<String>(
-        value: difficultyLevel.difficultyLevelName,
+        value: _translatedDifficultyLeveLName,
         child: Text(
-          difficultyLevel.difficultyLevelName,
+          _translatedDifficultyLeveLName,
           style: TextStyle(color: Colors.white, fontSize: 18.0),
           textAlign: TextAlign.center,
         ),
@@ -89,7 +98,11 @@ class _DifficultyLevelDropdownState extends State<DifficultyLevelDropdown> {
 
   DifficultyLevel _getChosenDifficultyLevel(String name) {
     for (var difficultyLevel in _difficultyLevels) {
-      if (difficultyLevel.difficultyLevelName == name) {
+      String _translatedName =
+          Translator.instance.translations['difficulty_levels_list']
+              [difficultyLevel.difficultyLevelName];
+
+      if (_translatedName == name) {
         return difficultyLevel;
       }
     }
