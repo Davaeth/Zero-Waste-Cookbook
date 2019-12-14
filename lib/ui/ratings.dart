@@ -18,16 +18,18 @@ class _RatingsState extends State<Ratings> {
       );
 
   List<Icon> _createFavouriteIcons() => List<Icon>.generate(
-      5,
-      (i) => Icon(
-            (i + 1) <= _ratingValue ? Icons.star : Icons.star_border,
-            size: 25.0,
-            color: Colors.orange,
-          ));
+        5,
+        (i) => Icon(
+          (i + 1) <= _ratingValue ? Icons.star : Icons.star_border,
+          size: 25.0,
+          color: Colors.orange,
+        ),
+      );
 
   @override
   void initState() {
     _ratingValue = widget._ratingValue;
+
     super.initState();
   }
 }

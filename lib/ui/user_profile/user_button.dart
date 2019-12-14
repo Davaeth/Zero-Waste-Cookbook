@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
-import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+import 'package:zero_waste_cookbook/ui/constants/enums/routes.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';

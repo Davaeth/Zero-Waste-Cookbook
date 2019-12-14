@@ -2,7 +2,7 @@ import 'package:firebase_storage_image/firebase_storage_image.dart';
 import 'package:flutter/material.dart';
 import 'package:global_configuration/global_configuration.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
-import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+import 'package:zero_waste_cookbook/ui/constants/enums/routes.dart';
 import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';

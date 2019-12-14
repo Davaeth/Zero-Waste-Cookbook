@@ -43,27 +43,27 @@ class _AddRecipeDialogState extends State<AddRecipeDialog> {
         contentPadding: EdgeInsets.only(top: 0, bottom: 16.0),
         backgroundColor: DefaultColors.secondaryColor,
         children: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.close,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              stepPageBack(context);
-            },
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            alignment: Alignment.topRight,
-          ),
+          _buildCloseButton(),
           Center(
-              child: Text(
-            Translator.instance.translations['choose_an_ingredient'],
-            style: TextStyle(color: Colors.white, fontSize: 18.0),
-          )),
+            child: Text(
+              Translator.instance.translations['choose_an_ingredient'],
+              style: TextStyle(color: Colors.white, fontSize: 18.0),
+            ),
+          ),
           _createIngredientDropdown(),
           _createAddIngredientButton()
         ],
         elevation: 0,
+      );
+
+  IconButton _buildCloseButton() => IconButton(
+        icon: Icon(Icons.close, color: Colors.white),
+        onPressed: () {
+          stepPageBack(context);
+        },
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        alignment: Alignment.topRight,
       );
 
   _chooseAnIngredient(Ingredient ingredient) {

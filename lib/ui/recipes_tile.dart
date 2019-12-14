@@ -7,7 +7,7 @@ import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/navigator.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 
-import 'constants/routes.dart';
+import 'constants/enums/routes.dart';
 
 class RecipeTile extends StatelessWidget {
   final Recipe _recipe;

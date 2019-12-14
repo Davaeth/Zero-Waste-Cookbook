@@ -17,8 +17,10 @@ class MultipleTags extends StatelessWidget {
   @override
   Widget build(BuildContext context) => _createRowOfTags(_widgets);
 
-  Row _createRowOfTags(List<Widget> widgets) =>
-      Row(children: widgets.where((widget) => widget != null).toList());
+  Row _createRowOfTags(List<Widget> widgets) => Row(
+        children: widgets.where((widget) => widget != null).toList(),
+        mainAxisSize: MainAxisSize.min,
+      );
 
   static Card createTag(String text, {IconData icon}) => Card(
         color: Colors.transparent,
@@ -43,8 +45,10 @@ class MultipleTags extends StatelessWidget {
             child: Icon(icon, size: 20.0, color: Colors.white),
           ),
           _createTag(text),
-          Text(' min ', style: TextStyle(color: Colors.white)),
-          
+          Text(
+            ' min ',
+            style: TextStyle(color: Colors.white),
+          ),
         ],
       );
 

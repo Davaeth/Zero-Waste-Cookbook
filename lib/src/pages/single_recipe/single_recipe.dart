@@ -5,9 +5,10 @@ import 'package:zero_waste_cookbook/src/models/administration/review.dart';
 import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
 import 'package:zero_waste_cookbook/src/pages/single_recipe/components/review_creator.dart';
+import 'package:zero_waste_cookbook/ui/cards/recipe_card/recipe_card.dart';
+import 'package:zero_waste_cookbook/ui/constants/enums/recipe_card_interior_type.dart';
+import 'package:zero_waste_cookbook/ui/constants/enums/routes.dart';
 import 'package:zero_waste_cookbook/utils/routes_arguments.dart';
-import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
-import 'package:zero_waste_cookbook/ui/constants/routes.dart';
 import 'package:zero_waste_cookbook/ui/expansion_tiles/expansion_tile_builder.dart';
 import 'package:zero_waste_cookbook/ui/expansion_tiles/section.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
@@ -62,13 +63,11 @@ class _SingleRecipeState extends State<SingleRecipe> {
               shrinkWrap: true,
               children: <Widget>[
                 RecipeCard(
-                  interior: RecipeCard.createInteriorForCardWithRating(
-                    recipe: _recipe,
-                    userId: currentUserId,
-                    context: context,
-                    iconData: _isFav ? Icons.favorite : Icons.favorite_border,
-                    callback: (bool isFav) => _recipeStackCardCallback(isFav),
-                  ),
+                  recipeCardInteriorType: RecipeCardInteriorType.RecipePage,
+                  recipe: _recipe,
+                  userId: currentUserId,
+                  iconData: _isFav ? Icons.favorite : Icons.favorite_border,
+                  callback: (bool isFav) => _recipeStackCardCallback(isFav),
                   isTappable: false,
                   recipeID: _recipe.id,
                 ),

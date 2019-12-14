@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/ui/cards/card_buttons_panel.dart';
-import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+import 'package:zero_waste_cookbook/ui/constants/enums/routes.dart';
 import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 class AdministratorPanel extends StatelessWidget {
