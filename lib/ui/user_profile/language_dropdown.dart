@@ -10,7 +10,7 @@ class LanguageDropdown extends StatefulWidget {
 }
 
 class _LanguageDropdownState extends State<LanguageDropdown> {
-  String _value = 'pl';
+  String _value = Translator.instance.languageType;
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +39,10 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
                     'en'),
               ],
               onChanged: (String value) {
-                setState(() async {
+                setState(() {
                   _value = value;
 
-                  await Translator.instance.setLanguageType(_value);
-                  await Translator.instance.getTranslations();
+                  setUpTranslator();
                 });
               },
               value: _value,
@@ -52,6 +51,11 @@ class _LanguageDropdownState extends State<LanguageDropdown> {
         ),
       ],
     );
+  }
+
+  Future<void> setUpTranslator() async {
+    await Translator.instance.setLanguageType(_value);
+    await Translator.instance.getTranslations();
   }
 
   DropdownMenuItem<String> _buildDropdownItem(

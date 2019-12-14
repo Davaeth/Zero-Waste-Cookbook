@@ -10,7 +10,6 @@ import 'package:zero_waste_cookbook/ui/cards/recipe_card/recipe_card.dart';
 import 'package:zero_waste_cookbook/ui/constants/enums/recipe_card_interior_type.dart';
 import 'package:zero_waste_cookbook/ui/constants/enums/routes.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
-import 'package:zero_waste_cookbook/utils/routes_arguments.dart';
 import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 import 'ui/recipes/recipes_manager.dart';

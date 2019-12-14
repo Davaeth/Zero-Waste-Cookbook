@@ -89,24 +89,36 @@ class RecipeTile extends StatelessWidget {
         ),
       );
 
-  _handleDeleteButton() async {
-    DatabaseService _db = DatabaseService();
+  _handleDeleteButton() {
+    DatabaseService _dbService = DatabaseService();
 
-    var recipeReferecne = _db.getDocumentReference('Recipes', _recipe.id);
+    var recipeReferecne =
+        _dbService.getDocumentReference('Recipes', _recipe.id);
 
-    var userByFavRecipe = await _db.getDatumIfContains(
+    var userByFavRecipe = _dbService.getDatumIfContains(
         'Users', 'favouriteRecipes', recipeReferecne);
 
     var userByRecipe =
-        await _db.getDatumIfContains('Users', 'recipes', recipeReferecne);
+        _dbService.getDatumIfContains('Users', 'recipes', recipeReferecne);
 
-    _db.deleteDatum('Recipes', _recipe.id);
-    _db.deleteDataByRelation('Tags', 'recipe', 'Recipes', _recipe.id);
-    _db.deleteDataByRelation('Reviews', 'recipe', 'Recipes', _recipe.id);
-    _db.deleteRelatedData(
-        'Users', userByRecipe.documentID, 'recipes', 'Recipes', _recipe.id);
-    _db.deleteRelatedData('Users', userByFavRecipe.documentID,
-        'favouriteRecipes', 'Recipes', _recipe.id);
+    userByFavRecipe.then((value) {
+      if (value.exists) {
+        _dbService.deleteRelatedData('Users', value.documentID,
+            'favouriteRecipes', 'Recipes', _recipe.id);
+      }
+    });
+
+    userByRecipe.then((value) {
+      if (value.exists) {
+        _dbService.deleteRelatedData(
+            'Users', value.documentID, 'recipes', 'Recipes', _recipe.id);
+      }
+    });
+
+    _dbService.deleteDataByRelation('Tags', 'recipe', 'Recipes', _recipe.id);
+    _dbService.deleteDataByRelation('Reviews', 'recipe', 'Recipes', _recipe.id);
+
+    _dbService.deleteDatum('Recipes', _recipe.id);
 
     _setStateCallback();
   }

@@ -104,28 +104,38 @@ class _RecipesViewBuilderState extends State<RecipesViewBuilder> {
 
   void _closePage() => stepPageBack(context);
 
-  Future<void> _deleteRecipes() async {
-    setState(() async {
+  void _deleteRecipes() {
+    setState(() {
       for (var index in _administratorAction.getIndexes) {
-        _dbService.deleteDatum('Recipes', _recipes[index].id);
-
         var recipeReferecne =
             _dbService.getDocumentReference('Recipes', _recipes[index].id);
 
-        var userByFavRecipe = await _dbService.getDatumIfContains(
+        var userByFavRecipe = _dbService.getDatumIfContains(
             'Users', 'favouriteRecipes', recipeReferecne);
 
-        var userByRecipe = await _dbService.getDatumIfContains(
-            'Users', 'recipes', recipeReferecne);
+        var userByRecipe =
+            _dbService.getDatumIfContains('Users', 'recipes', recipeReferecne);
+
+        userByFavRecipe.then((value) {
+          if (value.exists) {
+            _dbService.deleteRelatedData('Users', value.documentID,
+                'favouriteRecipes', 'Recipes', _recipes[index].id);
+          }
+        });
+
+        userByRecipe.then((value) {
+          if (value.exists) {
+            _dbService.deleteRelatedData('Users', value.documentID, 'recipes',
+                'Recipes', _recipes[index].id);
+          }
+        });
 
         _dbService.deleteDataByRelation(
             'Tags', 'recipe', 'Recipes', _recipes[index].id);
         _dbService.deleteDataByRelation(
             'Reviews', 'recipe', 'Recipes', _recipes[index].id);
-        _dbService.deleteRelatedData('Users', userByRecipe.documentID,
-            'recipes', 'Recipes', _recipes[index].id);
-        _dbService.deleteRelatedData('Users', userByFavRecipe.documentID,
-            'favouriteRecipes', 'Recipes', _recipes[index].id);
+
+        _dbService.deleteDatum('Recipes', _recipes[index].id);
       }
 
       _administratorAction.setIndexes = List<int>();

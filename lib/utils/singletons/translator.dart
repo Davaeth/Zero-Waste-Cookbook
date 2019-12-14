@@ -11,6 +11,8 @@ class Translator {
 
   Map<dynamic, dynamic> _translations;
 
+  String _languageType;
+
   factory Translator() {
     if (_instance == null) {
       _instance = Translator();
@@ -24,9 +26,11 @@ class Translator {
   Translator._internal();
 
   Map<dynamic, dynamic> get translations => _translations;
+  String get languageType => _languageType;
 
   Future<void> getTranslations() async {
     _translations = await _translate();
+    _languageType = await _setLanguageType();
   }
 
   Future<void> setLanguageType(String languageType) async {
@@ -52,5 +56,11 @@ class Translator {
     Map<dynamic, dynamic> _jsonTranslation = json.decode(_translation);
 
     return _jsonTranslation;
+  }
+
+  Future<String> _setLanguageType() async {
+    var _sharedPreferences = await SharedPreferences.getInstance();
+
+    return _sharedPreferences.getString(_languageKey);
   }
 }

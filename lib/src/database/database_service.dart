@@ -39,12 +39,13 @@ class DatabaseService {
     return true;
   }
 
-  Future<void> addRecipeToFavourites(String recipeId, String userId) async {
+  Future<void> addRecipeToUser(
+      String recipeId, String userId, String reffedField) async {
     var recipeRef = getDocumentReference('Recipes', recipeId);
 
     await _db.collection('Users').document(userId).updateData(
       {
-        'favouriteRecipes': FieldValue.arrayUnion([recipeRef])
+        reffedField: FieldValue.arrayUnion([recipeRef])
       },
     );
   }
@@ -267,13 +268,13 @@ class DatabaseService {
         .getDocuments();
   }
 
-  Future<void> removeRecipeFromFavourites(
-      String recipeId, String userId) async {
+  Future<void> removeRecipeFromUser(
+      String recipeId, String userId, String reffedField) async {
     var recipeRef = getDocumentReference('Recipes', recipeId);
 
     await _db.collection('Users').document(userId).updateData(
       {
-        'favouriteRecipes': FieldValue.arrayRemove([recipeRef])
+        reffedField: FieldValue.arrayRemove([recipeRef])
       },
     );
   }
