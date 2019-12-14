@@ -120,15 +120,17 @@ mixin RecipeCardInterior on State<RecipeCard> {
 
   _handleFavRecipeIconButton(
       String recipeId, String userId, DatabaseService dbService,
-      {Function callback}) async {
-    setState(() async {
-      if (await dbService.checkIfRecipeIsFaved(userId, recipeId)) {
-        dbService.removeRecipeFromFavourites(recipeId, userId);
-        callback(true);
-      } else {
-        dbService.addRecipeToFavourites(recipeId, userId);
-        callback(false);
-      }
+      {Function callback}) {
+    setState(() {
+      dbService.checkIfRecipeIsFaved(userId, recipeId).then((value) {
+        if (value) {
+          dbService.removeRecipeFromUser(recipeId, userId, 'favouriteRecipes');
+          callback(true);
+        } else {
+          dbService.addRecipeToUser(recipeId, userId, 'favouriteRecipes');
+          callback(false);
+        }
+      });
     });
   }
 }
