@@ -134,6 +134,14 @@ class DatabaseService {
           .getDocuments()
           .then((snaphshot) => snaphshot.documents.single);
 
+  Future<DocumentSnapshot> getDatumIfContains(
+          String collection, String field, dynamic expectedField) async =>
+      await _db
+          .collection(collection)
+          .where(field, arrayContains: expectedField)
+          .getDocuments()
+          .then((snaphshot) => snaphshot.documents.single);
+
   Future<DocumentSnapshot> getDatumByID(String collection, String id) async =>
       await _db
           .collection(collection)

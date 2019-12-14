@@ -122,8 +122,6 @@ class _MyHomePageState extends State<MyHomePage> {
   _callback(bool isFav) {
     setState(() {
       _isFav = isFav;
-      Navigator.pushReplacementNamed(context, Routes.Recipe,
-          arguments: RoutesArguments(_recipe.id, null));
     });
   }
 }

@@ -33,7 +33,7 @@ class RecipeTile extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.0),
               color: DefaultColors.secondaryColor,
             ),
-            child: _buildUserRecipesTile(context,  _recipe),
+            child: _buildUserRecipesTile(context, _recipe),
           ),
         ),
         bottom: 16.0,
@@ -56,7 +56,8 @@ class RecipeTile extends StatelessWidget {
         ],
       );
 
-  ListTile _buildUserRecipesTile(BuildContext context, Recipe recipe) => ListTile(
+  ListTile _buildUserRecipesTile(BuildContext context, Recipe recipe) =>
+      ListTile(
         onTap: () => navigateToPageByRoute(
           Routes.Recipe,
           context,
@@ -64,14 +65,13 @@ class RecipeTile extends StatelessWidget {
         ),
         onLongPress: () => onLongPressCallback(index, _setStateCallback),
         leading: Container(
-          child:(
-            Image(
-          image: FirebaseStorageImage(
-          GlobalConfiguration().getString("imagePath") + recipe.photoPath,),
-          width: MediaQuery.of(context).size.width* 4 / 16,
-          height: MediaQuery.of(context).size.width,
-          )
-          ),
+          child: (Image(
+            image: FirebaseStorageImage(
+              GlobalConfiguration().getString("imagePath") + recipe.photoPath,
+            ),
+            width: MediaQuery.of(context).size.width * 4 / 16,
+            height: MediaQuery.of(context).size.width,
+          )),
         ),
         title: Text(
           _recipe.recipeTitle,
@@ -94,11 +94,11 @@ class RecipeTile extends StatelessWidget {
 
     var recipeReferecne = _db.getDocumentReference('Recipes', _recipe.id);
 
-    var userByFavRecipe =
-        await _db.getDatumByField('Users', 'favouriteRecipes', recipeReferecne);
+    var userByFavRecipe = await _db.getDatumIfContains(
+        'Users', 'favouriteRecipes', recipeReferecne);
 
     var userByRecipe =
-        await _db.getDatumByField('Users', 'recipes', recipeReferecne);
+        await _db.getDatumIfContains('Users', 'recipes', recipeReferecne);
 
     _db.deleteDatum('Recipes', _recipe.id);
     _db.deleteDataByRelation('Tags', 'recipe', 'Recipes', _recipe.id);
