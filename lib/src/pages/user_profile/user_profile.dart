@@ -11,15 +11,16 @@ class UserProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) => wrapWithScrollingView(
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+       //   crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             settingsButton(context, 4),
             buildUserInfo(
-              ['100k', '2'],
-              [Icons.star, Icons.comment],
               currentUserName,
               currentUserIamgeUrl,
             ),
+            SizedBox(height: 8.0,),
             buildUserButtonsRow(
               context,
               [
@@ -31,13 +32,14 @@ class UserProfile extends StatelessWidget {
                 Routes.UserRecipesManager,
               ],
             ),
+
             addPadding(
               Text(
                 Translator.instance.translations['favourite_recipes'],
                 style: TextStyle(fontSize: 18.0, color: Colors.white),
               ),
               left: 10.0,
-              top: 8.0,
+              top: 16.0,
               bottom: 8.0,
             ),
             Expanded(

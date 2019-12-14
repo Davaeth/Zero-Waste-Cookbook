@@ -48,7 +48,8 @@ Row deleteAccountButton(BuildContext context) => Row(
             Translator.instance.translations['delete_account'],
             style: TextStyle(color: Colors.red),
           ),
-          onPressed: () async => await _deleteUser(),
+          onPressed: () async { await _deleteUser();signOutGoogle();navigateToPageByRoute(Routes.LoginPage, context);
+           }
         )
       ],
     );

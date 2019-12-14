@@ -4,8 +4,12 @@ import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 
 Padding buildUserInfoIcon(String amount, IconData iconData) => addPadding(
       Container(
+        
         padding: const EdgeInsets.all(8.0),
         child: Row(
+         // crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Icon(iconData, color: DefaultColors.iconColor),
             SizedBox(
@@ -22,13 +26,17 @@ Padding buildUserInfoIcon(String amount, IconData iconData) => addPadding(
       bottom: 8.0,
     );
 
-Column buildUserInfo(List<String> amounts, List<IconData> iconsData,
+Column buildUserInfo(
         String username, String newimageUrl) =>
     Column(
+  //    crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.max,
+             mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+         //   crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
+             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               addPadding(
                   CircleAvatar(
@@ -40,23 +48,24 @@ Column buildUserInfo(List<String> amounts, List<IconData> iconsData,
                   bottom: 16.0),
             ]),
         Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+           // crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
                 username,
                 style: TextStyle(fontSize: 24.0, color: Colors.white),
               ),
             ]),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            buildUserInfoIcon(amounts.first, iconsData.first),
-            buildUserInfoIcon(amounts.first, iconsData.last),
-            buildUserInfoIcon(amounts.last, iconsData.last),
-          ],
-        )
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   mainAxisSize: MainAxisSize.max,
+        //   children: <Widget>[
+        //     buildUserInfoIcon(amounts.first, iconsData.first),
+        //     buildUserInfoIcon(amounts.first, iconsData.last),
+        //     buildUserInfoIcon(amounts.last, iconsData.last),
+        //   ],
+        // )
       ],
     );
