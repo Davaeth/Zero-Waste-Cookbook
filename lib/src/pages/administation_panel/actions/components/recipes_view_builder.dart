@@ -112,10 +112,10 @@ class _RecipesViewBuilderState extends State<RecipesViewBuilder> {
         var recipeReferecne =
             _dbService.getDocumentReference('Recipes', _recipes[index].id);
 
-        var userByFavRecipe = await _dbService.getDatumByField(
+        var userByFavRecipe = await _dbService.getDatumIfContains(
             'Users', 'favouriteRecipes', recipeReferecne);
 
-        var userByRecipe = await _dbService.getDatumByField(
+        var userByRecipe = await _dbService.getDatumIfContains(
             'Users', 'recipes', recipeReferecne);
 
         _dbService.deleteDataByRelation(
@@ -132,6 +132,7 @@ class _RecipesViewBuilderState extends State<RecipesViewBuilder> {
       _administratorAction.setReadyToDelete = false;
     });
   }
+
   Future<void> _getRecipes(
       AsyncSnapshot<QuerySnapshot> recipesSnapshots) async {
     _recipes = List<Recipe>();
