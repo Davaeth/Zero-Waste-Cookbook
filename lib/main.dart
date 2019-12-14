@@ -10,6 +10,7 @@ import 'package:zero_waste_cookbook/ui/cards/recipe_card/recipe_card.dart';
 import 'package:zero_waste_cookbook/ui/constants/enums/recipe_card_interior_type.dart';
 import 'package:zero_waste_cookbook/ui/constants/enums/routes.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
+import 'package:zero_waste_cookbook/utils/routes_arguments.dart';
 import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
 import 'ui/recipes/recipes_manager.dart';
@@ -61,6 +62,15 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) => ListView(
         shrinkWrap: true,
         children: <Widget>[
+          addPadding(
+            Text(
+              Translator.instance.translations['recipe_of_the_day'],
+              style: TextStyle(fontSize: 18.0, color: Colors.white),
+            ),
+            left: 16.0,
+            top: 16.0,
+            bottom: 8.0,
+          ),
           _buildRecipeOfTheDay(context),
           addPadding(
               Text(
@@ -98,9 +108,9 @@ class _MyHomePageState extends State<MyHomePage> {
             recipeCardInteriorType: RecipeCardInteriorType.SingleRecipe,
             recipe: _recipe,
             userId: currentUserId,
-            iconData: _isFav ? Icons.favorite : Icons.favorite_border,
             callback: (bool isFav) => _callback(isFav),
             recipeID: _recipe.id,
+            isFav: _isFav,
           );
         } else {
           return Card();
@@ -112,6 +122,8 @@ class _MyHomePageState extends State<MyHomePage> {
   _callback(bool isFav) {
     setState(() {
       _isFav = isFav;
+      Navigator.pushReplacementNamed(context, Routes.Recipe,
+          arguments: RoutesArguments(_recipe.id, null));
     });
   }
 }

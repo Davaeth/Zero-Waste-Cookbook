@@ -13,9 +13,9 @@ mixin RecipeCardInterior on State<RecipeCard> {
   List<Widget> createInteriorForRecipeCard({
     @required BuildContext context,
     @required Recipe recipe,
-    @required IconData iconData,
     @required String userId,
     @required Function(bool) callback,
+    @required bool isFaved,
     Widget ratings,
     Widget mainImage,
   }) {
@@ -38,8 +38,9 @@ mixin RecipeCardInterior on State<RecipeCard> {
           _createFavIconButton(
             recipeId: recipe.id,
             userId: userId,
-            iconData: iconData,
             callback: callback,
+            dbService: _dbService,
+            isFaved: isFaved,
           ),
         ],
       ),
@@ -97,31 +98,35 @@ mixin RecipeCardInterior on State<RecipeCard> {
   }
 
   IconButton _createFavIconButton({
-    @required IconData iconData,
     @required String recipeId,
     @required String userId,
+    @required DatabaseService dbService,
+    @required bool isFaved,
     Function(bool) callback,
   }) =>
       IconButton(
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
-        icon: Icon(iconData),
-        onPressed: () =>
-            _handleFavRecipeIconButton(recipeId, userId, callback: callback),
+        icon: Icon(isFaved ? Icons.favorite : Icons.favorite_border),
+        onPressed: () => _handleFavRecipeIconButton(
+          recipeId,
+          userId,
+          dbService,
+          callback: callback,
+        ),
         iconSize: 40.0,
         color: DefaultColors.iconColor,
       );
 
-  _handleFavRecipeIconButton(String recipeId, String userId,
+  _handleFavRecipeIconButton(
+      String recipeId, String userId, DatabaseService dbService,
       {Function callback}) async {
     setState(() async {
-      DatabaseService _db = DatabaseService();
-
-      if (await _db.checkIfRecipeIsFaved(userId, recipeId)) {
-        _db.removeRecipeFromFavourites(recipeId, userId);
+      if (await dbService.checkIfRecipeIsFaved(userId, recipeId)) {
+        dbService.removeRecipeFromFavourites(recipeId, userId);
         callback(true);
       } else {
-        _db.addRecipeToFavourites(recipeId, userId);
+        dbService.addRecipeToFavourites(recipeId, userId);
         callback(false);
       }
     });
