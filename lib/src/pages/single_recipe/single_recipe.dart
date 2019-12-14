@@ -66,10 +66,10 @@ class _SingleRecipeState extends State<SingleRecipe> {
                   recipeCardInteriorType: RecipeCardInteriorType.RecipePage,
                   recipe: _recipe,
                   userId: currentUserId,
-                  iconData: _isFav ? Icons.favorite : Icons.favorite_border,
                   callback: (bool isFav) => _recipeStackCardCallback(isFav),
                   isTappable: false,
                   recipeID: _recipe.id,
+                  isFav: _isFav,
                 ),
                 _buildIngredients(),
                 addPadding(

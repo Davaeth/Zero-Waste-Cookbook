@@ -13,11 +13,11 @@ class RecipeCard extends StatefulWidget {
   final String userId;
 
   final bool isTappable;
+  final bool isFav;
 
   final RecipeCardInteriorType recipeCardInteriorType;
 
   final Recipe recipe;
-  final IconData iconData;
   final Function(bool) callback;
 
   RecipeCard({
@@ -25,7 +25,7 @@ class RecipeCard extends StatefulWidget {
     @required this.userId,
     @required this.recipeCardInteriorType,
     @required this.recipe,
-    @required this.iconData,
+    @required this.isFav,
     this.callback,
     this.isTappable = true,
   });
@@ -36,12 +36,14 @@ class RecipeCard extends StatefulWidget {
 
 class _RecipeCardState extends State<RecipeCard> with RecipeCardInterior {
   String _recipeId;
+
   bool _isTappable;
+  bool _isFav;
+
   RecipeCardInteriorType _recipeCardInteriorType;
 
   Recipe _recipe;
   String _userId;
-  IconData _iconData;
   Function(bool) _callback;
 
   @override
@@ -65,10 +67,10 @@ class _RecipeCardState extends State<RecipeCard> with RecipeCardInterior {
       case RecipeCardInteriorType.SingleRecipe:
         return createInteriorForRecipeCard(
           context: context,
-          iconData: _iconData,
           recipe: _recipe,
           userId: _userId,
           callback: _callback,
+          isFaved: _isFav,
           mainImage: StackBuilder.createImageWithFavButton(
             context: context,
             imagePath: GlobalConfiguration().getString("imagePath") +
@@ -78,8 +80,8 @@ class _RecipeCardState extends State<RecipeCard> with RecipeCardInterior {
         break;
       case RecipeCardInteriorType.RecipePage:
         return createInteriorForRecipeCard(
+          isFaved: _isFav,
           context: context,
-          iconData: _iconData,
           recipe: _recipe,
           userId: _userId,
           callback: _callback,
@@ -99,12 +101,14 @@ class _RecipeCardState extends State<RecipeCard> with RecipeCardInterior {
   @override
   void initState() {
     _recipeId = widget.recipeID;
+
     _isTappable = widget.isTappable;
+    _isFav = widget.isFav;
+
     _recipeCardInteriorType = widget.recipeCardInteriorType;
 
     _recipe = widget.recipe;
     _userId = widget.userId;
-    _iconData = widget.iconData;
     _callback = widget.callback;
 
     super.initState();

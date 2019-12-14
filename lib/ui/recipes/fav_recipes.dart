@@ -55,9 +55,9 @@ class _FavRecipesManager extends State<FavRecipesManager> {
         recipeCardInteriorType: RecipeCardInteriorType.SingleRecipe,
         recipe: recipe,
         userId: currentUserId,
-        iconData: _isFav ? Icons.favorite : Icons.favorite_border,
         callback: (bool isFav) => _callback(isFav),
         recipeID: recipe.id,
+        isFav: _isFav,
       );
     }
   }
