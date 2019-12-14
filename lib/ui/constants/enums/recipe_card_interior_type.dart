@@ -1,0 +1,4 @@
+enum RecipeCardInteriorType {
+  SingleRecipe,
+  RecipePage,
+}

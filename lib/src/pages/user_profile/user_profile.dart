@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:zero_waste_cookbook/ui/constants/routes.dart';
+import 'package:zero_waste_cookbook/ui/constants/enums/routes.dart';
 import 'package:zero_waste_cookbook/ui/recipes/fav_recipes.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 import 'package:zero_waste_cookbook/ui/user_profile/user_button.dart';

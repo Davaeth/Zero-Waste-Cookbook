@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
-import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
+import 'package:zero_waste_cookbook/ui/cards/recipe_card/recipe_card.dart';
+import 'package:zero_waste_cookbook/ui/constants/enums/recipe_card_interior_type.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 
 class RecipesManager extends StatefulWidget {
@@ -65,13 +66,11 @@ class _RecipesManager extends State<RecipesManager> {
         Container(
           height: (MediaQuery.of(context).size.height / 100) * 50,
           child: RecipeCard(
-            interior: RecipeCard.createInteriorForListOfCards(
-              context: context,
-              recipe: recipe,
-              userId: currentUserId,
-              iconData: _isFav ? Icons.favorite : Icons.favorite_border,
-              callback: (bool isFav) => _callback(isFav),
-            ),
+            recipeCardInteriorType: RecipeCardInteriorType.SingleRecipe,
+            recipe: recipe,
+            userId: currentUserId,
+            iconData: _isFav ? Icons.favorite : Icons.favorite_border,
+            callback: (bool isFav) => _callback(isFav),
             recipeID: snapshot.documentID,
           ),
         ),

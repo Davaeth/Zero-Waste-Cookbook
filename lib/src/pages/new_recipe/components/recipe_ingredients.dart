@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/models/food/ingredient.dart';
 import 'package:zero_waste_cookbook/src/pages/new_recipe/components/recipe_part_base.dart';
-import 'package:zero_waste_cookbook/ui/shared/colors/default_colors.dart';
 import 'package:zero_waste_cookbook/ui/shared/page_resolvers/positioning.dart';
 import 'package:zero_waste_cookbook/utils/singletons/translator.dart';
 
@@ -28,7 +27,8 @@ class RecipeIngredients extends RecipePartBase<Ingredient> {
   @override
   Padding createShowAddDataDialog(BuildContext context) => addPadding(
         FlatButton(
-          child: Text(Translator.instance.translations['add_an_ingredients'], style: TextStyle(color: Colors.grey)),
+          child: Text(Translator.instance.translations['add_an_ingredients'],
+              style: TextStyle(color: Colors.grey)),
           onPressed: () {
             showDialog(
               context: context,
@@ -36,7 +36,8 @@ class RecipeIngredients extends RecipePartBase<Ingredient> {
             );
           },
           shape: RoundedRectangleBorder(
-        borderRadius: new BorderRadius.circular(18.0),side: BorderSide(color: Colors.grey)),
+              borderRadius: new BorderRadius.circular(18.0),
+              side: BorderSide(color: Colors.grey)),
           color: Colors.transparent,
           splashColor: Colors.transparent,
           highlightColor: Colors.transparent,

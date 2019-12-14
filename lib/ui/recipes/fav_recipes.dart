@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zero_waste_cookbook/src/database/database_service.dart';
 import 'package:zero_waste_cookbook/src/models/food/recipe.dart';
-import 'package:zero_waste_cookbook/ui/cards/recipe_card.dart';
+import 'package:zero_waste_cookbook/ui/cards/recipe_card/recipe_card.dart';
+import 'package:zero_waste_cookbook/ui/constants/enums/recipe_card_interior_type.dart';
 import 'package:zero_waste_cookbook/ui/login/google_login.dart';
 
 class FavRecipesManager extends StatefulWidget {
@@ -51,13 +52,11 @@ class _FavRecipesManager extends State<FavRecipesManager> {
       var recipe = Recipe.fromFirestore(snapshot);
 
       yield RecipeCard(
-        interior: RecipeCard.createInteriorForListOfCards(
-          context: context,
-          recipe: recipe,
-          userId: currentUserId,
-          iconData: _isFav ? Icons.favorite : Icons.favorite_border,
-          callback: (bool isFav) => _callback(isFav),
-        ),
+        recipeCardInteriorType: RecipeCardInteriorType.SingleRecipe,
+        recipe: recipe,
+        userId: currentUserId,
+        iconData: _isFav ? Icons.favorite : Icons.favorite_border,
+        callback: (bool isFav) => _callback(isFav),
         recipeID: recipe.id,
       );
     }

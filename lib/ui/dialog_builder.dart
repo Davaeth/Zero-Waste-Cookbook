@@ -95,18 +95,7 @@ class _DialogBuilderState extends State<DialogBuilder> {
         contentPadding: EdgeInsets.only(top: 0, bottom: 16.0),
         backgroundColor: DefaultColors.secondaryColor,
         children: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.close,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              stepPageBack(context);
-            },
-            splashColor: Colors.transparent,
-            highlightColor: Colors.transparent,
-            alignment: Alignment.topRight,
-          ),
+          _buildCloseButton(),
           Center(
             child: Text(
               Translator.instance.translations['rate_the_recipe'],
@@ -118,6 +107,16 @@ class _DialogBuilderState extends State<DialogBuilder> {
           _createSubmitButotn(),
         ],
         elevation: 0,
+      );
+
+  IconButton _buildCloseButton() => IconButton(
+        icon: Icon(Icons.close, color: Colors.white),
+        onPressed: () {
+          stepPageBack(context);
+        },
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        alignment: Alignment.topRight,
       );
 
   Padding _craeteReviewDesctiptionField() => addPadding(

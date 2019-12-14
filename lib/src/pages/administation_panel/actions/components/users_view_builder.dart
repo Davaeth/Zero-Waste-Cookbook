@@ -117,7 +117,7 @@ class _UsersViewBuilderState extends State<UsersViewBuilder> {
             return GridView.builder(
               shrinkWrap: true,
               controller: ScrollController(),
-              gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
               ),
               itemCount: _users.length,
