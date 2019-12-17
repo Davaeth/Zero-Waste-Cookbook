@@ -19,7 +19,7 @@
     "title": "Title",
     "add_an_ingredients": "Add an ingredient",
     "difficulty_level": "Difficulty level",
-    "prep_time": "Prep time",
+    "prep_time": "Prep time (min)",
     "tags": "Tags",
     "add_new_tag": "Add tag",
     "add_recipe": "Add recipe",
