@@ -1,7 +1,6 @@
 # System wspomagający komponowanie posiłków
 
-Do poprawnego działania aplikacji wymagane jest pobranie frameworka Flutter ze strony oficjalnej:
+Do poprawnego działania aplikacji wymagane jest użycie frameworka dołączonego do płyty.
+Następnie należy dokonac instalacji postępujac według kroków podanych na stronie poniżej.
 
-https://flutter.dev/docs/get-started/install
-
-Następnie należy postępować według instrukcji podanych w pomocniku instalatora.
+https://flutter.dev/docs/get-started/install/windows
