@@ -1,6 +1,8 @@
-# System wspomagający komponowanie posiłków
+# Zero Waste Cookbook
 
-Do poprawnego działania aplikacji wymagane jest użycie frameworka dołączonego do płyty.
-Następnie należy dokonac instalacji postępujac według kroków podanych na stronie poniżej.
+Application was made as an engineer project for an university graduation.
 
-https://flutter.dev/docs/get-started/install/windows
+Imagine you have semi-finished products in your fridge and you are hungry, but do not know what can be done with them and you so much don't want to go and buy more ingredients.
+If so, then you can launch this app and search for recipes that include your typed ingredients, but DON'T INCLUDE ANY OTHER that you don't have! Pretty amazing, right?
+With this app you can reduce throwing away food that is still fit for use. Furthermore, you won't be needing to buy more and more food while you still have some, so you won't be wasting your money!
+What is even more interesting, you will be able to discover new flavors that you had no idea even existed!
