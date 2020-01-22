@@ -9,3 +9,12 @@ What is even more interesting, you will be able to discover new flavors that you
 
 # Searching For Recipes
 ![](http://www.mediafire.com/convkey/0439/xgkqut4646jl5ckzg.jpg)
+
+# Admin and User role differences (bottom nav bar)
+![](http://www.mediafire.com/convkey/9b28/iq340afrwiu3kqezg.jpg)
+
+# Translation
+![](http://www.mediafire.com/convkey/a2dd/6nzbccuwdh1banezg.jpg)
+
+# Adding new recipe
+![](http://www.mediafire.com/convkey/70c4/tu45qkkbtjt5pzozg.jpg)
