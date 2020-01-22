@@ -8,4 +8,4 @@ With this app you can reduce throwing away food that is still fit for use. Furth
 What is even more interesting, you will be able to discover new flavors that you had no idea even existed!
 
 # Searching For Recipes
-![img](https://www.mediafire.com/view/xgkqut4646jl5ck/wyszukiwanie_skladniki.png/file)
+![](http://www.mediafire.com/convkey/0439/xgkqut4646jl5ckzg.jpg)
