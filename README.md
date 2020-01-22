@@ -6,3 +6,6 @@ Imagine you have semi-finished products in your fridge and you are hungry, but d
 If so, then you can launch this app and search for recipes that include your typed ingredients, but DON'T INCLUDE ANY OTHER that you don't have! Pretty amazing, right?
 With this app you can reduce throwing away food that is still fit for use. Furthermore, you won't be needing to buy more and more food while you still have some, so you won't be wasting your money!
 What is even more interesting, you will be able to discover new flavors that you had no idea even existed!
+
+# Searching For Recipes
+![img](https://www.mediafire.com/view/xgkqut4646jl5ck/wyszukiwanie_skladniki.png/file)
