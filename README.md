@@ -15,3 +15,9 @@ What is even more interesting, you will be able to discover new flavors that you
 
 # Adding new recipe
 ![](http://www.mediafire.com/convkey/70c4/tu45qkkbtjt5pzozg.jpg)
+
+# Single Recipe
+![](http://www.mediafire.com/convkey/fe7e/q7wagrr10viutlhzg.jpg)
+
+# Reviews
+![](https://scontent.fwaw6-1.fna.fbcdn.net/v/t1.15752-9/83521344_484079265868770_6759303059521667072_n.jpg?_nc_cat=108&_nc_ohc=jx6-6kbHq4MAX-UA-VK&_nc_ht=scontent.fwaw6-1.fna&oh=5a9aa24e14d38c592c6b85b291ee03e9&oe=5E96DA86)
